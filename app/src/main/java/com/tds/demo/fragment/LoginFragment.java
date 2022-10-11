@@ -8,11 +8,15 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.tapsdk.bootstrap.Callback;
+import com.tapsdk.bootstrap.account.TDSUser;
+import com.tapsdk.bootstrap.exceptions.TapError;
 import com.tds.demo.R;
 
 import butterknife.BindView;
@@ -25,6 +29,10 @@ public class LoginFragment extends Fragment {
     ImageButton closeButton;
     @BindView(R.id.intro_button)
     Button intro_button;
+    @BindView(R.id.tap_login)
+    Button tap_login;
+    @BindView(R.id.logout)
+    Button logout;
 
     public LoginFragment() {
     }
@@ -68,6 +76,29 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        tap_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null == TDSUser.currentUser()) {
+                    // 未登录
+                    TDSUser.loginWithTapTap(getActivity(), new Callback<TDSUser>() {
+                        @Override
+                        public void onSuccess(TDSUser resultUser) {
+                            Toast.makeText(getActivity(), "succeed to login with Taptap.", Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onFail(TapError error) {
+                            Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }, "public_profile");
+
+                } else {
+                    // 已登录，进入游戏
+                    Toast.makeText(getActivity(),"Tap登录在已登录状态！", Toast.LENGTH_SHORT ).show();
+
+                }
+            }
+        });
     }
 
 }
