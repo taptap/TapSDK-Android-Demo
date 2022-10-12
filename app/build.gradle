@@ -15,11 +15,23 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            storeFile file('mysign.keystore')
+            storePassword 'mysign'
+            keyAlias = 'mysign'
+            keyPassword 'mysign'
+        }
+    }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -44,6 +56,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
     implementation 'cn.leancloud:storage-android:8.2.12'
+    implementation 'cn.leancloud:realtime-android:8.2.12'
 
 
 

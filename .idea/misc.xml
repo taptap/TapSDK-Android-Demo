@@ -15,6 +15,7 @@
         <entry key="app/src/main/res/layout/fragment_push.xml" value="0.38333333333333336" />
         <entry key="app/src/main/res/layout/item_children.xml" value="0.1375" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.13854166666666667" />
+        <entry key="app/src/main/res/layout/layout_dynamic_fragment.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/layout_login_fragment.xml" value="0.3296875" />
         <entry key="app/src/main/res/layout/layout_webview_fragment.xml" value="0.5656702898550725" />
         <entry key="app/src/main/res/menu/main.xml" value="0.578125" />
