@@ -1,6 +1,7 @@
 package com.tds.demo.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +31,13 @@ public class WebViewFragment extends Fragment {
     public WebViewFragment() {
     }
 
-    public static final WebViewFragment getInstance() {
+    public static final WebViewFragment getInstance(String documentUrl) {
         if (webViewFragment == null) {
             webViewFragment = new WebViewFragment();
         }
+        Bundle args = new Bundle();
+        args.putString("url", documentUrl);
+        webViewFragment.setArguments(args);
         return webViewFragment;
     }
 
@@ -60,8 +64,12 @@ public class WebViewFragment extends Fragment {
             }
         });
 
-        WebSettings webViewSettings = webView.getSettings();
-        webViewSettings.setJavaScriptEnabled(true);
-        webView.loadUrl("https://developer.taptap.com/docs/sdk/taptap-login/features/");
+        if(getArguments() != null){
+            String documentUrl = this.getArguments().getString("url");
+            WebSettings webViewSettings = webView.getSettings();
+            webViewSettings.setJavaScriptEnabled(true);
+            webView.loadUrl(documentUrl);
+        }
+
     }
 }

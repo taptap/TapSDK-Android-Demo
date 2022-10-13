@@ -65,7 +65,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         View view= inflater.inflate(R.layout.layout_login_fragment, container, false);
         ButterKnife.bind(this, view);
 
-
         return view;
 
     }
@@ -91,7 +90,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             case R.id.intro_button:
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, WebViewFragment.getInstance(), null)
+                        .replace(R.id.fragment_container, WebViewFragment.getInstance("https://developer.taptap.com/docs/sdk/taptap-login/features/"), null)
                         .addToBackStack("webViewFragment")
                         .commit();
                 break;
