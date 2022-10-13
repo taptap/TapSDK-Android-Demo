@@ -1,13 +1,22 @@
 package com.tds.demo;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
@@ -20,6 +29,9 @@ import com.tds.demo.fragment.GenuineVerifyFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
 import com.tds.demo.fragment.LoginFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        checkPermission(this, this);
         initSDK();
 
         ExpandableListView listView = findViewById(R.id.listview);
@@ -142,5 +154,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // 要申请的权限
+    public static String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
+    public static void checkPermission(Context context, Activity activity){
+        int i = ContextCompat.checkSelfPermission(context, permissions[0]);
+        int j = ContextCompat.checkSelfPermission(context, permissions[1]);
+
+        if (i != PackageManager.PERMISSION_GRANTED || j != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, permissions, 1); //调用方法获取权限
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1) {
+            for (int i =0; i< permissions.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) { //选择了“始终允许”
+
+                } else {
+                    Toast.makeText(this,"用户禁止了权限", Toast.LENGTH_SHORT ).show();
+                }
+            }
+        }
+
+    }
 }
