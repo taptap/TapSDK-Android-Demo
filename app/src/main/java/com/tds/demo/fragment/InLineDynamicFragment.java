@@ -22,12 +22,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.tapsdk.moment.TapMoment;
 import com.tds.demo.R;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +80,6 @@ public class InLineDynamicFragment extends Fragment implements View.OnClickListe
         TapMoment.setCallback(new TapMoment.TapMomentCallback() {
             @Override
             public void onCallback(int code, String msg) {
-                Log.e("TAG", "内嵌动态: "+code+msg );
                 switch(code){
                     case CALLBACK_CODE_PUBLISH_SUCCESS:
                         Toast.makeText(getActivity(), "动态发布成功", Toast.LENGTH_SHORT).show();

@@ -15,6 +15,8 @@ import com.tds.common.entities.TapConfig;
 import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
+import com.tds.demo.fragment.AntiaddictionFragment;
+import com.tds.demo.fragment.GenuineVerifyFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
 import com.tds.demo.fragment.LoginFragment;
 
@@ -74,11 +76,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case "正版验证":
-                    Log.e("TAG", "onItemClick: "+SDKType );
+                    showFragment(GenuineVerifyFragment.getInstance(), "genuineVerifyFragment");
                     break;
 
                 case "防沉迷-合规认证":
-                    Log.e("TAG", "onItemClick: "+SDKType );
+                    showFragment(AntiaddictionFragment.getInstance(), "antiaddictionFragment");
                     break;
 
                 case "内建账户":
