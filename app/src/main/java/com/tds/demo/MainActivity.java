@@ -25,6 +25,7 @@ import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.AntiaddictionFragment;
+import com.tds.demo.fragment.FriendsFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
 import com.tds.demo.fragment.InsideAccoundFragment;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case "好友":
-                    Log.e("TAG", "onItemClick: "+SDKType );
+                    showFragment(FriendsFragment.getInstance(), "friendsFragment");
                     break;
 
                 case "成就":
