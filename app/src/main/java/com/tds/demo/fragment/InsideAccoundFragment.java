@@ -17,10 +17,21 @@ import com.tapsdk.bootstrap.account.TDSUser;
 import com.tds.demo.R;
 import com.tds.demo.until.ToastUtil;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.leancloud.LCObject;
+import cn.leancloud.LCQuery;
+import cn.leancloud.LCUser;
+import cn.leancloud.Transformer;
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 
 /**
  * 2022/10/14
@@ -37,6 +48,18 @@ public class InsideAccoundFragment extends Fragment implements View.OnClickListe
     Button intro_button;
     @BindView(R.id.anonym_login)
     Button anonym_login;
+    @BindView(R.id.set_current_user)
+    Button set_current_user;
+    @BindView(R.id.set_other_attribute)
+    Button set_other_attribute;
+    @BindView(R.id.search_user)
+    Button search_user;
+    @BindView(R.id.third_login)
+    Button third_login;
+
+
+
+
 
 
     private static InsideAccoundFragment insideAccoundFragment = null;
@@ -69,6 +92,10 @@ public class InsideAccoundFragment extends Fragment implements View.OnClickListe
         close_button.setOnClickListener(this);
         intro_button.setOnClickListener(this);
         anonym_login.setOnClickListener(this);
+        set_current_user.setOnClickListener(this);
+        set_other_attribute.setOnClickListener(this);
+        search_user.setOnClickListener(this);
+        third_login.setOnClickListener(this);
     }
 
     @Override
@@ -87,9 +114,133 @@ public class InsideAccoundFragment extends Fragment implements View.OnClickListe
             case R.id.anonym_login:
                 anonumLogin();
                 break;
+            case R.id.set_current_user:
+                setCurrentUser();
+                TDSUser.getCurrentUser().isAuthenticated();
+            case R.id.set_other_attribute:
+                setOtherAttribute();
+                break;
+            case R.id.search_user:
+                searchUser();
+                break;
+            case R.id.third_login:
+                thirdLogin();
+                break;
+
             default:
                 break;
         }
+    }
+
+
+    /**
+     * 使用第三方平台登录
+     * 需要先在开发着平台配置第三方平台的appId、appkey等信息
+     * 然后根据第三方平台登录 SDK 的集成要求进行接入
+     * 获取到第三方授权返回的数据后，调用 loginWithAuthData() 完成玩家账户的登录
+     *
+     * 以下是以 微信 登录为了例
+     * */
+    private void thirdLogin() {
+        Map<String, Object> thirdPartyData = new HashMap<String, Object>();
+        // 必须参数
+        thirdPartyData.put("expires_in", 7200);
+        thirdPartyData.put("openid", "调用微信授权返回的 openid 的值");
+        thirdPartyData.put("access_token", "调用微信授权返回的 ACCESS_TOKEN 的值");
+        // 可选参数
+        thirdPartyData.put("refresh_token", "调用微信授权返回的 refresh_token 的值");
+        thirdPartyData.put("scope", "调用微信授权返回的 scope 的值");
+        TDSUser.loginWithAuthData(TDSUser.class, thirdPartyData, "weixin").subscribe(new Observer<TDSUser>() {
+            public void onSubscribe(Disposable disposable) {
+            }
+            public void onNext(TDSUser user) {
+                System.out.println("成功登录");
+                ToastUtil.showCus("登录成功", ToastUtil.Type.SUCCEED);
+            }
+            public void onError(Throwable throwable) {
+                ToastUtil.showCus("登录发生错误："+throwable.getMessage(), ToastUtil.Type.ERROR);
+
+            }
+            public void onComplete() {
+            }
+        });
+    }
+
+    /**
+     * 查询用户
+     * 查询有多少玩家是 1 月 1 日生日的：
+     * */
+    private void searchUser() {
+
+        LCQuery<TDSUser> userQuery = TDSUser.getQuery(TDSUser.class);
+        userQuery.whereEqualTo("birthday", "01-01");
+        userQuery.countInBackground().subscribe(new Observer<Integer>() {
+            public void onSubscribe(Disposable disposable) {}
+            public void onNext(Integer count) {
+                ToastUtil.showCus("生日是1月1日的玩家有："+count+"位", ToastUtil.Type.POINT);
+            }
+            public void onError(Throwable throwable) {
+                ToastUtil.showCus("查询失败："+throwable.getMessage(), ToastUtil.Type.POINT);
+
+            }
+            public void onComplete() {}
+        });
+    }
+
+    /**
+     * 设置用户其他属性
+     * */
+    private void setOtherAttribute() {
+        TDSUser currentUser = TDSUser.currentUser();  // 获取当前登录的账户实例
+        currentUser.put("nickname","TDS_User");
+        currentUser.put("birthday", "01-01");
+        currentUser.put("age", "18");
+        currentUser.saveInBackground().subscribe(new Observer<LCObject>() {
+            @Override
+            public void onSubscribe(@NotNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@NotNull LCObject lcObject) {
+                // 保存成功，currentUser 的属性得到更新
+                TDSUser tdsUser = (TDSUser) lcObject;
+                ToastUtil.showCus("用户昵称属性："+tdsUser.getServerData().get("nickname").toString()+"设置成功", ToastUtil.Type.SUCCEED);
+            }
+
+            @Override
+            public void onError(@NotNull Throwable e) {
+                ToastUtil.showCus(e.getMessage(), ToastUtil.Type.ERROR);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    /**
+     * 设置当前用户
+     * 使用 session token 登录一个用户（云端会验证 session token 是否有效）：
+     * */
+    private void setCurrentUser() {
+
+        TDSUser.becomeWithSessionTokenInBackground("wavcs62lixesisz365rhp9h9z").subscribe(new Observer<TDSUser>() {
+            public void onSubscribe(Disposable disposable) {}
+            public void onNext(TDSUser user) {
+                // 修改 currentUser
+                TDSUser.changeCurrentUser(user, true);
+                ToastUtil.showCus("设置当前用户成功", ToastUtil.Type.SUCCEED);
+            }
+            public void onError(Throwable throwable) {
+                // session token 无效
+                ToastUtil.showCus("session token 无效", ToastUtil.Type.ERROR);
+            }
+            public void onComplete() {}
+        });
+
+
     }
 
     /**
