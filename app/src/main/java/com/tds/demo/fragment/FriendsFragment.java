@@ -11,11 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.tapsdk.friends.Callback;
 import com.tapsdk.friends.FriendStatusChangedListener;
 import com.tapsdk.friends.TDSFriends;
 import com.tapsdk.friends.entities.TDSFriendInfo;
 import com.tapsdk.friends.entities.TDSFriendshipRequest;
 import com.tapsdk.friends.entities.TDSRichPresence;
+import com.tapsdk.friends.exceptions.TDSFriendError;
 import com.tds.demo.R;
 import com.tds.demo.until.ToastUtil;
 
@@ -35,6 +37,8 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
     Button friend_listener;
     @BindView(R.id.stop_listener)
     Button stop_listener;
+    @BindView(R.id.add_friend)
+    Button add_friend;
 
 
 
@@ -72,6 +76,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         intro_button.setOnClickListener(this);
         friend_listener.setOnClickListener(this);
         stop_listener.setOnClickListener(this);
+        add_friend.setOnClickListener(this);
     }
 
     @Override
@@ -95,7 +100,9 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
             case R.id.stop_listener:
                 stopListenr();
                 break;
-
+            case R.id.add_friend:
+                addFriend();
+                break;
 
             default:
                 break;
@@ -103,7 +110,25 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    /**
+     * 添加好友
+     *
+     * */
+    private void addFriend() {
+        TDSFriends.addFriendByShortCode("dppnpm", null, new Callback<Void>() {
 
+            @Override
+            public void onSuccess(Void result) {
+                ToastUtil.showCus("添加好友成功", ToastUtil.Type.SUCCEED);
+            }
+
+            @Override
+            public void onFail(TDSFriendError error) {
+                ToastUtil.showCus("添加好友失败："+error.detailMessage, ToastUtil.Type.ERROR);
+            }
+        });
+
+    }
 
 
     /**
@@ -111,6 +136,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
      * 好友模块支持客户端监听好友状态变化，在游戏中实时给玩家提示。 你需要在调用上线接口前注册好友状态变更监听实例，这样，玩家上线后就能收到相应通知
      */
     private void initListener() {
+        ToastUtil.showCus("开启好友状态变化的通知！", ToastUtil.Type.WARNING);
 
         TDSFriends.registerFriendStatusChangedListener(new FriendStatusChangedListener() {
             // 新增好友（触发时机同「已发送的好友申请被接受」）

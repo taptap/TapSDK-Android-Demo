@@ -71,6 +71,15 @@
         app:layout_constraintStart_toEndOf="@id/friend_listener"
         android:layout_marginLeft="15dp"/>
 
+    <Button
+        android:id="@+id/add_friend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="添加好友"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stop_listener"
+        android:layout_marginLeft="15dp"/>
+
 
 
 
