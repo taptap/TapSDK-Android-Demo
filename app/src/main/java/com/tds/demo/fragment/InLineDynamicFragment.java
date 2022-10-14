@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import com.tapsdk.moment.TapMoment;
 import com.tds.demo.MainActivity;
 import com.tds.demo.R;
+import com.tds.demo.until.ToastUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -83,32 +84,40 @@ public class InLineDynamicFragment extends Fragment implements View.OnClickListe
             public void onCallback(int code, String msg) {
                 switch(code){
                     case CALLBACK_CODE_PUBLISH_SUCCESS:
-                        Toast.makeText(getActivity(), "动态发布成功", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("动态发布成功", ToastUtil.Type.SUCCEED );
                         break;
                     case CALLBACK_CODE_PUBLISH_FAIL	:
-                        Toast.makeText(getActivity(), "动态发布失败", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("动态发布失败", ToastUtil.Type.SUCCEED );
+
                         break;
                     case CALLBACK_CODE_PUBLISH_CANCEL:
-                        Toast.makeText(getActivity(), "关闭动态发布页面", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("关闭动态发布页面", ToastUtil.Type.SUCCEED );
+
                         break;
                     case CALLBACK_CODE_GET_NOTICE_SUCCESS:
                         Log.e("TAG", "获取新消息成功: "+msg );
-                        Toast.makeText(getActivity(), "获取新消息成功", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("获取新消息成功", ToastUtil.Type.SUCCEED );
+
                         break;
                     case CALLBACK_CODE_GET_NOTICE_FAIL:
-                        Toast.makeText(getActivity(), "获取新消息失败", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("获取新消息失败", ToastUtil.Type.SUCCEED );
+
                         break;
                     case CALLBACK_CODE_MOMENT_APPEAR:
-                        Toast.makeText(getActivity(), "动态页面打开", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("动态页面打开", ToastUtil.Type.SUCCEED );
+
                         break;
                     case CALLBACK_CODE_MOMENT_DISAPPEAR:
-                        Toast.makeText(getActivity(), "动态页面关闭", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("动态页面关闭", ToastUtil.Type.SUCCEED );
+
                         break;
                     case CALLBACK_CODE_LOGIN_SUCCESS:
-                        Toast.makeText(getActivity(), "动态页面内登录成功", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("动态页面内登录成功", ToastUtil.Type.SUCCEED );
+
                         break;
                     case CALLBACK_CODE_SCENE_EVENT:
-                        Toast.makeText(getActivity(), "场景化入口回调", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("场景化入口回调", ToastUtil.Type.SUCCEED );
+
                         break;
                     default:
                         break;

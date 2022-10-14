@@ -57,7 +57,6 @@
         android:id="@+id/quick_authentication"
         app:layout_constraintStart_toStartOf="parent"
         android:text="快速认证"
-        android:background="@drawable/button_ripple"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         style="@style/button_style"
@@ -69,7 +68,6 @@
         android:id="@+id/logout"
         style="@style/button_style"
         android:text="登出"
-        android:background="@drawable/button_ripple"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +78,6 @@
         style="@style/button_style"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="玩家年龄"
-        android:background="@drawable/button_ripple"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
         app:layout_constraintTop_toBottomOf="@id/logout" />
@@ -91,7 +88,6 @@
         style="@style/button_style"
         app:layout_constraintStart_toStartOf="parent"
         android:text="消费上限"
-        android:background="@drawable/button_ripple"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         app:layout_constraintTop_toBottomOf="@id/logout"/>
@@ -104,14 +100,12 @@
         android:text="关闭游戏时长上报"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
-        android:background="@drawable/button_ripple"
         app:layout_constraintTop_toBottomOf="@id/pay_limit"/>
 
     <Button
         android:id="@+id/open_game_time"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="游戏时长上报"
-        android:background="@drawable/button_ripple"
         style="@style/button_style"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
@@ -125,14 +119,12 @@
         android:text="剩余游戏时间"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
-        android:background="@drawable/button_ripple"
         app:layout_constraintTop_toBottomOf="@id/close_game_time"/>
 
     <Button
         android:id="@+id/submit_pay"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="上报消费金额"
-        android:background="@drawable/button_ripple"
         style="@style/button_style"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"

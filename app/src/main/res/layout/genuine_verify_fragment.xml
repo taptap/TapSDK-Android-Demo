@@ -56,7 +56,6 @@
     <Button
         android:id="@+id/check_pay"
         android:text="检查是否付费"
-        android:background="@drawable/button_ripple"
         style="@style/button_style"
         android:layout_marginLeft="15dp"
         app:layout_constraintStart_toStartOf="parent"

@@ -33,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/close_button"
             app:layout_constraintEnd_toStartOf="@id/intro_button"
-            android:text="内嵌动态"
+            android:text="内建账户"
             android:textStyle="bold"
             android:textColor="@color/TapTap"
             android:textSize="16sp"/>
@@ -53,48 +53,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <Button
-        android:id="@+id/show_dynamic_page"
-        android:text="显示动态"
+        android:id="@+id/anonym_login"
         style="@style/button_style"
-        android:layout_marginLeft="15dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"/>
-
-    <Button
-        android:id="@+id/new_notice"
-        android:text="获取新消息"
-        style="@style/button_style"
-        app:layout_constraintStart_toEndOf="@id/show_dynamic_page"
-        app:layout_constraintEnd_toStartOf="@id/scene_entry"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"/>
-
-    <Button
-        android:id="@+id/scene_entry"
-        android:text="场景化入口"
-        style="@style/button_style"
-        android:layout_marginRight="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"/>
-
-
-    <Button
-        android:id="@+id/close_dynamic_page"
-        android:text="关闭动态"
-        style="@style/button_style"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/show_dynamic_page"/>
+        android:text="游客登录"/>
 
-    <Button
-        android:id="@+id/onekey_send"
-        android:text="一键发布"
-        style="@style/button_style"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@id/close_dynamic_page"
-        app:layout_constraintTop_toBottomOf="@id/show_dynamic_page"/>
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

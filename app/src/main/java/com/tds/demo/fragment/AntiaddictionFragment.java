@@ -23,6 +23,7 @@ import com.tapsdk.antiaddictionui.AntiAddictionUICallback;
 import com.tapsdk.antiaddictionui.AntiAddictionUIKit;
 import com.tds.demo.R;
 import com.tds.demo.data.SDKInfoData;
+import com.tds.demo.until.ToastUtil;
 
 import java.util.Map;
 
@@ -88,17 +89,23 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
             @Override
             public void onCallback(int code, Map<String, Object> extras) {
                 if (code == Constants.ANTI_ADDICTION_CALLBACK_CODE.LOGIN_SUCCESS){
-                    Toast.makeText(getActivity(), "玩家登录后判断当前玩家可以进行游戏", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showCus("玩家登录后判断当前玩家可以进行游戏", ToastUtil.Type.SUCCEED );
+
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.EXITED){
-                    Toast.makeText(getActivity(), "退出账号", Toast.LENGTH_SHORT).show();
+                   ToastUtil.showCus("退出账号", ToastUtil.Type.SUCCEED );
+
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.SWITCH_ACCOUNT){
-                    Toast.makeText(getActivity(), "点击切换账号按钮", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showCus("点击切换账号按钮", ToastUtil.Type.SUCCEED );
+
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.PERIOD_RESTRICT){
-                    Toast.makeText(getActivity(), "未成年玩家当前无法进行游戏", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showCus("未成年玩家当前无法进行游戏", ToastUtil.Type.SUCCEED );
+
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.DURATION_LIMIT	){
-                    Toast.makeText(getActivity(), "时长限制", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showCus("时长限制", ToastUtil.Type.SUCCEED );
+
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.REAL_NAME_STOP	){
-                    Toast.makeText(getActivity(), "实名过程中点击了关闭实名窗\n", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showCus("实名过程中点击了关闭实名窗", ToastUtil.Type.SUCCEED );
+
                 }
             }
         });
@@ -172,13 +179,15 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
                     @Override
                     public void onSuccess(SubmitPayResult result) {
                         // 提交成功
-                        Toast.makeText(getActivity(), "提交成功！", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("提交成功", ToastUtil.Type.SUCCEED );
+
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         // 处理异常
-                        Toast.makeText(getActivity(), "处理异常！", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("处理异常！", ToastUtil.Type.ERROR );
+
                     }
                 }
         );
@@ -197,16 +206,20 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
                     public void onSuccess(CheckPayResult result) {
                         // status 为 true 时可以支付，false 则限制消费
                         if (result.status) {
-                            Toast.makeText(getActivity(), "可以进行充值操作！", Toast.LENGTH_SHORT).show();
+                            ToastUtil.showCus("可以进行充值操作！", ToastUtil.Type.SUCCEED );
+
                         }else{
                             Log.e("TAG", "消费受限: "+result.description);
-                            Toast.makeText(getActivity(), "消费受限！", Toast.LENGTH_SHORT).show();
+                            ToastUtil.showCus("消费受限！", ToastUtil.Type.SUCCEED );
+
                         }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         // 处理异常
+                        ToastUtil.showCus(throwable.getMessage(), ToastUtil.Type.ERROR );
+
                     }
                 }
         );
@@ -217,7 +230,8 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     * */
     private void remainingTime() {
         int remainingTimeInMinutes = AntiAddictionUIKit.getRemainingTimeInMinutes();
-        Toast.makeText(getActivity(), "剩余时长："+ remainingTimeInMinutes +"分钟", Toast.LENGTH_SHORT).show();
+        ToastUtil.showCus("剩余时长："+ remainingTimeInMinutes +"分钟", ToastUtil.Type.SUCCEED );
+
 
 
     }
@@ -228,7 +242,8 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     * */
     private void getGamerAge() {
         int ageRange = AntiAddictionUIKit.getAgeRange();
-        Toast.makeText(getActivity(), "玩家年龄是："+ ageRange, Toast.LENGTH_SHORT).show();
+        ToastUtil.showCus("玩家年龄是："+ ageRange, ToastUtil.Type.SUCCEED );
+
     }
 
 

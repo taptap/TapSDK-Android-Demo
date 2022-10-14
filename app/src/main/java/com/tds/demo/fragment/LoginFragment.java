@@ -20,6 +20,8 @@ import com.taptap.sdk.TapLoginHelper;
 import com.taptap.sdk.net.Api;
 import com.tds.demo.R;
 import com.tds.demo.until.FormatJson;
+import com.tds.demo.until.ToastUtil;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observer;
@@ -117,9 +119,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
     /**
      * 如果没有安装 TapTap 客户端则会调用网页授权
+     * 静默登录可以帮助用户跳过登录的流程，通常用于用户下一次启动游戏时，仍需之前登录状态的场景。
      * */
     public void tapLogin() {
-
         // 检查登录状态
         if (null == TDSUser.currentUser()) {
             // 未登录
@@ -128,17 +130,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 public void onSuccess(TDSUser resultUser) {
                     // 此处也可以获取用户信息
                     Log.e("TAG", "onSuccess: "+ resultUser.toJSONInfo() );
-                    Toast.makeText(getActivity(), "恭喜 "+resultUser.getServerData().get("nickname")+" 登录成功！", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showCus("恭喜 "+resultUser.getServerData().get("nickname")+" 登录成功！", ToastUtil.Type.SUCCEED );
                 }
                 @Override
                 public void onFail(TapError error) {
-                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    ToastUtil.showCus(error.getMessage(), ToastUtil.Type.ERROR );
+
                 }
             }, "public_profile");
 
         } else {
             // 已登录，进入游戏
-            Toast.makeText(getActivity(),"您已登录！", Toast.LENGTH_SHORT ).show();
+            ToastUtil.showCus("您已登录！", ToastUtil.Type.POINT );
+
         }
     }
     /**
@@ -154,12 +158,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 @Override
                 public void onNext(Boolean aBoolean) {
                     if (aBoolean){
-                        Toast.makeText(getActivity(), "SessionToken 重置成功", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCus("SessionToken 重置成功", ToastUtil.Type.SUCCEED );
+
                     }
                 }
                 @Override
                 public void onError(Throwable e) {
-                    Log.e("TAG", "onError: "+ e.getMessage());
+                    ToastUtil.showCus(e.getMessage(), ToastUtil.Type.ERROR );
+
                 }
 
                 @Override
@@ -183,7 +189,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     // 退出登录
     private void tapLogout() {
         TDSUser.logOut();
-        Toast.makeText(getActivity(),"退出登录！", Toast.LENGTH_SHORT ).show();
+        ToastUtil.showCus("退出登录！", ToastUtil.Type.SUCCEED );
 
     }
 
@@ -198,16 +204,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             public void onSuccess(Boolean aBoolean) {
                 if(aBoolean){
                     // 该玩家已拥有测试资格
-                    Toast.makeText(getActivity(), "该玩家已具有篝火测试资格", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showCus("该玩家已具有篝火测试资格", ToastUtil.Type.SUCCEED );
+
                 }else {
                     // 该玩家不具备测试资格， 游戏层面进行拦截
-                    Toast.makeText(getActivity(), "该玩家不具备篝火测试资格", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showCus("该玩家不具备篝火测试资格", ToastUtil.Type.SUCCEED );
+
                 }
             }
             @Override
             public void onError(Throwable throwable) {
                 // 服务端检查出错或者网络异常
-                Toast.makeText(getActivity(), "服务端检查出错或者网络异常", Toast.LENGTH_SHORT).show();
+                ToastUtil.showCus("服务端检查出错或者网络异常", ToastUtil.Type.SUCCEED );
+
             }
         });
 

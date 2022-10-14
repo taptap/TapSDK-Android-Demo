@@ -27,7 +27,9 @@ import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.AntiaddictionFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
+import com.tds.demo.fragment.InsideAccoundFragment;
 import com.tds.demo.fragment.LoginFragment;
+import com.tds.demo.until.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case "内建账户":
-                    Log.e("TAG", "onItemClick: "+SDKType );
+                    showFragment(InsideAccoundFragment.getInstance(), "insideAccoundFragment");
                     break;
 
                 case "好友":
@@ -175,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) { //选择了“始终允许”
 
                 } else {
-                    Toast.makeText(this,"用户禁止了权限", Toast.LENGTH_SHORT ).show();
+                    ToastUtil.showCus("用户禁止了权限", ToastUtil.Type.WARNING );
                 }
             }
         }

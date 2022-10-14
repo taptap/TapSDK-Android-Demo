@@ -6,8 +6,12 @@
         <entry key="../../../../../layout/custom_preview.xml" value="0.11520349815001682" />
         <entry key="app/src/main/res/drawable/box_shape.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/button_ripple.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/error_toast_shape.xml" value="0.32" />
         <entry key="app/src/main/res/drawable/expandablelistviewselector.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/point_toast_shape.xml" value="0.32" />
+        <entry key="app/src/main/res/drawable/success_toast_shape.xml" value="0.32" />
         <entry key="app/src/main/res/drawable/top_bar_shape.xml" value="0.32" />
+        <entry key="app/src/main/res/drawable/waring_toast_shape.xml" value="0.32" />
         <entry key="app/src/main/res/layout/activity_control.xml" value="0.38333333333333336" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.578125" />
         <entry key="app/src/main/res/layout/antiaddiction_fragment.xml" value="0.32395833333333335" />
@@ -19,7 +23,11 @@
         <entry key="app/src/main/res/layout/item_children.xml" value="0.1375" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.13854166666666667" />
         <entry key="app/src/main/res/layout/layout_dynamic_fragment.xml" value="0.35104166666666664" />
+        <entry key="app/src/main/res/layout/layout_inside_accound_fragment.xml" value="0.41822916666666665" />
         <entry key="app/src/main/res/layout/layout_login_fragment.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/layout_toast_error.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/layout_toast_point.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/layout_toast_warning.xml" value="0.3296875" />
         <entry key="app/src/main/res/layout/layout_webview_fragment.xml" value="0.5656702898550725" />
         <entry key="app/src/main/res/menu/main.xml" value="0.578125" />
         <entry key="app/src/main/res/xml/navigation.xml" value="0.38229166666666664" />
