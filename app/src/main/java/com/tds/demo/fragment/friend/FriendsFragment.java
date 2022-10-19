@@ -1,6 +1,7 @@
-package com.tds.demo.fragment;
+package com.tds.demo.fragment.friend;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,33 +14,37 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.friends.Callback;
 import com.tapsdk.friends.FriendStatusChangedListener;
+import com.tapsdk.friends.ListCallback;
 import com.tapsdk.friends.TDSFriends;
 import com.tapsdk.friends.entities.TDSFriendInfo;
 import com.tapsdk.friends.entities.TDSFriendshipRequest;
 import com.tapsdk.friends.entities.TDSRichPresence;
 import com.tapsdk.friends.exceptions.TDSFriendError;
 import com.tds.demo.R;
+import com.tds.demo.fragment.WebViewFragment;
 import com.tds.demo.until.ToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.leancloud.LCFriendshipRequest;
 
 /**
- * 2022/10/14
- * Describe：游戏内好友
+ * 2022/10/19
+ * Describe：好友功能
  */
 public class FriendsFragment extends Fragment implements View.OnClickListener {
+
     @BindView(R.id.close_button)
     ImageButton close_button;
     @BindView(R.id.intro_button)
     Button intro_button;
-    @BindView(R.id.friend_listener)
-    Button friend_listener;
-    @BindView(R.id.stop_listener)
-    Button stop_listener;
-    @BindView(R.id.add_friend)
-    Button add_friend;
+    @BindView(R.id.apply_list)
+    Button apply_list;
 
+    private ArrayList<UserBean> addFriends = new ArrayList<>();
 
 
     private static FriendsFragment friendsFragment = null;
@@ -58,11 +63,10 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.friends_fragment, container, false);
+        View view= inflater.inflate(R.layout.friends_new_fragment, container, false);
         ButterKnife.bind(this, view);
-
-
-
+        // 好友状态监听
+        initListener();
 
         return view;
     }
@@ -74,9 +78,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         close_button.setOnClickListener(this);
         intro_button.setOnClickListener(this);
-        friend_listener.setOnClickListener(this);
-        stop_listener.setOnClickListener(this);
-        add_friend.setOnClickListener(this);
+        apply_list.setOnClickListener(this);
     }
 
     @Override
@@ -84,7 +86,6 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.close_button:
                 getParentFragmentManager().beginTransaction().remove(FriendsFragment.getInstance()).commit();
-
                 break;
             case R.id.intro_button:
                 getActivity().getSupportFragmentManager()
@@ -93,20 +94,105 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
                         .addToBackStack("webViewFragment")
                         .commit();
                 break;
-            case R.id.friend_listener:
-                initListener();
+            case R.id.apply_list:
+                searchApplyList();
                 break;
-
-            case R.id.stop_listener:
-                stopListenr();
-                break;
-            case R.id.add_friend:
-                addFriend();
-                break;
-
             default:
                 break;
         }
+    }
+
+    /**
+     * 生成链接
+     * */
+    private void createUrl() {
+        TDSFriends.generateFriendInvitationLink(new Callback<String>() {
+            @Override
+            public void onSuccess(String inviteUrl) {
+                Log.e("TAG", "分享链接生成成功："+inviteUrl );
+                ToastUtil.showCus("分享链接"+inviteUrl, ToastUtil.Type.SUCCEED);
+            }
+            @Override
+            public void onFail(TDSFriendError error) {
+                Log.e("TAG", "分享链接生成失败："+error.detailMessage );
+
+                ToastUtil.showCus("分享链接失败："+error.detailMessage, ToastUtil.Type.ERROR);
+
+            }
+        });
+
+    }
+
+    /**
+     * 查询好友申请列表
+     * */
+    private void searchApplyList() {
+        int from = 0;
+        int limit = 100;
+        TDSFriends.queryFriendRequestList(LCFriendshipRequest.STATUS_PENDING, from, limit,
+                new ListCallback<LCFriendshipRequest>(){
+
+                    @Override
+                    public void onSuccess(List<LCFriendshipRequest> requests) {
+                        // requests 就是处于 pending 状态中的好友申请列表
+                        Log.e("TAG", "好友申请列表 "+requests.get(0));
+                        addFriends.clear();
+                        for(int i=0; i<requests.size(); i++){
+                            UserBean userBean = new UserBean();
+                            userBean.setAvatar(requests.get(i).getSourceUser().getServerData().get("avatar").toString());
+                            userBean.setNickname(requests.get(i).getSourceUser().getServerData().get("nickname").toString());
+                            userBean.setShortId(requests.get(i).getSourceUser().getServerData().get("shortId").toString());
+                            userBean.setObjectId(requests.get(i).getSourceUser().getServerData().get("objectId").toString());
+                            userBean.setUsername(requests.get(i).getSourceUser().getServerData().get("username").toString());
+                            addFriends.add(userBean);
+                        }
+
+
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, FriendWorkFragment.getInstance("好友申请列表", addFriends), null)
+                                .addToBackStack("friendWorkFragment")
+                                .commit();
+
+
+
+                    }
+
+                    @Override
+                    public void onFail(TDSFriendError error) {
+                        ToastUtil.showCus(error.detailMessage, ToastUtil.Type.ERROR);
+                    }
+                });
+
+    }
+
+
+    /**
+     * 玩家下线
+     * */
+    private void playerDown() {
+        TDSFriends.offline();
+    }
+
+
+    /**
+     * 玩家上线
+     * */
+    private void playUp() {
+        TDSFriends.online(new Callback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                // 成功
+                ToastUtil.showCus("玩家上线", ToastUtil.Type.SUCCEED);
+            }
+
+            @Override
+            public void onFail(TDSFriendError error) {
+                // 处理异常
+                ToastUtil.showCus(error.detailMessage, ToastUtil.Type.ERROR);
+
+            }
+        });
     }
 
 
@@ -115,7 +201,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
      *
      * */
     private void addFriend() {
-        TDSFriends.addFriendByShortCode("dppnpm", null, new Callback<Void>() {
+        TDSFriends.addFriendByShortCode("hmbdhq", null, new Callback<Void>() {
 
             @Override
             public void onSuccess(Void result) {
@@ -157,6 +243,20 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onReceivedInvitationLink(String url) {
                 ToastUtil.showCus("邀请好友成功！", ToastUtil.Type.POINT);
+
+                // 玩家通过邀请链接打开游戏后，开发者需要调用该接口。 调用该接口后，SDK 会自动向对应的玩家发起好友申请。
+                TDSFriends.handFriendInvitationLink(url, new Callback<Void>() {
+                    @Override
+                    public void onSuccess(Void result) {
+                        ToastUtil.showCus("通过邀请链接打开游戏成功："+result.toString(), ToastUtil.Type.SUCCEED);
+                    }
+
+                    @Override
+                    public void onFail(TDSFriendError error) {
+                        ToastUtil.showCus("通过邀请链接打开游戏失败："+error.detailMessage, ToastUtil.Type.ERROR);
+
+                    }
+                });
             }
 
             // 已发送的好友申请被接受

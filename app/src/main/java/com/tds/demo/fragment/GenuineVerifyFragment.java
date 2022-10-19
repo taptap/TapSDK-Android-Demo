@@ -72,7 +72,6 @@ public class GenuineVerifyFragment extends Fragment implements View.OnClickListe
         check_pay.setOnClickListener(this);
     }
 
-    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.close_button:

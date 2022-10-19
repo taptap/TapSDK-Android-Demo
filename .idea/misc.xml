@@ -6,8 +6,10 @@
         <entry key="../../../../../layout/custom_preview.xml" value="0.11520349815001682" />
         <entry key="app/src/main/res/drawable/box_shape.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/button_ripple.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/edittext_shape.xml" value="0.304" />
         <entry key="app/src/main/res/drawable/error_toast_shape.xml" value="0.32" />
         <entry key="app/src/main/res/drawable/expandablelistviewselector.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.304" />
         <entry key="app/src/main/res/drawable/point_toast_shape.xml" value="0.32" />
         <entry key="app/src/main/res/drawable/success_toast_shape.xml" value="0.32" />
         <entry key="app/src/main/res/drawable/top_bar_shape.xml" value="0.32" />
@@ -18,9 +20,12 @@
         <entry key="app/src/main/res/layout/fragment_antiaddiction.xml" value="0.38333333333333336" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.38333333333333336" />
         <entry key="app/src/main/res/layout/fragment_push.xml" value="0.38333333333333336" />
+        <entry key="app/src/main/res/layout/friends_dialog_fragment.xml" value="0.2321504916631039" />
         <entry key="app/src/main/res/layout/friends_fragment.xml" value="0.35741769987174005" />
+        <entry key="app/src/main/res/layout/friends_new_fragment.xml" value="0.3557075673364686" />
         <entry key="app/src/main/res/layout/genuine_antiaddiction_fragment.xml" value="0.2791666666666667" />
         <entry key="app/src/main/res/layout/genuine_verify_fragment.xml" value="0.4557291666666667" />
+        <entry key="app/src/main/res/layout/item_add_friend.xml" value="0.2321504916631039" />
         <entry key="app/src/main/res/layout/item_children.xml" value="0.1375" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.13854166666666667" />
         <entry key="app/src/main/res/layout/layout_dynamic_fragment.xml" value="0.35104166666666664" />

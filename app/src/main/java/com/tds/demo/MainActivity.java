@@ -1,7 +1,6 @@
 package com.tds.demo;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,15 +23,12 @@ import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.AntiaddictionFragment;
-import com.tds.demo.fragment.FriendsFragment;
+import com.tds.demo.fragment.friend.FriendsFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
 import com.tds.demo.fragment.InsideAccoundFragment;
 import com.tds.demo.fragment.LoginFragment;
 import com.tds.demo.until.ToastUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 
