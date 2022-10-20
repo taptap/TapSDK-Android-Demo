@@ -27,6 +27,8 @@
         <entry key="app/src/main/res/layout/genuine_verify_fragment.xml" value="0.4557291666666667" />
         <entry key="app/src/main/res/layout/item_add_friend.xml" value="0.2321504916631039" />
         <entry key="app/src/main/res/layout/item_children.xml" value="0.1375" />
+        <entry key="app/src/main/res/layout/item_friend_black_list.xml" value="0.2902949978623343" />
+        <entry key="app/src/main/res/layout/item_friend_list.xml" value="0.2902949978623343" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.13854166666666667" />
         <entry key="app/src/main/res/layout/layout_dynamic_fragment.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/layout_inside_accound_fragment.xml" value="0.33" />

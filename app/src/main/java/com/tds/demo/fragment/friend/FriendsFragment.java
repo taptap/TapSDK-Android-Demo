@@ -1,31 +1,37 @@
 package com.tds.demo.fragment.friend;
 
+import static com.tds.demo.data.SDKInfoData.Clound_SHAREHOST;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.tapsdk.bootstrap.account.TDSUser;
 import com.tapsdk.friends.Callback;
 import com.tapsdk.friends.FriendStatusChangedListener;
 import com.tapsdk.friends.ListCallback;
 import com.tapsdk.friends.TDSFriends;
 import com.tapsdk.friends.entities.TDSFriendInfo;
+import com.tapsdk.friends.entities.TDSFriendLinkInfo;
 import com.tapsdk.friends.entities.TDSFriendshipRequest;
 import com.tapsdk.friends.entities.TDSRichPresence;
 import com.tapsdk.friends.exceptions.TDSFriendError;
 import com.tds.demo.R;
 import com.tds.demo.fragment.WebViewFragment;
+import com.tds.demo.until.PlatformUtil;
 import com.tds.demo.until.ToastUtil;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,11 +49,48 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
     Button intro_button;
     @BindView(R.id.apply_list)
     Button apply_list;
+    @BindView(R.id.friend_list)
+    Button friend_list;
+    @BindView(R.id.black_list)
+    Button black_list;
+    @BindView(R.id.shortid_edit)
+    EditText shortid_edit;
+    @BindView(R.id.add_for_shortid)
+    Button add_for_shortid;
+    @BindView(R.id.objectid_edit)
+    EditText objectid_edit;
+    @BindView(R.id.add_for_objectid)
+    Button add_for_objectid;
+    @BindView(R.id.share_url)
+    Button share_url;
+    @BindView(R.id.nickname_edit)
+    EditText nickname_edit;
+    @BindView(R.id.search_for_nickname)
+    Button search_for_nickname;
+    @BindView(R.id.shortid_search_edit)
+    EditText shortid_search_edit;
+    @BindView(R.id.search_for_shortid)
+    Button search_for_shortid;
+    @BindView(R.id.objectid_search_edit)
+    EditText objectid_search_edit;
+    @BindView(R.id.search_for_objectid)
+    Button search_for_objectid;
+    @BindView(R.id.player_up)
+    Button player_up;
+    @BindView(R.id.player_down)
+    Button player_down;
+    @BindView(R.id.stop_listener)
+    Button stop_listener;
 
-    private ArrayList<UserBean> addFriends = new ArrayList<>();
+
+
+
+
+
 
 
     private static FriendsFragment friendsFragment = null;
+    private FriendBean friendBean= null;
 
     public FriendsFragment() {
 
@@ -68,6 +111,11 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         // 好友状态监听
         initListener();
 
+        // 落地页网站的地址需要在客户端配置：
+        TDSFriends.setShareLink(Clound_SHAREHOST);
+
+
+
         return view;
     }
 
@@ -79,6 +127,17 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         close_button.setOnClickListener(this);
         intro_button.setOnClickListener(this);
         apply_list.setOnClickListener(this);
+        friend_list.setOnClickListener(this);
+        black_list.setOnClickListener(this);
+        add_for_shortid.setOnClickListener(this);
+        add_for_objectid.setOnClickListener(this);
+        share_url.setOnClickListener(this);
+        search_for_nickname.setOnClickListener(this);
+        search_for_shortid.setOnClickListener(this);
+        search_for_objectid.setOnClickListener(this);
+        player_up.setOnClickListener(this);
+        player_down.setOnClickListener(this);
+        stop_listener.setOnClickListener(this);
     }
 
     @Override
@@ -97,31 +156,279 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
             case R.id.apply_list:
                 searchApplyList();
                 break;
+            case R.id.friend_list:
+                searchFriendList();
+                break;
+            case R.id.black_list:
+                searchBlackList();
+                break;
+            case R.id.add_for_shortid:
+                addFriendForShortId();
+                break;
+            case R.id.add_for_objectid:
+                addFriendForObjectId();
+                break;
+            case R.id.share_url:
+                shareInviteUrl();
+                break;
+            case R.id.search_for_nickname:
+                searchForNickname();
+                break;
+            case R.id.search_for_shortid:
+                searchForShortid();
+                break;
+            case R.id.search_for_objectid:
+                searchForObjectid();
+                break;
+            case R.id.player_up:
+                playUp();
+                break;
+            case R.id.player_down:
+                playerDown();
+                break;
+            case R.id.stop_listener:
+                stopListenr();
+                break;
+
+
             default:
                 break;
         }
     }
 
+
+
+
+
     /**
-     * 生成链接
+     * 通过 ObjectId 查询好友
      * */
-    private void createUrl() {
-        TDSFriends.generateFriendInvitationLink(new Callback<String>() {
+    private void searchForObjectid() {
+        if(objectid_search_edit.getText().toString().isEmpty()){
+            ToastUtil.showCus("请输入ObjectId！", ToastUtil.Type.POINT);
+            return;
+        }
+        TDSFriends.searchUserById(objectid_search_edit.getText().toString(), new Callback<TDSFriendInfo>() {
             @Override
-            public void onSuccess(String inviteUrl) {
-                Log.e("TAG", "分享链接生成成功："+inviteUrl );
-                ToastUtil.showCus("分享链接"+inviteUrl, ToastUtil.Type.SUCCEED);
+            public void onSuccess(TDSFriendInfo friendInfo) {
+                ToastUtil.showCus("好友昵称是："+friendInfo.getUser().getUsername(), ToastUtil.Type.SUCCEED);
+
             }
+
             @Override
             public void onFail(TDSFriendError error) {
-                Log.e("TAG", "分享链接生成失败："+error.detailMessage );
 
-                ToastUtil.showCus("分享链接失败："+error.detailMessage, ToastUtil.Type.ERROR);
-
+                ToastUtil.showCus(error.detailMessage, ToastUtil.Type.ERROR);
             }
         });
 
     }
+
+
+    /**
+     * 通过好友码查询好友
+     * */
+    private void searchForShortid() {
+        if(shortid_search_edit.getText().toString().isEmpty()){
+            ToastUtil.showCus("请输入好友码！", ToastUtil.Type.POINT);
+            return;
+        }
+        TDSFriends.searchUserByShortCode(shortid_search_edit.getText().toString(), new Callback<TDSFriendInfo>() {
+            @Override
+            public void onSuccess(TDSFriendInfo friendInfo) {
+                /* 略（参见上节） */
+                ToastUtil.showCus("好友昵称是："+friendInfo.getUser().getUsername(), ToastUtil.Type.SUCCEED);
+
+            }
+
+            @Override
+            public void onFail(TDSFriendError error) {
+
+                ToastUtil.showCus(error.detailMessage, ToastUtil.Type.ERROR);
+            }
+        });
+
+    }
+
+
+    /**
+     * 通过用户昵称查询好友
+     * */
+    private void searchForNickname() {
+        if(nickname_edit.getText().toString().isEmpty()){
+            ToastUtil.showCus("请输入用户昵称！", ToastUtil.Type.POINT);
+            return;
+        }
+        TDSFriends.searchUserByName(nickname_edit.getText().toString(), new ListCallback<TDSFriendInfo>() {
+            @Override
+            public void onSuccess(List<TDSFriendInfo> friendInfoList) {
+                for (TDSFriendInfo info : friendInfoList) {
+                    // 玩家信息
+                    TDSUser user = info.getUser();
+                    // 富信息数据，详见后文
+                    TDSRichPresence richPresence = info.getRichPresence();
+                    // 好友是否在线
+                    boolean online = info.isOnline();
+                }
+                ToastUtil.showCus("好友昵称是："+friendInfoList.get(0).getUser().getUsername(), ToastUtil.Type.SUCCEED);
+
+            }
+
+            @Override
+            public void onFail(TDSFriendError error) {
+                ToastUtil.showCus(error.detailMessage, ToastUtil.Type.ERROR);
+            }
+        });
+
+    }
+
+
+    /**
+     * 先生成邀请链接，然后进行分享
+     * */
+    private void shareInviteUrl() {
+        // 生成链接
+            TDSFriends.generateFriendInvitationLink(new Callback<String>() {
+                @Override
+                public void onSuccess(String inviteUrl) {
+                    Log.e("TAG", "onSuccess:====》 "+ inviteUrl);
+
+                    // 分享功能，需开发者自行实现
+                    ToastUtil.showCus("分享链接"+inviteUrl, ToastUtil.Type.SUCCEED);
+                    if (PlatformUtil.isInstallApp(getActivity(),PlatformUtil.PACKAGE_WECHAT )){
+                        PlatformUtil.shareWechatFriend(getActivity(), inviteUrl );
+                    }else if (PlatformUtil.isInstallApp(getActivity(),PlatformUtil.PACKAGE_MOBILE_QQ )){
+                        PlatformUtil.shareQQ(getActivity(),  inviteUrl);
+                    }
+
+
+                }
+                @Override
+                public void onFail(TDSFriendError error) {
+                    if (error.code == 9304){
+                        ToastUtil.showCus("落地页网站的地址需要在客户端配置", ToastUtil.Type.WARNING);
+                    }else{
+                        ToastUtil.showCus(error.toJSON(), ToastUtil.Type.ERROR);
+                    }
+
+                }
+            });
+    }
+
+    /**
+     * 通过 ObjectId 添加好友
+     *
+     * */
+    private void addFriendForObjectId() {
+        if (objectid_edit.getText().toString().isEmpty()){
+            ToastUtil.showCus("请输入用户 ObjectId！", ToastUtil.Type.POINT);
+            return;
+        }
+        TDSFriends.addFriend(objectid_edit.getText().toString(), new Callback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                ToastUtil.showCus("添加好友", ToastUtil.Type.SUCCEED);
+            }
+
+            @Override
+            public void onFail(TDSFriendError error) {
+                ToastUtil.showCus(error.detailMessage, ToastUtil.Type.ERROR);
+            }
+        });
+    }
+
+
+    /**
+     * 通过 shortId 添加好友
+     *
+     * */
+    private void addFriendForShortId() {
+        if (shortid_edit.getText().toString().isEmpty()){
+            ToastUtil.showCus("请输入好友码！", ToastUtil.Type.POINT);
+            return;
+        }
+        TDSFriends.addFriendByShortCode(shortid_edit.getText().toString(), null, new Callback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                ToastUtil.showCus("添加好友", ToastUtil.Type.SUCCEED);
+            }
+
+            @Override
+            public void onFail(TDSFriendError error) {
+                ToastUtil.showCus(error.detailMessage, ToastUtil.Type.ERROR);
+            }
+        });
+
+    }
+
+
+    /**
+     * 查询黑名单列表
+     * */
+    private void searchBlackList() {
+
+        TDSFriends.queryBlockList(0, 100, new ListCallback<TDSFriendInfo>() {
+            @Override
+            public void onSuccess(List<TDSFriendInfo> result) {
+                friendBean= new FriendBean();
+                friendBean.settDSFriendInfo(result);
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, FriendWorkFragment.getInstance("黑名单列表", friendBean), null)
+                        .addToBackStack("friendWorkFragment")
+                        .commit();
+
+
+            }
+
+            @Override
+            public void onFail(TDSFriendError error) {
+                ToastUtil.showCus(error.detailMessage, ToastUtil.Type.SUCCEED);
+            }
+        });
+
+    }
+
+
+    /**
+     * 查询好友列表
+     * */
+    private void searchFriendList() {
+
+        int from = 0;
+        int limit = 100;
+        TDSFriends.queryFriendList(from, limit, new ListCallback<TDSFriendInfo>(){
+                    @Override
+                    public void onSuccess(List<TDSFriendInfo> friendInfoList) {
+//                        for (TDSFriendInfo info : friendInfoList) {
+//                            // 玩家信息
+//                            TDSUser user = info.getUser();
+//                            // 富信息数据
+//                            TDSRichPresence richPresence = info.getRichPresence();
+//                            // 好友是否在线
+//                            boolean online = info.isOnline();
+//                        }
+
+                        friendBean= new FriendBean();
+                        friendBean.settDSFriendInfo(friendInfoList);
+
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, FriendWorkFragment.getInstance("好友列表", friendBean), null)
+                                .addToBackStack("friendWorkFragment")
+                                .commit();
+
+                    }
+
+                    @Override
+                    public void onFail(TDSFriendError error) {
+                        ToastUtil.showCus(error.detailMessage, ToastUtil.Type.ERROR);
+                    }
+                });
+    }
+
+
 
     /**
      * 查询好友申请列表
@@ -129,28 +436,17 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
     private void searchApplyList() {
         int from = 0;
         int limit = 100;
-        TDSFriends.queryFriendRequestList(LCFriendshipRequest.STATUS_PENDING, from, limit,
-                new ListCallback<LCFriendshipRequest>(){
+        TDSFriends.queryFriendRequestList(LCFriendshipRequest.STATUS_PENDING, from, limit, new ListCallback<LCFriendshipRequest>(){
 
                     @Override
                     public void onSuccess(List<LCFriendshipRequest> requests) {
                         // requests 就是处于 pending 状态中的好友申请列表
-                        Log.e("TAG", "好友申请列表 "+requests.get(0));
-                        addFriends.clear();
-                        for(int i=0; i<requests.size(); i++){
-                            UserBean userBean = new UserBean();
-                            userBean.setAvatar(requests.get(i).getSourceUser().getServerData().get("avatar").toString());
-                            userBean.setNickname(requests.get(i).getSourceUser().getServerData().get("nickname").toString());
-                            userBean.setShortId(requests.get(i).getSourceUser().getServerData().get("shortId").toString());
-                            userBean.setObjectId(requests.get(i).getSourceUser().getServerData().get("objectId").toString());
-                            userBean.setUsername(requests.get(i).getSourceUser().getServerData().get("username").toString());
-                            addFriends.add(userBean);
-                        }
-
+                        friendBean= new FriendBean();
+                        friendBean.setRequests(requests);
 
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.fragment_container, FriendWorkFragment.getInstance("好友申请列表", addFriends), null)
+                                .replace(R.id.fragment_container, FriendWorkFragment.getInstance("好友申请列表", friendBean), null)
                                 .addToBackStack("friendWorkFragment")
                                 .commit();
 
@@ -197,32 +493,10 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
 
 
     /**
-     * 添加好友
-     *
-     * */
-    private void addFriend() {
-        TDSFriends.addFriendByShortCode("hmbdhq", null, new Callback<Void>() {
-
-            @Override
-            public void onSuccess(Void result) {
-                ToastUtil.showCus("添加好友成功", ToastUtil.Type.SUCCEED);
-            }
-
-            @Override
-            public void onFail(TDSFriendError error) {
-                ToastUtil.showCus("添加好友失败："+error.detailMessage, ToastUtil.Type.ERROR);
-            }
-        });
-
-    }
-
-
-    /**
      * 响应好友变化通知
      * 好友模块支持客户端监听好友状态变化，在游戏中实时给玩家提示。 你需要在调用上线接口前注册好友状态变更监听实例，这样，玩家上线后就能收到相应通知
      */
     private void initListener() {
-        ToastUtil.showCus("开启好友状态变化的通知！", ToastUtil.Type.WARNING);
 
         TDSFriends.registerFriendStatusChangedListener(new FriendStatusChangedListener() {
             // 新增好友（触发时机同「已发送的好友申请被接受」）
@@ -242,13 +516,19 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
             // 或通过 parseFriendInvitationLink 解析链接，获取相关参数再执行自定义的逻辑
             @Override
             public void onReceivedInvitationLink(String url) {
-                ToastUtil.showCus("邀请好友成功！", ToastUtil.Type.POINT);
-
                 // 玩家通过邀请链接打开游戏后，开发者需要调用该接口。 调用该接口后，SDK 会自动向对应的玩家发起好友申请。
                 TDSFriends.handFriendInvitationLink(url, new Callback<Void>() {
                     @Override
                     public void onSuccess(Void result) {
-                        ToastUtil.showCus("通过邀请链接打开游戏成功："+result.toString(), ToastUtil.Type.SUCCEED);
+
+                        // 通过邀请链接进行数据解析
+
+                        TDSFriendLinkInfo linkInfo = TDSFriends.parseFriendInvitationLink(url);
+                        String userObjectId = linkInfo.getIdentity();
+                        String name = linkInfo.getRoleName();
+                        Map<String, String> parameters = linkInfo.getQueries();
+
+                        ToastUtil.showCus("通过'"+name+"'邀请链接打开游戏成功：", ToastUtil.Type.SUCCEED);
                     }
 
                     @Override
@@ -257,6 +537,8 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
 
                     }
                 });
+
+
             }
 
             // 已发送的好友申请被接受

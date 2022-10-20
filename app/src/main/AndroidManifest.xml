@@ -16,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TDS_Android_Demo"
         tools:targetApi="31">
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640"/>
 
         <activity
             android:name=".MainActivity"
@@ -24,6 +30,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
 

@@ -7,7 +7,20 @@
     android:background="@drawable/edittext_shape"
     android:paddingStart="15dp"
     android:paddingRight="15dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
     android:layout_marginTop="5dp">
+
+
+    <ImageView
+        android:id="@+id/user_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintEnd_toStartOf="@id/user_nickname"
+        />
 
     <TextView
         android:id="@+id/user_nickname"
@@ -20,64 +33,51 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintEnd_toStartOf="@id/user_shortid"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@id/is_online"
+        app:layout_constraintStart_toEndOf="@id/user_icon"/>
 
     <TextView
-        android:id="@+id/user_shortid"
+        android:id="@+id/is_online"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="shortid"
+        android:text="在线"
         android:textSize="14sp"
         android:textColor="@color/black"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/user_nickname"
-        app:layout_constraintEnd_toStartOf="@id/agree_apply"
+        app:layout_constraintEnd_toStartOf="@id/del_friend"
         app:layout_constraintHorizontal_bias="1"
         android:layout_marginLeft="5dp"
         />
 
-    <Button
-        android:id="@+id/agree_apply"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="同意"
-        android:textSize="14sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintEnd_toStartOf="@id/refuse_apply"
-        app:layout_constraintStart_toEndOf="@id/user_shortid"
-        android:layout_marginLeft="5dp"
-        />
 
     <Button
-        android:id="@+id/refuse_apply"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="拒绝"
-        android:textSize="14sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintEnd_toStartOf="@id/del_apply"
-        app:layout_constraintStart_toEndOf="@id/agree_apply"
-        android:layout_marginLeft="5dp"
-        />
-
-    <Button
-        android:id="@+id/del_apply"
+        android:id="@+id/del_friend"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:text="删除"
         android:textSize="14sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/refuse_apply"
+        app:layout_constraintEnd_toStartOf="@id/black_friend"
+        app:layout_constraintStart_toEndOf="@id/is_online"
         android:layout_marginLeft="5dp"
         />
 
+    <Button
+        android:id="@+id/black_friend"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="拉黑"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/del_friend"
+        android:layout_marginLeft="5dp"
+        />
 
 
 

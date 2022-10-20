@@ -13,18 +13,23 @@ import com.tds.demo.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.leancloud.LCFriendshipRequest;
+
 /**
  * 2022/10/19
- * Describe：
+ * Describe：好友申请列表的 Adapter
  */
 public class FriendApplyAdapter extends RecyclerView.Adapter<FriendApplyAdapter.MyViewHolder>{
 
-    private List<UserBean> users = new ArrayList<>();
+    private List<LCFriendshipRequest> lCFriendshipRequestList = new ArrayList<>();
+    public static final int handleType_AGREE = 1;
+    public static final int handleType_REFUSE = 2;
+    public static final int handleType_DEL = 3;
 
-    public void addData(List<UserBean> data){
+    public void addData(List<LCFriendshipRequest> data){
         if(data !=null){
-            users.clear();
-            users.addAll(data);
+            lCFriendshipRequestList.clear();
+            lCFriendshipRequestList.addAll(data);
             notifyDataSetChanged();
         }
     }
@@ -38,13 +43,13 @@ public class FriendApplyAdapter extends RecyclerView.Adapter<FriendApplyAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.setData(users.get(position) , position);
+        holder.setData(lCFriendshipRequestList.get(position) , position);
 
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return lCFriendshipRequestList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -64,13 +69,46 @@ public class FriendApplyAdapter extends RecyclerView.Adapter<FriendApplyAdapter.
             delApply = itemView.findViewById(R.id.del_apply);
         }
 
-        public void setData(UserBean userBean, int position) {
+        public void setData(LCFriendshipRequest request, int position) {
 
-            nickname.setText(userBean.getNickname());
-            userShortid.setText(userBean.getShortId());
-//                  agreeApply
-//            refuseApply
-//                    delApply
+            nickname.setText(request.getSourceUser().getServerData().get("nickname").toString());
+            userShortid.setText(request.getSourceUser().getServerData().get("shortId").toString());
+
+            agreeApply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onClick(request, position, handleType_AGREE);
+                }
+            });
+
+            refuseApply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onClick(request, position,handleType_REFUSE);
+                }
+            });
+
+            delApply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onClick(request, position,handleType_DEL);
+
+                }
+            });
         }
     }
+
+    private OnItemClickListener mOnItemClickListener;
+
+
+    public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
+
+    public interface OnItemClickListener{
+
+        void onClick(LCFriendshipRequest request, int position, int handleType);
+
+    }
+
 }

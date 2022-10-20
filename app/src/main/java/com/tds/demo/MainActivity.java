@@ -18,16 +18,19 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
+import com.tapsdk.friends.Callback;
+import com.tapsdk.friends.TDSFriends;
+import com.tapsdk.friends.exceptions.TDSFriendError;
 import com.tds.common.entities.TapConfig;
 import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.AntiaddictionFragment;
-import com.tds.demo.fragment.friend.FriendsFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
 import com.tds.demo.fragment.InsideAccoundFragment;
 import com.tds.demo.fragment.LoginFragment;
+import com.tds.demo.fragment.friend.FriendsFragment;
 import com.tds.demo.until.ToastUtil;
 
 import butterknife.ButterKnife;
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < adapter.getGroupCount(); i++) {
             listView.expandGroup(i);
         }
+
+
     }
 
 
@@ -131,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
                 case "公告系统":
                     Log.e("TAG", "onItemClick: "+SDKType );
+
                     break;
 
                 default:

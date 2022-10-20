@@ -67,16 +67,14 @@
             android:layout_height="match_parent">
 
 
-
-
     <Button
         android:id="@+id/friend_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="好友列表"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/apply_list"
         android:layout_marginLeft="15dp"/>
 
@@ -85,10 +83,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="好友申请列表"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintEnd_toStartOf="@id/black_list"
         app:layout_constraintStart_toEndOf="@id/friend_list"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
 
@@ -97,10 +97,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="黑名单列表"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toEndOf="@id/apply_list"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginRight="15dp"
         />
 
