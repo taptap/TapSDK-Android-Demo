@@ -18,13 +18,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
-import com.tapsdk.friends.Callback;
-import com.tapsdk.friends.TDSFriends;
-import com.tapsdk.friends.exceptions.TDSFriendError;
 import com.tds.common.entities.TapConfig;
 import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
+import com.tds.demo.fragment.achievement.AchievementFragment;
 import com.tds.demo.fragment.AntiaddictionFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
@@ -107,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case "成就":
-                    Log.e("TAG", "onItemClick: "+SDKType );
+                    showFragment(AchievementFragment.getInstance(), "achievementFragment");
                     break;
 
                 case "排行榜":

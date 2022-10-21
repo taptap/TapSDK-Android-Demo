@@ -189,8 +189,6 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
             case R.id.stop_listener:
                 stopListenr();
                 break;
-
-
             default:
                 break;
         }
