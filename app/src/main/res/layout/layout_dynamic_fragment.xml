@@ -58,6 +58,7 @@
         android:text="显示动态"
         style="@style/button_style"
         android:layout_marginLeft="15dp"
+        app:layout_constraintEnd_toStartOf="@id/new_notice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_bar"/>
 
@@ -65,6 +66,8 @@
         android:id="@+id/new_notice"
         android:text="获取新消息"
         style="@style/button_style"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         app:layout_constraintStart_toEndOf="@id/show_dynamic_page"
         app:layout_constraintEnd_toStartOf="@id/scene_entry"
         app:layout_constraintTop_toBottomOf="@id/top_bar"/>
@@ -75,6 +78,7 @@
         style="@style/button_style"
         android:layout_marginRight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/new_notice"
         app:layout_constraintTop_toBottomOf="@id/top_bar"/>
 
 

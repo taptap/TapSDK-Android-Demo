@@ -32,9 +32,11 @@
         <entry key="app/src/main/res/layout/item_friend_black_list.xml" value="0.2902949978623343" />
         <entry key="app/src/main/res/layout/item_friend_list.xml" value="0.2902949978623343" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.13854166666666667" />
+        <entry key="app/src/main/res/layout/item_ranking.xml" value="0.3254759746146872" />
         <entry key="app/src/main/res/layout/layout_dynamic_fragment.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/layout_inside_accound_fragment.xml" value="0.33" />
         <entry key="app/src/main/res/layout/layout_login_fragment.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/layout_ranking_fragment.xml" value="0.3390337751175716" />
         <entry key="app/src/main/res/layout/layout_taost_succeed.xml" value="0.3582727661393758" />
         <entry key="app/src/main/res/layout/layout_toast_error.xml" value="0.3296875" />
         <entry key="app/src/main/res/layout/layout_toast_point.xml" value="0.3296875" />

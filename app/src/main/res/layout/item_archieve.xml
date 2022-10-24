@@ -7,6 +7,7 @@
     android:paddingStart="15dp"
     android:paddingEnd="15dp"
     android:paddingTop="2dp"
+    android:layout_marginTop="3dp"
     android:background="@drawable/edittext_shape"
     android:paddingBottom="2dp">
 

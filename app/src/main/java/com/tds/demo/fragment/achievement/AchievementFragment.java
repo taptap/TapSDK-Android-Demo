@@ -1,7 +1,5 @@
 package com.tds.demo.fragment.achievement;
 
-import static com.tds.achievement.TapAchievement.showAchievementPage;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tapsdk.bootstrap.account.TDSUser;
-import com.tapsdk.friends.entities.TDSFriendInfo;
 import com.tds.achievement.AchievementCallback;
 import com.tds.achievement.AchievementException;
 import com.tds.achievement.GetAchievementListCallBack;
@@ -24,7 +22,6 @@ import com.tds.achievement.TapAchievement;
 import com.tds.achievement.TapAchievementBean;
 import com.tds.demo.R;
 import com.tds.demo.fragment.WebViewFragment;
-import com.tds.demo.fragment.friend.BlackFriendAdapter;
 import com.tds.demo.until.ToastUtil;
 
 import java.util.List;
@@ -48,7 +45,6 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
     Button my_archieve;
     @BindView(R.id.recycle_view)
     RecyclerView recycle_view;
-
 
 
     private static AchievementFragment achievementFragment = null;
@@ -113,9 +109,6 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
                 }
             }
         });
-
-
-
 
         return view;
     }
@@ -232,9 +225,7 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
     private void searchArchieList() {
         // 本地数据
         List<TapAchievementBean> allList = TapAchievement.getLocalAllAchievementList();
-        for (int i= 0; i< allList.size(); i++) {
-            Log.e("TAG", "全部成就数据: "+ allList.get(i).getAchievementId()+"  "+allList.get(i).getTitle()+" "+allList.get(i).getStep());
-        }
+
         ArchievementAdapter archievementAdapter = new ArchievementAdapter();
         archievementAdapter.addData(allList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -245,10 +236,12 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
             @Override
             public void onClick(TapAchievementBean tapAchievementBean, int position, int hadle_type) {
                 if(hadle_type == 1){
-                    Log.e("TAG", "onClick: "+ tapAchievementBean.getDisplayId());
                     addStep(tapAchievementBean.getDisplayId());
+                    ToastUtil.showCus("增加一步成功！", ToastUtil.Type.SUCCEED);
                 }else{
                     finishAchieve(tapAchievementBean.getDisplayId());
+                    ToastUtil.showCus("直接完成该成就！", ToastUtil.Type.SUCCEED);
+
                 }
 
             }

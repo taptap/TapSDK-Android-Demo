@@ -1,5 +1,6 @@
 package com.tds.demo.fragment.achievement;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,13 +76,13 @@ public class ArchievementAdapter extends RecyclerView.Adapter<ArchievementAdapte
             archieve_name.setText(tapAchievementBean.getTitle().toString());
             archieve_id.setText(tapAchievementBean.getDisplayId().toString());
             archieve_step.setText(tapAchievementBean.getStep()+"步");
-            archieve_name.setOnClickListener(new View.OnClickListener() {
+            add_step.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnItemClickListener.onClick(tapAchievementBean, position, Handle_ADD);
                 }
             });
-            archieve_name.setOnClickListener(new View.OnClickListener() {
+            finish_archieve.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnItemClickListener.onClick(tapAchievementBean, position, Handle_FINISH);

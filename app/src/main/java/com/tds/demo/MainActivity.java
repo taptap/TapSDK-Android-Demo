@@ -22,6 +22,7 @@ import com.tds.common.entities.TapConfig;
 import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
+import com.tds.demo.fragment.ranking.RankingFragment;
 import com.tds.demo.fragment.achievement.AchievementFragment;
 import com.tds.demo.fragment.AntiaddictionFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case "排行榜":
-                    Log.e("TAG", "onItemClick: "+SDKType );
+                    showFragment(RankingFragment.getInstance(), "rankingFragment");
                     break;
 
                 case "云存档":
