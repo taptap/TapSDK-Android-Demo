@@ -1,5 +1,7 @@
 package com.tds.demo;
 
+import static cn.leancloud.LCLeaderboard.fetchByName;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -22,6 +24,8 @@ import com.tds.common.entities.TapConfig;
 import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
+import com.tds.demo.fragment.CloudSaveFragment;
+import com.tds.demo.fragment.DataSaveFragment;
 import com.tds.demo.fragment.ranking.RankingFragment;
 import com.tds.demo.fragment.achievement.AchievementFragment;
 import com.tds.demo.fragment.AntiaddictionFragment;
@@ -33,6 +37,7 @@ import com.tds.demo.fragment.friend.FriendsFragment;
 import com.tds.demo.until.ToastUtil;
 
 import butterknife.ButterKnife;
+import cn.leancloud.LCLeaderboard;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -110,15 +115,16 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case "排行榜":
+
                     showFragment(RankingFragment.getInstance(), "rankingFragment");
                     break;
 
                 case "云存档":
-                    Log.e("TAG", "onItemClick: "+SDKType );
+                    showFragment(CloudSaveFragment.getInstance(), "cloudSaveFragment");
                     break;
 
                 case "数据存储":
-                    Log.e("TAG", "onItemClick: "+SDKType );
+                    showFragment(DataSaveFragment.getInstance(), "dataSaveFragment");
                     break;
 
                 case "云引擎":

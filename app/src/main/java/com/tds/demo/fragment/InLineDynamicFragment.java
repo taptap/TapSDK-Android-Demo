@@ -28,6 +28,10 @@ import com.tds.demo.MainActivity;
 import com.tds.demo.R;
 import com.tds.demo.until.ToastUtil;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -174,7 +178,7 @@ public class InLineDynamicFragment extends Fragment implements View.OnClickListe
             case R.id.onekey_send:
                 int orientation = TapMoment.ORIENTATION_PORTRAIT;
                 String content = "动态描述：Tds demo 开发中";
-                String[] imagePaths = new String[]{"/sdcard/TDS DEMO.png"};  // 路径可自己设置
+                String[] imagePaths = new String[]{copyAssetGetFilePath("logo.png")};  // 路径可自己设置
                 TapMoment.publish(orientation, imagePaths, content);
                 break;
             default:
@@ -183,6 +187,42 @@ public class InLineDynamicFragment extends Fragment implements View.OnClickListe
         }
 
     }
+
+
+    private String copyAssetGetFilePath(String fileName) {
+        try {
+            File cacheDir = getContext().getCacheDir();
+            if (!cacheDir.exists()) {
+                cacheDir.mkdirs();
+            }
+            File outFile = new File(cacheDir, fileName);
+            if (!outFile.exists()) {
+                boolean res = outFile.createNewFile();
+                if (!res) {
+                    return null;
+                }
+            } else {
+                if (outFile.length() > 10) {//表示已经写入一次
+                    return outFile.getPath();
+                }
+            }
+            InputStream is = getContext().getAssets().open(fileName);
+            FileOutputStream fos = new FileOutputStream(outFile);
+            byte[] buffer = new byte[1024];
+            int byteCount;
+            while ((byteCount = is.read(buffer)) != -1) {
+                fos.write(buffer, 0, byteCount);
+            }
+            fos.flush();
+            is.close();
+            fos.close();
+            return outFile.getPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
 }

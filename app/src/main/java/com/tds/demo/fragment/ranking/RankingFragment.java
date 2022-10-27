@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,10 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tds.achievement.TapAchievementBean;
 import com.tds.demo.R;
 import com.tds.demo.fragment.WebViewFragment;
-import com.tds.demo.fragment.achievement.ArchievementAdapter;
 import com.tds.demo.until.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -57,6 +54,9 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
     Button search_rank_list;
     @BindView(R.id.recycle_view)
     RecyclerView recycle_view;
+    @BindView(R.id.search_ranking_attr)
+    Button search_ranking_attr;
+
 
 
 
@@ -91,6 +91,8 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
         intro_button.setOnClickListener(this);
         submit_score.setOnClickListener(this);
         search_rank_list.setOnClickListener(this);
+        search_ranking_attr.setOnClickListener(this);
+
     }
 
     @Override
@@ -112,12 +114,45 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             case R.id.search_rank_list:
                 searchRankList();
                 break;
+            case R.id.search_ranking_attr:
+                searchRankingAttr();
+                break;
+
 
             default:
                 break;
 
         }
 
+    }
+
+
+    /**
+     * 查询排行榜属性
+     * */
+    private void searchRankingAttr() {
+        LCLeaderboard.fetchByName("word").subscribe(new Observer<LCLeaderboard>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(LCLeaderboard lcLeaderboard) {
+               ToastUtil.showCus(lcLeaderboard.getStatisticName()+"榜：更新策略："+lcLeaderboard.getUpdateStrategy()+"  排序："+lcLeaderboard.getOrder() , ToastUtil.Type.SUCCEED);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ToastUtil.showCus(e.getMessage(), ToastUtil.Type.ERROR);
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
 
@@ -199,9 +234,9 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
     private void submitScore() {
 
         Map<String, Double> statistic  = new HashMap<>();
-        statistic.put("word", 110.00);
-        statistic.put("score", 210.00);
-        statistic.put("kills", 40.0);
+        statistic.put("word", 210.00);
+        statistic.put("score", 310.00);
+        statistic.put("kills", 180.0);
         LCLeaderboard.updateStatistic(LCUser.currentUser(), statistic).subscribe(new Observer<LCStatisticResult>() {
             @Override
             public void onSubscribe(@NotNull Disposable disposable) {}
@@ -224,6 +259,9 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             public void onComplete() {}
         });
     }
+
+
+
 
 
 }

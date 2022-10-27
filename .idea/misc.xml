@@ -33,6 +33,8 @@
         <entry key="app/src/main/res/layout/item_friend_list.xml" value="0.2902949978623343" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.13854166666666667" />
         <entry key="app/src/main/res/layout/item_ranking.xml" value="0.3254759746146872" />
+        <entry key="app/src/main/res/layout/layout_cloud_save_fragment.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/layout_data_save_fragment.xml" value="0.25908507909362977" />
         <entry key="app/src/main/res/layout/layout_dynamic_fragment.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/layout_inside_accound_fragment.xml" value="0.33" />
         <entry key="app/src/main/res/layout/layout_login_fragment.xml" value="0.3296875" />

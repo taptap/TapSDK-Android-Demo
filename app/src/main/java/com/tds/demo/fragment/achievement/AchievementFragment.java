@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tapsdk.antiaddictionui.AntiAddictionUIKit;
+import com.tapsdk.antiaddictionui.widget.AntiToastManager;
 import com.tapsdk.bootstrap.account.TDSUser;
 import com.tds.achievement.AchievementCallback;
 import com.tds.achievement.AchievementException;
@@ -223,6 +225,8 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
      *
      * */
     private void searchArchieList() {
+
+
         // 本地数据
         List<TapAchievementBean> allList = TapAchievement.getLocalAllAchievementList();
 
