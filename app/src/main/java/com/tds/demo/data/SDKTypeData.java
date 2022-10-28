@@ -68,7 +68,6 @@ public class SDKTypeData {
         iconList2.add(R.mipmap.ii);
         iconList2.add(R.mipmap.jj);
         iconList2.add(R.mipmap.kk);
-        iconList2.add(R.mipmap.ll);
         iconList2.add(R.mipmap.mm);
         iconList2.add(R.mipmap.nn);
         iconList2.add(R.mipmap.oo);
