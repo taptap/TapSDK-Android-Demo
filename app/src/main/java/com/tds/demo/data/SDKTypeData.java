@@ -48,7 +48,6 @@ public class SDKTypeData {
         itemList2.add("排行榜");
         itemList2.add("云存档");
         itemList2.add("数据存储");
-        itemList2.add("云引擎");
         itemList2.add("即时通讯");
         itemList2.add("实时语音");
         itemList2.add("推送通知");

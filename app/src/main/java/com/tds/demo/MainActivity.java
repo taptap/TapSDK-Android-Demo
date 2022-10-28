@@ -38,6 +38,7 @@ import com.tds.demo.until.ToastUtil;
 
 import butterknife.ButterKnife;
 import cn.leancloud.LCLeaderboard;
+import cn.leancloud.push.PushService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
                 .withRegionType(TapRegionType.CN)
                 .build();
         TapBootstrap.init(MainActivity.this, tdsConfig);
+
+
     }
 
     private MyBaseExpandableListAdapter.OnItemClickListener myItemClickListener = new MyBaseExpandableListAdapter.OnItemClickListener(){
@@ -127,10 +130,6 @@ public class MainActivity extends AppCompatActivity {
                     showFragment(DataSaveFragment.getInstance(), "dataSaveFragment");
                     break;
 
-                case "云引擎":
-                    Log.e("TAG", "onItemClick: "+SDKType );
-                    break;
-
                 case "实时语音":
                     Log.e("TAG", "onItemClick: "+SDKType );
                     break;
@@ -164,13 +163,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     // 要申请的权限
-    public static String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    public static String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_NETWORK_STATE};
 
     public static void checkPermission(Context context, Activity activity){
         int i = ContextCompat.checkSelfPermission(context, permissions[0]);
         int j = ContextCompat.checkSelfPermission(context, permissions[1]);
+        int k = ContextCompat.checkSelfPermission(context, permissions[2]);
 
-        if (i != PackageManager.PERMISSION_GRANTED || j != PackageManager.PERMISSION_GRANTED) {
+        if (i != PackageManager.PERMISSION_GRANTED || j != PackageManager.PERMISSION_GRANTED || k != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, permissions, 1); //调用方法获取权限
         }
     }
