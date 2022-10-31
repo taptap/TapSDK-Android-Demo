@@ -1,7 +1,5 @@
 package com.tds.demo;
 
-import static cn.leancloud.LCLeaderboard.fetchByName;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -26,6 +24,7 @@ import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.CloudSaveFragment;
 import com.tds.demo.fragment.DataSaveFragment;
+import com.tds.demo.fragment.IM.IMFragment;
 import com.tds.demo.fragment.ranking.RankingFragment;
 import com.tds.demo.fragment.achievement.AchievementFragment;
 import com.tds.demo.fragment.AntiaddictionFragment;
@@ -37,8 +36,6 @@ import com.tds.demo.fragment.friend.FriendsFragment;
 import com.tds.demo.until.ToastUtil;
 
 import butterknife.ButterKnife;
-import cn.leancloud.LCLeaderboard;
-import cn.leancloud.push.PushService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -94,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     showFragment(InLineDynamicFragment.getInstance(), "inLineDynamicFragment");
                     break;
                 case "即时通讯":
-                    Log.e("TAG", "onItemClick: "+SDKType );
+                    showFragment(IMFragment.getInstance(), "iMFragment");
                     break;
 
                 case "正版验证":

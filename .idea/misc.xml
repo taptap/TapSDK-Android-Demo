@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/layout/fragment_antiaddiction.xml" value="0.38333333333333336" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.38333333333333336" />
         <entry key="app/src/main/res/layout/fragment_push.xml" value="0.38333333333333336" />
+        <entry key="app/src/main/res/layout/friends_alone_chat_fragment.xml" value="0.24625908507909364" />
         <entry key="app/src/main/res/layout/friends_dialog_fragment.xml" value="0.2321504916631039" />
         <entry key="app/src/main/res/layout/friends_fragment.xml" value="0.35741769987174005" />
         <entry key="app/src/main/res/layout/friends_new_fragment.xml" value="0.3557075673364686" />
@@ -36,6 +37,7 @@
         <entry key="app/src/main/res/layout/layout_cloud_save_fragment.xml" value="0.33" />
         <entry key="app/src/main/res/layout/layout_data_save_fragment.xml" value="0.25908507909362977" />
         <entry key="app/src/main/res/layout/layout_dynamic_fragment.xml" value="0.35104166666666664" />
+        <entry key="app/src/main/res/layout/layout_im_fragment.xml" value="0.31338178708849934" />
         <entry key="app/src/main/res/layout/layout_inside_accound_fragment.xml" value="0.33" />
         <entry key="app/src/main/res/layout/layout_login_fragment.xml" value="0.3296875" />
         <entry key="app/src/main/res/layout/layout_ranking_fragment.xml" value="0.3390337751175716" />
@@ -44,6 +46,7 @@
         <entry key="app/src/main/res/layout/layout_toast_point.xml" value="0.3296875" />
         <entry key="app/src/main/res/layout/layout_toast_warning.xml" value="0.3296875" />
         <entry key="app/src/main/res/layout/layout_webview_fragment.xml" value="0.5656702898550725" />
+        <entry key="app/src/main/res/layout/popupwindow_view.xml" value="0.3450192389910218" />
         <entry key="app/src/main/res/menu/main.xml" value="0.578125" />
         <entry key="app/src/main/res/xml/navigation.xml" value="0.38229166666666664" />
       </map>

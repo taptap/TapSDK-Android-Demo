@@ -399,14 +399,6 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         TDSFriends.queryFriendList(from, limit, new ListCallback<TDSFriendInfo>(){
                     @Override
                     public void onSuccess(List<TDSFriendInfo> friendInfoList) {
-//                        for (TDSFriendInfo info : friendInfoList) {
-//                            // 玩家信息
-//                            TDSUser user = info.getUser();
-//                            // 富信息数据
-//                            TDSRichPresence richPresence = info.getRichPresence();
-//                            // 好友是否在线
-//                            boolean online = info.isOnline();
-//                        }
 
                         friendBean= new FriendBean();
                         friendBean.settDSFriendInfo(friendInfoList);
