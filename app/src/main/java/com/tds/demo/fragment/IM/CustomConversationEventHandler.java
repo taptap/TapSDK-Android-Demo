@@ -2,6 +2,8 @@ package com.tds.demo.fragment.IM;
 
 import android.util.Log;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import cn.leancloud.im.v2.LCIMClient;
@@ -47,8 +49,7 @@ public class CustomConversationEventHandler extends LCIMConversationEventHandler
         Log.e(TAG, "onInvited: "+ client+"  "+ conversation );
     }
 }
-// 设置全局的对话事件处理 handler
-// LCIMMessageManager.setConversationEventHandler(new CustomConversationEventHandler());
+
 
 // Java/Android SDK 通过定制自己的消息事件 Handler 处理服务端下发的消息通知
  class CustomMessageHandler extends LCIMMessageHandler {
@@ -59,12 +60,20 @@ public class CustomConversationEventHandler extends LCIMConversationEventHandler
      * @param conversation
      * @param client
      */
+
     @Override
     public void onMessage(LCIMMessage message, LCIMConversation conversation, LCIMClient client){
         if(message instanceof LCIMTextMessage){
-            Log.e("TAG", "onMessage: "+ ((LCIMTextMessage) message).getText() );
+
+            Log.e("TAG", "onMessage: "+ conversation.getCreator());
+            Log.e("TAG", "onMessage: "+ conversation.getFetchRequestParams());
+            Log.e("TAG", "onMessage: "+ conversation.getMembers());
+            Log.e("TAG", "onMessage: "+ conversation.getType());
+            Log.e("TAG", "onMessage: "+ conversation.getName());
+            Log.e("TAG", "onMessage: "+ conversation.get("msg"));
+
+            EventBus.getDefault().post(MessageEvent.getInstance(((LCIMTextMessage) message).getText(), conversation ));
+
         }
     }
 }
-// 设置全局的消息处理 handler
-//LCIMMessageManager.registerDefaultMessageHandler(new CustomMessageHandler());

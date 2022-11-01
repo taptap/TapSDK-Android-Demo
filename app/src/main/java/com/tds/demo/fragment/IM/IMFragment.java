@@ -11,12 +11,15 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.tds.demo.R;
 import com.tds.demo.fragment.WebViewFragment;
-import com.tds.demo.fragment.friend.FriendWorkFragment;
 import com.tds.demo.until.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Arrays;
 
@@ -28,9 +31,7 @@ import cn.leancloud.im.v2.LCIMConversation;
 import cn.leancloud.im.v2.LCIMException;
 import cn.leancloud.im.v2.LCIMMessageManager;
 import cn.leancloud.im.v2.callback.LCIMClientCallback;
-import cn.leancloud.im.v2.callback.LCIMConversationCallback;
 import cn.leancloud.im.v2.callback.LCIMConversationCreatedCallback;
-import cn.leancloud.im.v2.messages.LCIMTextMessage;
 
 /**
  * 2022-10-11
@@ -44,13 +45,14 @@ public class IMFragment extends Fragment implements View.OnClickListener{
     Button intro_button;
     @BindView(R.id.create_conversation)
     Button create_conversation;
-    @BindView(R.id.send_message)
-    Button send_message;
-
+    @BindView(R.id.new_msg_notify)
+    Button new_msg_notify;
     @BindView(R.id.receive_chient_id)
     EditText receive_chient_id;
+    @BindView(R.id.new_msg)
+    ConstraintLayout new_msg;
 
-
+    private MessageEvent myMessageEvent;
 
     // 登录的 IM 客户端
     private LCIMClient testClient;
@@ -74,6 +76,19 @@ public class IMFragment extends Fragment implements View.OnClickListener{
         return iMFragment;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+
+    }
 
     @Nullable
     @Override
@@ -93,11 +108,11 @@ public class IMFragment extends Fragment implements View.OnClickListener{
                     // 成功打开连接
                     ToastUtil.showCus("成功打开链接", ToastUtil.Type.SUCCEED);
                 }else {
-                    Log.e(TAG, "Tom 登录: "+e.getLocalizedMessage() );
                     ToastUtil.showCus(e.getLocalizedMessage(), ToastUtil.Type.ERROR);
                 }
             }
         });
+
 
 
         LCIMMessageManager.setConversationEventHandler(new CustomConversationEventHandler());
@@ -115,8 +130,8 @@ public class IMFragment extends Fragment implements View.OnClickListener{
         imageButton.setOnClickListener(this);
         intro_button.setOnClickListener(this);
         create_conversation.setOnClickListener(this);
-        send_message.setOnClickListener(this);
-
+        new_msg.setOnClickListener(this);
+        new_msg_notify.setOnClickListener(this);
     }
 
     @Override
@@ -137,9 +152,8 @@ public class IMFragment extends Fragment implements View.OnClickListener{
 
                 createAloneChat();
                 break;
-
-            case R.id.send_message:
-                sendMessage("");
+            case R.id.new_msg_notify:
+                newMsg(myMessageEvent);
                 break;
 
             default:
@@ -149,13 +163,30 @@ public class IMFragment extends Fragment implements View.OnClickListener{
 
     }
 
+
+    /**
+    *
+    * */
+    private void newMsg(MessageEvent messageEvent) {
+
+        ChatBean chatBean = new ChatBean();
+        chatBean.setConversation(messageEvent.getlCIMConversation());
+        chatBean.setNickname(messageEvent.getlCIMConversation().getCreator());
+
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, AloneChatFragment.getInstance(chatBean), null)
+                .addToBackStack("aloneChatFragment")
+                .commit();
+    }
+
     private void createAloneChat() {
         if(receive_chient_id.getText().toString().isEmpty() || receive_chient_id.getText().toString().trim().isEmpty() ){
             ToastUtil.showCus("输入接收消息方的Tap账号昵称", ToastUtil.Type.POINT);
             return;
         }
 
-        testClient.createConversation(Arrays.asList(receive_chient_id.getText().toString().trim()), receive_chient_id.getText().toString().trim(), null, false, true,
+        testClient.createConversation(Arrays.asList(receive_chient_id.getText().toString().trim()), nickname+"与"+receive_chient_id.getText().toString().trim(), null, false, true,
                 new LCIMConversationCreatedCallback() {
                     @Override
                     public void done(LCIMConversation conversation, LCIMException e) {
@@ -181,25 +212,12 @@ public class IMFragment extends Fragment implements View.OnClickListener{
                 });
     }
 
-
-    /**
-     * 发送消息
-     *
-     **/
-    private void sendMessage(String message) {
-        LCIMTextMessage msg = new LCIMTextMessage();
-        msg.setText(message);
-        // 发送消息
-        myConversation.sendMessage(msg, new LCIMConversationCallback() {
-            @Override
-            public void done(LCIMException e) {
-                if (e == null) {
-                    Log.d(TAG, "发送成功！");
-                }
-            }
-        });
-
+    // 声明一个订阅方法，用于接收事件
+    @Subscribe
+    public void onEvent(MessageEvent messageEvent) {
+        Log.d("TAG", "onEvent() called with: messageEvent = [" + messageEvent.getMessage() + "]");
+        new_msg.setVisibility(View.VISIBLE);
+        myMessageEvent = messageEvent;
     }
-
 
 }

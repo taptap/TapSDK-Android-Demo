@@ -6,6 +6,7 @@
         <entry key="../../../../../layout/custom_preview.xml" value="0.11520349815001682" />
         <entry key="app/src/main/res/drawable/box_shape.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/button_ripple.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/dot_shap.xml" value="0.2185" />
         <entry key="app/src/main/res/drawable/edittext_shape.xml" value="0.304" />
         <entry key="app/src/main/res/drawable/error_toast_shape.xml" value="0.32" />
         <entry key="app/src/main/res/drawable/expandablelistviewselector.xml" value="0.1" />
@@ -46,6 +47,7 @@
         <entry key="app/src/main/res/layout/layout_toast_point.xml" value="0.3296875" />
         <entry key="app/src/main/res/layout/layout_toast_warning.xml" value="0.3296875" />
         <entry key="app/src/main/res/layout/layout_webview_fragment.xml" value="0.5656702898550725" />
+        <entry key="app/src/main/res/layout/msg_item.xml" value="0.33219324497648567" />
         <entry key="app/src/main/res/layout/popupwindow_view.xml" value="0.3450192389910218" />
         <entry key="app/src/main/res/menu/main.xml" value="0.578125" />
         <entry key="app/src/main/res/xml/navigation.xml" value="0.38229166666666664" />

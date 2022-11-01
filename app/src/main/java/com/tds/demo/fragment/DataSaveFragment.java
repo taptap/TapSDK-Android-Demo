@@ -343,6 +343,8 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
         LCFile file = null;
         try {
             file = LCFile.withAbsoluteLocalPath("logo.png", copyAssetGetFilePath("logo.png"));
+//             file = new LCFile("resume11.txt", "LeanCloud".getBytes());
+
             file.saveInBackground().subscribe(new Observer<LCFile>() {
                 public void onSubscribe(Disposable disposable) {}
                 public void onNext(LCFile file) {
@@ -354,7 +356,7 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
                 public void onComplete() {}
             });
 
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -442,7 +444,6 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
         LCQuery<LCObject> query = new LCQuery<>("Todo");
         query.whereEqualTo("time", "2022-10-29");
         LCLiveQuery liveQuery = LCLiveQuery.initWithQuery(query);
-
 
         // 当另一个设备中新建 Todo 一个对象，那么下面的代码可以获取到这个新的
         liveQuery.setEventHandler(new LCLiveQueryEventHandler() {

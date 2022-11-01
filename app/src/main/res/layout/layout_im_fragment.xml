@@ -88,14 +88,36 @@
         android:layout_marginLeft="15dp"/>
 
 
-    <Button
-        android:id="@+id/send_message"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/new_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="发送消息"
         app:layout_constraintTop_toBottomOf="@id/receive_chient_id"
         app:layout_constraintStart_toEndOf="@id/create_conversation"
-        android:layout_marginLeft="15dp"/>
+        android:visibility="gone"
+        android:layout_marginLeft="15dp">
+
+        <Button
+            android:id="@+id/new_msg_notify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="有新消息"
+            android:stateListAnimator="@null"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/dot_shap"
+            app:layout_constraintTop_toTopOf="@id/new_msg_notify"
+            app:layout_constraintEnd_toEndOf="@id/new_msg_notify"
+            android:layout_marginTop="5dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 
