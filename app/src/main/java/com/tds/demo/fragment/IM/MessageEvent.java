@@ -3,6 +3,7 @@ package com.tds.demo.fragment.IM;
 import com.tds.demo.fragment.GenuineVerifyFragment;
 
 import cn.leancloud.im.v2.LCIMConversation;
+import cn.leancloud.im.v2.LCIMMessage;
 
 /**
  * 2022/11/1
@@ -10,26 +11,27 @@ import cn.leancloud.im.v2.LCIMConversation;
  */
 public class MessageEvent {
 
-    private String message;
     private LCIMConversation lCIMConversation;
+    private LCIMMessage lCIMMessage;
 
     private static MessageEvent messageEvent = null;
 
 
-    public static final MessageEvent getInstance(String message, LCIMConversation lCIMConversation) {
+    public static final MessageEvent getInstance( LCIMMessage lCIMMessage,
+            LCIMConversation lCIMConversation) {
         if (messageEvent == null) {
-            messageEvent = new MessageEvent( message,  lCIMConversation);
+            messageEvent = new MessageEvent( lCIMMessage,  lCIMConversation);
         }
         return messageEvent;
     }
 
-    public MessageEvent(String message, LCIMConversation lCIMConversation) {
-        this.message = message;
+    public MessageEvent(LCIMMessage lCIMMessage, LCIMConversation lCIMConversation) {
+        this.lCIMMessage = lCIMMessage;
         this.lCIMConversation = lCIMConversation;
     }
 
-    public String getMessage() {
-        return message;
+    public LCIMMessage getlCIMMessage() {
+        return lCIMMessage;
     }
 
     public LCIMConversation getlCIMConversation() {
@@ -39,8 +41,8 @@ public class MessageEvent {
     @Override
     public String toString() {
         return "MessageEvent{" +
-                "message='" + message + '\'' +
-                ", lCIMConversation=" + lCIMConversation +
+                "lCIMConversation=" + lCIMConversation +
+                ", lCIMMessage=" + lCIMMessage +
                 '}';
     }
 }

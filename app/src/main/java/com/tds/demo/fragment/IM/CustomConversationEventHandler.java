@@ -11,6 +11,7 @@ import cn.leancloud.im.v2.LCIMConversation;
 import cn.leancloud.im.v2.LCIMConversationEventHandler;
 import cn.leancloud.im.v2.LCIMMessage;
 import cn.leancloud.im.v2.LCIMMessageHandler;
+import cn.leancloud.im.v2.messages.LCIMImageMessage;
 import cn.leancloud.im.v2.messages.LCIMTextMessage;
 
 /**
@@ -63,7 +64,7 @@ public class CustomConversationEventHandler extends LCIMConversationEventHandler
 
     @Override
     public void onMessage(LCIMMessage message, LCIMConversation conversation, LCIMClient client){
-        if(message instanceof LCIMTextMessage){
+//        if(message instanceof LCIMTextMessage){
 
             Log.e("TAG", "onMessage: "+ conversation.getCreator());
             Log.e("TAG", "onMessage: "+ conversation.getFetchRequestParams());
@@ -72,8 +73,8 @@ public class CustomConversationEventHandler extends LCIMConversationEventHandler
             Log.e("TAG", "onMessage: "+ conversation.getName());
             Log.e("TAG", "onMessage: "+ conversation.get("msg"));
 
-            EventBus.getDefault().post(MessageEvent.getInstance(((LCIMTextMessage) message).getText(), conversation ));
+            EventBus.getDefault().post(MessageEvent.getInstance(message, conversation ));
 
-        }
+//        }
     }
 }

@@ -22,6 +22,14 @@
             android:textColor="@color/black"/>
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/left_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        android:layout_gravity="left"
+        />
+
     <LinearLayout
         android:id="@+id/right_layout"
         android:layout_width="wrap_content"
@@ -38,4 +46,11 @@
             android:textColor="@color/white"/>
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/right_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        />
 </LinearLayout>

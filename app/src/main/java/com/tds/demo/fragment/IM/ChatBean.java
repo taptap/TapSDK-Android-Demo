@@ -11,7 +11,7 @@ import cn.leancloud.im.v2.LCIMConversation;
 public class ChatBean implements Serializable {
 
     private String nickname;
-    private LCIMConversation conversation;
+    private transient LCIMConversation conversation;
 
     public void setConversation(LCIMConversation conversation) {
         this.conversation = conversation;

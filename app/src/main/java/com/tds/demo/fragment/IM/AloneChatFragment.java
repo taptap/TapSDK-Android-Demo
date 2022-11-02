@@ -1,35 +1,53 @@
 package com.tds.demo.fragment.IM;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.IBinder;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tds.demo.R;
+import com.tds.demo.until.ToastUtil;
 import com.tds.gson.JsonObject;
 import com.tds.gson.JsonParser;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.leancloud.LCFile;
 import cn.leancloud.LCUser;
 import cn.leancloud.im.v2.LCIMConversation;
 import cn.leancloud.im.v2.LCIMException;
@@ -37,13 +55,14 @@ import cn.leancloud.im.v2.LCIMMessage;
 import cn.leancloud.im.v2.LCIMMessageManager;
 import cn.leancloud.im.v2.callback.LCIMConversationCallback;
 import cn.leancloud.im.v2.callback.LCIMMessagesQueryCallback;
+import cn.leancloud.im.v2.messages.LCIMImageMessage;
 import cn.leancloud.im.v2.messages.LCIMTextMessage;
 
 /**
  * 2022/10/19
  * Describe：单聊
  */
-public class AloneChatFragment extends DialogFragment {
+public class AloneChatFragment extends DialogFragment implements View.OnClickListener{
 
     @BindView(R.id.close_button)
     ImageButton close_button;
@@ -53,9 +72,18 @@ public class AloneChatFragment extends DialogFragment {
     EditText send_message;
     @BindView(R.id.message_recycle)
     RecyclerView message_recycle;
+    @BindView(R.id.other_msg_box)
+    ConstraintLayout other_msg_box;
+
+    @BindView(R.id.add_type)
+    ImageButton add_type;
+    @BindView(R.id.send_img)
+    ImageButton send_img;
 
 
     private LCIMConversation conversation;
+
+    private String imgPath = "";
 
     private static AloneChatFragment aloneChatFragment = null;
     private List<Msg> msgList = new ArrayList<>();
@@ -105,12 +133,43 @@ public class AloneChatFragment extends DialogFragment {
                 if (e == null) {
                     for(int i=0; i< messages.size(); i++){
                         JsonObject jsonObject = (JsonObject) new JsonParser().parse(messages.get(i).getContent());
+                        // 判断发送还是接收方
                         if(messages.get(i).getFrom().equals(LCUser.currentUser().getServerData().get("nickname").toString())){
-                            Msg received_content = new Msg( jsonObject.get("_lctext").toString() , Msg.TYPE_SENT);
-                            msgList.add(received_content);
+                            // 判断消息类型
+                            if( jsonObject.get("_lctype").getAsInt() == Msg.TEXT_TYPE){
+                                Msg received_content = new Msg();
+                                received_content.setContent(jsonObject.get("_lctext").toString());
+                                received_content.setType(Msg.TYPE_SENT);
+                                received_content.setMsg_type(Msg.TEXT_TYPE);
+                                msgList.add(received_content);
+                            }else {
+                                JsonObject jsonFileObject = (JsonObject) new JsonParser().parse(jsonObject.get("_lcfile").toString());
+                                Msg received_content = new Msg();
+                                received_content.setImagePath(jsonFileObject.get("url").getAsString());
+                                received_content.setType(Msg.TYPE_SENT);
+                                received_content.setMsg_type(Msg.IMG_TYPE);
+                                msgList.add(received_content);
+                            }
+
+
                         }else{
-                            Msg received_content = new Msg( jsonObject.get("_lctext").toString() , Msg.TYPE_RECEIVED);
-                            msgList.add(received_content);
+                            // 判断消息类型
+                            if( jsonObject.get("_lctype").getAsInt() == Msg.TEXT_TYPE){
+                                Msg received_content = new Msg();
+                                received_content.setContent(jsonObject.get("_lctext").toString());
+                                received_content.setType(Msg.TYPE_RECEIVED);
+                                received_content.setMsg_type(Msg.TEXT_TYPE);
+                                msgList.add(received_content);
+                            }else {
+                                JsonObject jsonFileObject = (JsonObject) new JsonParser().parse(jsonObject.get("_lcfile").toString());
+                                Msg received_content = new Msg();
+                                received_content.setImagePath(jsonFileObject.get("url").getAsString());
+                                received_content.setType(Msg.TYPE_RECEIVED);
+                                received_content.setMsg_type(Msg.IMG_TYPE);
+                                msgList.add(received_content);
+                            }
+
+
                         }
                     }
                     adapter.notifyDataSetChanged();
@@ -123,6 +182,20 @@ public class AloneChatFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        add_type.setOnClickListener(this);
+        send_img.setOnClickListener(this);
+
+        send_message.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    other_msg_box.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
         if(getArguments() != null) {
             ChatBean chatBean = (ChatBean) this.getArguments().getSerializable("chatBean");
             conversation = chatBean.getConversation();
@@ -180,11 +253,26 @@ public class AloneChatFragment extends DialogFragment {
     // 声明一个订阅方法，用于接收事件
     @Subscribe
     public void onEvent(MessageEvent messageEvent) {
-        Log.d("TAG", "onEvent() called with: messageEvent = [" + messageEvent.getMessage() + "]");
 
-        Msg received_content = new Msg( messageEvent.getMessage(), Msg.TYPE_RECEIVED);
-        msgList.add(received_content);
+        Log.e("TAG", ">>>>onEvent: "+messageEvent.getlCIMMessage().getContent());
+        JsonObject jsonObject = (JsonObject) new JsonParser().parse(messageEvent.getlCIMMessage().getContent());
+
+        if( jsonObject.get("_lctype").getAsInt() == Msg.TEXT_TYPE){
+            Msg msg = new Msg();
+            msg.setContent(jsonObject.get("_lctext").toString());
+            msg.setType(Msg.TYPE_RECEIVED);
+            msg.setMsg_type(Msg.TEXT_TYPE);
+            msgList.add(msg);
+        }else {
+            JsonObject jsonFileObject = (JsonObject) new JsonParser().parse(jsonObject.get("_lcfile").toString());
+            Msg received_content = new Msg();
+            received_content.setImagePath(jsonFileObject.get("url").getAsString());
+            received_content.setType(Msg.TYPE_RECEIVED);
+            received_content.setMsg_type(Msg.IMG_TYPE);
+            msgList.add(received_content);
+        }
         adapter.notifyDataSetChanged();
+
     }
 
     /**
@@ -199,7 +287,10 @@ public class AloneChatFragment extends DialogFragment {
             @Override
             public void done(LCIMException e) {
                 if (e == null) {
-                    Msg send_content = new Msg(message, Msg.TYPE_SENT);
+                    Msg send_content = new Msg();
+                    send_content.setContent(message);
+                    send_content.setType( Msg.TYPE_SENT);
+                    send_content.setMsg_type(Msg.TEXT_TYPE);
                     msgList.add(send_content);
                     adapter.notifyDataSetChanged();
                 }
@@ -207,4 +298,113 @@ public class AloneChatFragment extends DialogFragment {
         });
 
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.add_type:
+
+                other_msg_box.setVisibility(View.VISIBLE);
+                send_message.clearFocus();
+                hideKeyboard(getActivity(), send_message);
+                break;
+            case R.id.send_img:
+                sendImg();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
+    /**
+     *
+     * 发送图片类型消息
+     * */
+    private void sendImg(){
+        setPhotoImage();
+
+
+    }
+
+/**
+ * 隐藏键盘
+ *
+ * */
+    public static void hideKeyboard(Activity activity, View view){
+        if(activity==null||view==null){
+            return;
+        }
+        InputMethodManager imm=(InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+    }
+
+
+    /**
+     * 获取相册图片
+     * */
+
+    private final int OPEN_ALBUM_REQUESTCODE = 1; //请求码
+
+
+    private void setPhotoImage(){
+        Intent openAlbumIntent = new Intent(Intent.ACTION_PICK); //打开相册
+        openAlbumIntent.setType("image/*");     //选择全部照片
+        startActivityForResult(openAlbumIntent, OPEN_ALBUM_REQUESTCODE); //发送请求
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == OPEN_ALBUM_REQUESTCODE){
+            if (resultCode == RESULT_OK){
+                Uri uri = data.getData();
+                String picPath = getPicPath(uri);
+                imgPath =picPath;
+
+                LCFile file = null;
+                try {
+                    file = LCFile.withAbsoluteLocalPath("my.png", imgPath);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                // 创建一条图像消息
+                LCIMImageMessage m = new LCIMImageMessage(file);
+                conversation.sendMessage(m, new LCIMConversationCallback() {
+                    @Override
+                    public void done(LCIMException e) {
+                        if (e == null) {
+                            // 发送成功
+                            Msg msg = new Msg();
+                            msg.setContent("message");
+                            msg.setMsg_type(Msg.IMG_TYPE);
+                            msg.setType(Msg.TYPE_SENT);
+                            msg.setImagePath(imgPath);
+                            msgList.add(msg);
+                            adapter.notifyDataSetChanged();
+
+                        }
+                    }
+                });
+
+            }
+        }
+    }
+
+    /**
+     * 获取图片路径
+     * @param uri
+     * @return
+     */
+    @SuppressLint("Range")
+    private String getPicPath(Uri uri){
+        String[] picPathColumns = {MediaStore.Images.Media.DATA};
+        Cursor cursor = this.getActivity().getContentResolver().query(uri, picPathColumns, null, null, null);
+        cursor.moveToFirst();
+        return cursor.getString(cursor.getColumnIndex(picPathColumns[0]));
+    }
+
+
 }

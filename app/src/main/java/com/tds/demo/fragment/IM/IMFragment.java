@@ -215,7 +215,7 @@ public class IMFragment extends Fragment implements View.OnClickListener{
     // 声明一个订阅方法，用于接收事件
     @Subscribe
     public void onEvent(MessageEvent messageEvent) {
-        Log.d("TAG", "onEvent() called with: messageEvent = [" + messageEvent.getMessage() + "]");
+//        Log.d("TAG", "onEvent() called with: messageEvent = [" + messageEvent.getMessage() + "]");
         new_msg.setVisibility(View.VISIBLE);
         myMessageEvent = messageEvent;
     }

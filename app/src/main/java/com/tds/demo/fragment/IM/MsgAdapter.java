@@ -6,15 +6,19 @@ package com.tds.demo.fragment.IM;
  *
  */
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.tds.demo.R;
+import com.tds.demo.until.GlideCircleTransform;
 
 import java.util.List;
 
@@ -26,6 +30,9 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
         LinearLayout rightLayout;
         TextView leftMsg;
         TextView rihgtMsg;
+        ImageView leftImage;
+        ImageView rightImage;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -33,6 +40,8 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
             rightLayout = (LinearLayout) view.findViewById(R.id.right_layout);
             leftMsg = (TextView) view.findViewById(R.id.left_msg);
             rihgtMsg = (TextView) view.findViewById(R.id.right_msg);
+            leftImage= (ImageView) view.findViewById(R.id.left_img);
+            rightImage= (ImageView) view.findViewById(R.id.right_img);
         }
     }
 
@@ -49,14 +58,36 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Msg msg = mMsgList.get(position);
+
+
         if (msg.getType() == Msg.TYPE_RECEIVED) {
-            holder.leftLayout.setVisibility(View.VISIBLE);
-            holder.rightLayout.setVisibility(View.GONE);
-            holder.leftMsg.setText(msg.getContent());
+            if(msg.getMsg_type() == Msg.TEXT_TYPE){
+                holder.leftLayout.setVisibility(View.VISIBLE);
+                holder.rightLayout.setVisibility(View.GONE);
+                holder.leftMsg.setText(msg.getContent());
+            }else{
+                holder.leftLayout.setVisibility(View.GONE);
+                holder.rightLayout.setVisibility(View.GONE);
+                holder.leftImage.setVisibility(View.VISIBLE);
+                Glide.with(holder.leftImage.getContext())
+                        .load(msg.getImagePath())
+                        .into(holder.leftImage);
+            }
+
         } else if (msg.getType() == Msg.TYPE_SENT) {
-            holder.rightLayout.setVisibility(View.VISIBLE);
-            holder.leftLayout.setVisibility(View.GONE);
-            holder.rihgtMsg.setText(msg.getContent());
+            if(msg.getMsg_type() == Msg.TEXT_TYPE){
+                holder.rightLayout.setVisibility(View.VISIBLE);
+                holder.leftLayout.setVisibility(View.GONE);
+                holder.rihgtMsg.setText(msg.getContent());
+            }else {
+                holder.rightLayout.setVisibility(View.GONE);
+                holder.leftLayout.setVisibility(View.GONE);
+                holder.rightImage.setVisibility(View.VISIBLE);
+                Glide.with(holder.rightImage.getContext())
+                        .load(msg.getImagePath())
+                        .into(holder.rightImage);
+            }
+
         }
     }
 
