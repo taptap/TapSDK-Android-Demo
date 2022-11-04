@@ -17,11 +17,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.tapsdk.billboard.Callback;
+import com.tapsdk.billboard.TapBillboard;
+import com.tapsdk.billboard.exceptions.TapBillboardException;
 import com.tapsdk.bootstrap.TapBootstrap;
+import com.tds.common.entities.Pair;
+import com.tds.common.entities.TapBillboardConfig;
 import com.tds.common.entities.TapConfig;
 import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
+import com.tds.demo.fragment.BillboardFragment;
 import com.tds.demo.fragment.CloudSaveFragment;
 import com.tds.demo.fragment.DataSaveFragment;
 import com.tds.demo.fragment.IM.IMFragment;
@@ -34,6 +40,10 @@ import com.tds.demo.fragment.InsideAccoundFragment;
 import com.tds.demo.fragment.LoginFragment;
 import com.tds.demo.fragment.friend.FriendsFragment;
 import com.tds.demo.until.ToastUtil;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import butterknife.ButterKnife;
 
@@ -68,14 +78,29 @@ public class MainActivity extends AppCompatActivity {
      *
      * */
     private void initSDK() {
+
+        Set<Pair<String, String>> dimensionSet = new HashSet<>();
+        dimensionSet.addAll(Arrays.asList(Pair.create("location", "CN"), Pair.create("platform", "TapTap")));
+        String billboardServerUrl = "https://tdsdemo.weijiash.cn"; // 开发者中心 > 你的游戏 > 游戏服务 > 应用配置 > 域名配置 > 公告
+
+        TapBillboardConfig billboardCnConfig = new TapBillboardConfig.Builder()
+                .withDimensionSet(dimensionSet)    // 可选
+                .withServerUrl(billboardServerUrl) // 必须, 公告的自定义域名
+                .withTemplate("navigate") // 可选, 默认是 navigate
+                .build();
+
+
         TapConfig tdsConfig = new TapConfig.Builder()
                 .withAppContext(this)
                 .withClientId(SDKInfoData.SDK_CLIENT_ID)
                 .withClientToken(SDKInfoData.SDK_CLINT_TOKEN)
                 .withServerUrl(SDKInfoData.SDK_SERVER_URL)
+                .withBillboardConfig(billboardCnConfig) // 使用公告系统时就必须加入
                 .withRegionType(TapRegionType.CN)
                 .build();
         TapBootstrap.init(MainActivity.this, tdsConfig);
+
+//        TapBillboard.init(tdsConfig);
 
 
     }
@@ -136,8 +161,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case "公告系统":
-                    Log.e("TAG", "onItemClick: "+SDKType );
-
+                    showFragment(BillboardFragment.getInstance(), "billboardFragment");
                     break;
 
                 default:

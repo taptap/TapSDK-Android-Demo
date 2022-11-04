@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="15dp">
+
+
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/back"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/close_button"
+            app:layout_constraintEnd_toStartOf="@id/intro_button"
+            android:text="公告系统"
+            android:textStyle="bold"
+            android:textColor="@color/TapTap"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/intro_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="功能介绍"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:background="@drawable/box_shape"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <Button
+        android:id="@+id/open_billboard"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="打开公告"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:background="@drawable/box_shape"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="15dp"/>
+
+    <Button
+        android:id="@+id/regist_listener"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="注册消息监听"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:background="@drawable/box_shape"
+        app:layout_constraintTop_toBottomOf="@id/open_billboard"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"/>
+
+
+    <Button
+        android:id="@+id/cancel_listener"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="取消消息监听"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:background="@drawable/box_shape"
+        app:layout_constraintTop_toBottomOf="@id/regist_listener"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
