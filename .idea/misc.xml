@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/drawable/expandablelistviewselector.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.304" />
         <entry key="app/src/main/res/drawable/point_toast_shape.xml" value="0.32" />
+        <entry key="app/src/main/res/drawable/popu_shape.xml" value="0.3175" />
         <entry key="app/src/main/res/drawable/success_toast_shape.xml" value="0.32" />
         <entry key="app/src/main/res/drawable/top_bar_shape.xml" value="0.32" />
         <entry key="app/src/main/res/drawable/waring_toast_shape.xml" value="0.32" />
@@ -49,6 +50,7 @@
         <entry key="app/src/main/res/layout/layout_webview_fragment.xml" value="0.5656702898550725" />
         <entry key="app/src/main/res/layout/msg_item.xml" value="0.33219324497648567" />
         <entry key="app/src/main/res/layout/popupwindow_view.xml" value="0.3450192389910218" />
+        <entry key="app/src/main/res/layout/popview_invite.xml" value="0.25908507909362977" />
         <entry key="app/src/main/res/menu/main.xml" value="0.578125" />
         <entry key="app/src/main/res/xml/navigation.xml" value="0.38229166666666664" />
       </map>

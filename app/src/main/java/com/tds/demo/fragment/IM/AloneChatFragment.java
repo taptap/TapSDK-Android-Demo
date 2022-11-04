@@ -1,6 +1,7 @@
 package com.tds.demo.fragment.IM;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.POWER_SERVICE;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -13,15 +14,19 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +38,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tapsdk.antiaddictionui.utils.ToastUtils;
 import com.tds.demo.R;
 import com.tds.demo.until.ToastUtil;
 import com.tds.gson.JsonObject;
@@ -43,18 +49,22 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.leancloud.LCFile;
 import cn.leancloud.LCUser;
+import cn.leancloud.im.v2.LCIMClient;
 import cn.leancloud.im.v2.LCIMConversation;
 import cn.leancloud.im.v2.LCIMException;
 import cn.leancloud.im.v2.LCIMMessage;
 import cn.leancloud.im.v2.LCIMMessageManager;
 import cn.leancloud.im.v2.callback.LCIMConversationCallback;
 import cn.leancloud.im.v2.callback.LCIMMessagesQueryCallback;
+import cn.leancloud.im.v2.callback.LCIMOperationFailure;
+import cn.leancloud.im.v2.callback.LCIMOperationPartiallySucceededCallback;
 import cn.leancloud.im.v2.messages.LCIMImageMessage;
 import cn.leancloud.im.v2.messages.LCIMTextMessage;
 
@@ -79,6 +89,9 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
     ImageButton add_type;
     @BindView(R.id.send_img)
     ImageButton send_img;
+
+    @BindView(R.id.invite_button)
+    TextView invite_button;
 
 
     private LCIMConversation conversation;
@@ -138,7 +151,7 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
                             // 判断消息类型
                             if( jsonObject.get("_lctype").getAsInt() == Msg.TEXT_TYPE){
                                 Msg received_content = new Msg();
-                                received_content.setContent(jsonObject.get("_lctext").toString());
+                                received_content.setContent(jsonObject.get("_lctext").getAsString());
                                 received_content.setType(Msg.TYPE_SENT);
                                 received_content.setMsg_type(Msg.TEXT_TYPE);
                                 msgList.add(received_content);
@@ -156,7 +169,7 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
                             // 判断消息类型
                             if( jsonObject.get("_lctype").getAsInt() == Msg.TEXT_TYPE){
                                 Msg received_content = new Msg();
-                                received_content.setContent(jsonObject.get("_lctext").toString());
+                                received_content.setContent(jsonObject.get("_lctext").getAsString());
                                 received_content.setType(Msg.TYPE_RECEIVED);
                                 received_content.setMsg_type(Msg.TEXT_TYPE);
                                 msgList.add(received_content);
@@ -185,6 +198,7 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
 
         add_type.setOnClickListener(this);
         send_img.setOnClickListener(this);
+        invite_button.setOnClickListener(this);
 
         send_message.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -221,6 +235,7 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
         });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setStackFromEnd(true);
         message_recycle.setLayoutManager(layoutManager);
         adapter = new MsgAdapter(msgList);
         message_recycle.setAdapter(adapter);
@@ -250,16 +265,24 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
 
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        msgList.clear();
+        adapter.notifyDataSetChanged();
+
+    }
+
     // 声明一个订阅方法，用于接收事件
     @Subscribe
     public void onEvent(MessageEvent messageEvent) {
-
-        Log.e("TAG", ">>>>onEvent: "+messageEvent.getlCIMMessage().getContent());
         JsonObject jsonObject = (JsonObject) new JsonParser().parse(messageEvent.getlCIMMessage().getContent());
 
         if( jsonObject.get("_lctype").getAsInt() == Msg.TEXT_TYPE){
             Msg msg = new Msg();
-            msg.setContent(jsonObject.get("_lctext").toString());
+            msg.setContent(jsonObject.get("_lctext").getAsString());
             msg.setType(Msg.TYPE_RECEIVED);
             msg.setMsg_type(Msg.TEXT_TYPE);
             msgList.add(msg);
@@ -272,6 +295,14 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
             msgList.add(received_content);
         }
         adapter.notifyDataSetChanged();
+
+    }
+
+
+    // 声明一个订阅方法，用于接收事件
+    @Subscribe
+    public void onInviteEvent(InviteEvent inviteEvent) {
+         ToastUtil.showCus("邀请"+inviteEvent.getMembers().get(0)+"加入群聊！", ToastUtil.Type.SUCCEED);
 
     }
 
@@ -311,9 +342,77 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
             case R.id.send_img:
                 sendImg();
                 break;
+            case R.id.invite_button:
+                inviteUserChat();
+
+                break;
             default:
                 break;
         }
+
+    }
+
+
+    /*
+    * 邀请用户聊天
+    * */
+    private void inviteUserChat() {
+
+
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.popview_invite, null);
+
+        PopupWindow mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        mPopupWindow.setOutsideTouchable(false);//在外点击消失
+        WindowManager.LayoutParams attributes = getActivity().getWindow().getAttributes();
+        attributes.alpha = 0.5f;
+        getActivity().getWindow().setAttributes(attributes);
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+        mPopupWindow.setOnDismissListener(() -> {
+            WindowManager.LayoutParams attributes1 = getActivity().getWindow().getAttributes();
+            attributes1.alpha = 1;
+            getActivity().getWindow().setAttributes(attributes1);
+        });
+
+        EditText inviteUser = view.findViewById(R.id.user_edit);
+        Button invite_submit = view.findViewById(R.id.invite_submit);
+        Button cancel = view.findViewById(R.id.cancel);
+
+        invite_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(inviteUser.getText().toString().isEmpty()){
+                    ToastUtil.showCus("请输入邀请人的Tap账户昵称！", ToastUtil.Type.POINT);
+                    return;
+                }
+                // 邀请用户进入聊天室
+                LCIMClient testClient = LCIMClient.getInstance(LCUser.currentUser().getServerData().get("nickname").toString());
+
+                final LCIMConversation conv = testClient.getConversation(conversation.getConversationId());
+                // 邀请 Mary 加入对话
+                conv.addMembers(Arrays.asList(inviteUser.getText().toString()), new LCIMOperationPartiallySucceededCallback() {
+                    @Override
+                    public void done(LCIMException e, List<String> successfulClientIds, List<LCIMOperationFailure> failures) {
+                        // 添加成功
+                        mPopupWindow.dismiss();
+
+                    }
+                });
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+            }
+        });
+
+//        // Tom 创建了一个 client，用昵称作为 clientId 登录测试
+
+
 
     }
 
@@ -358,6 +457,8 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        Log.e("TAG", "onActivityResult:++++++++++++++++++++++++ " );
         if (requestCode == OPEN_ALBUM_REQUESTCODE){
             if (resultCode == RESULT_OK){
                 Uri uri = data.getData();
@@ -366,7 +467,7 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
 
                 LCFile file = null;
                 try {
-                    file = LCFile.withAbsoluteLocalPath("my.png", imgPath);
+                    file = LCFile.withAbsoluteLocalPath("my.png", picPath);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

@@ -20,14 +20,28 @@ public class MessageEvent {
     public static final MessageEvent getInstance( LCIMMessage lCIMMessage,
             LCIMConversation lCIMConversation) {
         if (messageEvent == null) {
-            messageEvent = new MessageEvent( lCIMMessage,  lCIMConversation);
+            messageEvent = new MessageEvent();
         }
+        messageEvent.setlCIMMessage(lCIMMessage);
+        messageEvent.setlCIMConversation(lCIMConversation);
+
         return messageEvent;
     }
 
-    public MessageEvent(LCIMMessage lCIMMessage, LCIMConversation lCIMConversation) {
-        this.lCIMMessage = lCIMMessage;
+    public MessageEvent(){
+
+    }
+//    public MessageEvent(LCIMMessage lCIMMessage, LCIMConversation lCIMConversation) {
+//        this.lCIMMessage = lCIMMessage;
+//        this.lCIMConversation = lCIMConversation;
+//    }
+
+    public void setlCIMConversation(LCIMConversation lCIMConversation) {
         this.lCIMConversation = lCIMConversation;
+    }
+
+    public void setlCIMMessage(LCIMMessage lCIMMessage) {
+        this.lCIMMessage = lCIMMessage;
     }
 
     public LCIMMessage getlCIMMessage() {

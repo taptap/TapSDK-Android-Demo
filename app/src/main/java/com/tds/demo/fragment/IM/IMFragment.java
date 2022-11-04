@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -106,7 +107,7 @@ public class IMFragment extends Fragment implements View.OnClickListener{
             public void done(LCIMClient client, LCIMException e) {
                 if (e == null) {
                     // 成功打开连接
-                    ToastUtil.showCus("成功打开链接", ToastUtil.Type.SUCCEED);
+                    ToastUtil.showCus("登录成功，长链接建立成功！", ToastUtil.Type.SUCCEED);
                 }else {
                     ToastUtil.showCus(e.getLocalizedMessage(), ToastUtil.Type.ERROR);
                 }
@@ -214,10 +215,10 @@ public class IMFragment extends Fragment implements View.OnClickListener{
 
     // 声明一个订阅方法，用于接收事件
     @Subscribe
-    public void onEvent(MessageEvent messageEvent) {
-//        Log.d("TAG", "onEvent() called with: messageEvent = [" + messageEvent.getMessage() + "]");
+    public void onMessageEvent(MessageEvent messageEvent) {
         new_msg.setVisibility(View.VISIBLE);
         myMessageEvent = messageEvent;
     }
+
 
 }

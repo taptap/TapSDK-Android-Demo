@@ -65,6 +65,8 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
                 holder.leftLayout.setVisibility(View.VISIBLE);
                 holder.rightLayout.setVisibility(View.GONE);
                 holder.leftMsg.setText(msg.getContent());
+                holder.leftImage.setVisibility(View.GONE);
+
             }else{
                 holder.leftLayout.setVisibility(View.GONE);
                 holder.rightLayout.setVisibility(View.GONE);
@@ -79,6 +81,7 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
                 holder.rightLayout.setVisibility(View.VISIBLE);
                 holder.leftLayout.setVisibility(View.GONE);
                 holder.rihgtMsg.setText(msg.getContent());
+                holder.rightImage.setVisibility(View.GONE);
             }else {
                 holder.rightLayout.setVisibility(View.GONE);
                 holder.leftLayout.setVisibility(View.GONE);

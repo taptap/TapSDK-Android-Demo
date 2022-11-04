@@ -29,7 +29,7 @@ public class CustomConversationEventHandler extends LCIMConversationEventHandler
     @Override
     public void onMemberJoined(LCIMClient client, LCIMConversation conversation, List<String> members, String invitedBy) {
         Log.e(TAG, "onMemberJoined: "+client+"  "+ conversation.toString()+"  "+members.toString()  );
-
+        EventBus.getDefault().post(InviteEvent.getInstance(client, conversation, members, invitedBy ));
     }
 
     @Override
@@ -64,14 +64,12 @@ public class CustomConversationEventHandler extends LCIMConversationEventHandler
 
     @Override
     public void onMessage(LCIMMessage message, LCIMConversation conversation, LCIMClient client){
-//        if(message instanceof LCIMTextMessage){
 
-            Log.e("TAG", "onMessage: "+ conversation.getCreator());
-            Log.e("TAG", "onMessage: "+ conversation.getFetchRequestParams());
-            Log.e("TAG", "onMessage: "+ conversation.getMembers());
-            Log.e("TAG", "onMessage: "+ conversation.getType());
-            Log.e("TAG", "onMessage: "+ conversation.getName());
-            Log.e("TAG", "onMessage: "+ conversation.get("msg"));
+//            Log.e("TAG", "onMessage: "+ conversation.getCreator());
+//            Log.e("TAG", "onMessage: "+ conversation.getType());
+//            Log.e("TAG", "onMessage: "+ conversation.getName());
+//            Log.e("TAG", "onMessage: "+ conversation.get("msg"));
+//            Log.e("TAG", "onMessage: "+ message.getContent());
 
             EventBus.getDefault().post(MessageEvent.getInstance(message, conversation ));
 

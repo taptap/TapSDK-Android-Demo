@@ -343,7 +343,6 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
         LCFile file = null;
         try {
             file = LCFile.withAbsoluteLocalPath("logo.png", copyAssetGetFilePath("logo.png"));
-//             file = new LCFile("resume11.txt", "LeanCloud".getBytes());
 
             file.saveInBackground().subscribe(new Observer<LCFile>() {
                 public void onSubscribe(Disposable disposable) {}
