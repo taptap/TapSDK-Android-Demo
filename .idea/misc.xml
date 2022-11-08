@@ -19,6 +19,7 @@
         <entry key="app/src/main/res/layout/achievement_fragment.xml" value="0.3274903805044891" />
         <entry key="app/src/main/res/layout/activity_control.xml" value="0.38333333333333336" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.578125" />
+        <entry key="app/src/main/res/layout/activity_push.xml" value="0.31637451902522445" />
         <entry key="app/src/main/res/layout/antiaddiction_fragment.xml" value="0.32395833333333335" />
         <entry key="app/src/main/res/layout/fragment_antiaddiction.xml" value="0.38333333333333336" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.38333333333333336" />
@@ -43,6 +44,7 @@
         <entry key="app/src/main/res/layout/layout_im_fragment.xml" value="0.31338178708849934" />
         <entry key="app/src/main/res/layout/layout_inside_accound_fragment.xml" value="0.33" />
         <entry key="app/src/main/res/layout/layout_login_fragment.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/layout_push_fragment.xml" value="0.2969174977334542" />
         <entry key="app/src/main/res/layout/layout_ranking_fragment.xml" value="0.3390337751175716" />
         <entry key="app/src/main/res/layout/layout_taost_succeed.xml" value="0.3582727661393758" />
         <entry key="app/src/main/res/layout/layout_toast_error.xml" value="0.3296875" />

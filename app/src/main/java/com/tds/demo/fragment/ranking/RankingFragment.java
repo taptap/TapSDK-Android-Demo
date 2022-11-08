@@ -40,7 +40,7 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * 2022-10-11
- * Describe：内嵌动态
+ * Describe：排行榜
  */
 public class RankingFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "RankingFragment";

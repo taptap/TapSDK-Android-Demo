@@ -1,0 +1,108 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="15dp">
+
+
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/back"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/close_button"
+            app:layout_constraintEnd_toStartOf="@id/intro_button"
+            android:text="推送"
+            android:textStyle="bold"
+            android:textColor="@color/TapTap"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/intro_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="功能介绍"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:background="@drawable/box_shape"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <EditText
+        android:id="@+id/installation_id"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/edittext_shape"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        android:layout_margin="15dp"
+        android:hint="输入设备 InstallationId"
+        android:textSize="16sp"
+        android:padding="5dp"
+        />
+
+    <EditText
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/edittext_shape"
+        app:layout_constraintTop_toBottomOf="@id/installation_id"
+        android:layout_margin="15dp"
+        android:hint="通知内容"
+        android:textSize="16sp"
+        android:padding="5dp"
+        />
+
+    <Button
+        android:id="@+id/device_push"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="推送指定设备"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="15dp"
+        />
+
+    <Button
+        android:id="@+id/all_push"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="推送所有设备"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintStart_toEndOf="@id/device_push"
+        android:layout_margin="15dp"
+        />
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

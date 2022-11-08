@@ -427,7 +427,6 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         int from = 0;
         int limit = 100;
         TDSFriends.queryFriendRequestList(LCFriendshipRequest.STATUS_PENDING, from, limit, new ListCallback<LCFriendshipRequest>(){
-
                     @Override
                     public void onSuccess(List<LCFriendshipRequest> requests) {
                         // requests 就是处于 pending 状态中的好友申请列表
@@ -439,7 +438,6 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
                                 .replace(R.id.fragment_container, FriendWorkFragment.getInstance("好友申请列表", friendBean), null)
                                 .addToBackStack("friendWorkFragment")
                                 .commit();
-
 
 
                     }

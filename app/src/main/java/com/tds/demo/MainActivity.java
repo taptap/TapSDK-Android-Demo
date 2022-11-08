@@ -31,6 +31,7 @@ import com.tds.demo.fragment.BillboardFragment;
 import com.tds.demo.fragment.CloudSaveFragment;
 import com.tds.demo.fragment.DataSaveFragment;
 import com.tds.demo.fragment.IM.IMFragment;
+import com.tds.demo.fragment.push.PushFragment;
 import com.tds.demo.fragment.ranking.RankingFragment;
 import com.tds.demo.fragment.achievement.AchievementFragment;
 import com.tds.demo.fragment.AntiaddictionFragment;
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case "推送通知":
-                    Log.e("TAG", "onItemClick: "+SDKType );
+                    showFragment(PushFragment.getInstance(), "pushFragment");
                     break;
 
                 case "公告系统":
