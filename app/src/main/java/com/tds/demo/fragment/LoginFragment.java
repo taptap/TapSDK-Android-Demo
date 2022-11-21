@@ -23,8 +23,12 @@ import com.tds.demo.R;
 import com.tds.demo.until.FormatJson;
 import com.tds.demo.until.ToastUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.leancloud.LCUser;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -34,7 +38,7 @@ import io.reactivex.disposables.Disposable;
  */
 public class LoginFragment extends Fragment implements View.OnClickListener{
     private static LoginFragment loginFragment = null;
-
+    private static final String TAG = "LoginFragment";
     @BindView(R.id.close_button)
     ImageButton closeButton;
     @BindView(R.id.intro_button)
@@ -51,6 +55,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     Button test_status;
     @BindView(R.id.refresh_token_button)
     Button refresh_token_button;
+    @BindView(R.id.third_bind)
+    Button third_bind;
+
 
     public LoginFragment() {
     }
@@ -82,6 +89,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         logout.setOnClickListener(this);
         test_status.setOnClickListener(this);
         refresh_token_button.setOnClickListener(this);
+        third_bind.setOnClickListener(this);
     }
 
     @Override
@@ -111,11 +119,78 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.refresh_token_button:
                 refreshSessionToken();
+                break;
+            case R.id.third_bind:
+
+                thirdBind();
+                break;
             default:
                 break;
         }
     }
 
+
+    /**
+     * 第三方登录账号与 TapTap 登录账号绑定
+     * */
+    private void thirdBind() {
+
+        Map<String, Object> thirdPartyData = new HashMap<String, Object>();
+        thirdPartyData.put("expires_in", 7200);
+        thirdPartyData.put("openid", "my_OPENID");
+        thirdPartyData.put("access_token", "my_ACCESS_TOKEN");
+
+        TDSUser.getCurrentUser().associateWithAuthData(thirdPartyData, "my").subscribe(new Observer<LCUser>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(LCUser lcUser) {
+                Log.e(TAG, "绑定成功: "+ lcUser);
+                Log.e(TAG, "onNext==: "+ TDSUser.getCurrentUser() );
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(TAG, "绑定失败: "+ e.getMessage());
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+
+//        TDSUser user = TDSUser.currentUser();
+//        user.dissociateWithAuthData("weixin").subscribe(new Observer<LCUser>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(LCUser lcUser) {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        });
+
+
+
+    }
 
 
     /**
@@ -200,23 +275,25 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
      * Error 信息为网络错误，或者该游戏未开通篝火测试服。
      * */
     private void testStatus() {
+
         TapLoginHelper.getTestQualification(new Api.ApiCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
                 if(aBoolean){
                     // 该玩家已拥有测试资格
                     ToastUtil.showCus("该玩家已具有篝火测试资格", ToastUtil.Type.SUCCEED );
-
+                    Log.e(TAG, "onSuccess: "+"该玩家已具有篝火测试资格" );
                 }else {
                     // 该玩家不具备测试资格， 游戏层面进行拦截
                     ToastUtil.showCus("该玩家不具备篝火测试资格", ToastUtil.Type.SUCCEED );
-
+                    Log.e(TAG, "该玩家不具备篝火测试资格" );
                 }
             }
             @Override
             public void onError(Throwable throwable) {
                 // 服务端检查出错或者网络异常
                 ToastUtil.showCus("服务端检查出错或者网络异常", ToastUtil.Type.SUCCEED );
+                Log.e(TAG, "onError: "+"服务端检查出错或者网络异常" );
 
             }
         });

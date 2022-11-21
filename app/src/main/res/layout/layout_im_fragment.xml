@@ -119,7 +119,56 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/im_apk_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/im_apk"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="即时通讯完整功能演示 APK 下载链接："/>
 
+    <TextView
+        android:id="@+id/im_apk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/im_github_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:autoLink="web"
+        android:text="https://capacity-files.lcfile.com/YcArV3HtjDRBtoXcHDUuHDQByvPjHRHE/chatkitapplication-debug.apk"/>
+
+
+    <TextView
+        android:id="@+id/im_github_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/im_github"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="如需参考完整功能源码可访问如下 github 链接："/>
+
+    <TextView
+        android:id="@+id/im_github"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:autoLink="web"
+        android:text="https://github.com/leancloud/LeanCloudChatKit-Android"/>
 
 
 

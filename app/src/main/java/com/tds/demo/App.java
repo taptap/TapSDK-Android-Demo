@@ -29,9 +29,9 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LeanCloud.initialize(this, SDKInfoData.SDK_CLIENT_ID, SDKInfoData.SDK_CLINT_TOKEN, SDKInfoData.SDK_SERVER_URL);
 
         context = getApplicationContext();
+        LeanCloud.initialize(this, SDKInfoData.SDK_CLIENT_ID, SDKInfoData.SDK_CLINT_TOKEN, SDKInfoData.SDK_SERVER_URL);
 
 
         // android 8.0 以上必须实现一个或多个通知渠道
@@ -40,7 +40,6 @@ public class App extends Application {
 
         // 推送订阅频道，需要在保存 Installation 前调用
         // 订阅频道，当该频道消息到来的时候，打开对应的 Activity
-//        PushService.subscribe(this, "public", MainActivity.class);
         PushService.subscribe(this, "other", PushActivity.class);
 
         // 设置通知展示的默认 channel，否则消息无法展示。

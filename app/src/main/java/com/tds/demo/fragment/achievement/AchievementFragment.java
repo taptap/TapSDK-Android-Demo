@@ -96,6 +96,7 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
             @Override
             public void onAchievementSDKInitFail(AchievementException exception) {
                 // 数据加载失败，请重试
+                Log.e("TAG", "onAchievementSDKInitFail: "+ exception.getMessage() );
                 ToastUtil.showCus("数据加载失败，请重试", ToastUtil.Type.ERROR);
             }
             @Override

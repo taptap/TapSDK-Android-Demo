@@ -97,6 +97,15 @@
         app:layout_constraintStart_toEndOf="@id/test_status"/>
 
 
+    <Button
+        android:id="@+id/third_bind"
+        android:text="第三方账号与 TapTap 账号绑定"
+        style="@style/button_style"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintTop_toBottomOf="@id/refresh_token_button"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
     <TextView
         android:id="@+id/user_info"
         android:layout_width="match_parent"
@@ -104,7 +113,7 @@
         android:padding="15dp"
         android:textSize="14sp"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/test_status"
+        app:layout_constraintTop_toBottomOf="@id/third_bind"
         app:layout_constraintStart_toStartOf="parent"/>
 
 

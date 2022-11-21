@@ -2,10 +2,14 @@ package com.tds.demo;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.Service;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +23,11 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.billboard.Callback;
 import com.tapsdk.billboard.TapBillboard;
-import com.tapsdk.billboard.exceptions.TapBillboardException;
+
+import cn.leancloud.LCException;
+import cn.leancloud.LCInstallation;
+import cn.leancloud.LCObject;
+import cn.leancloud.LeanCloud;
 import com.tapsdk.bootstrap.TapBootstrap;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapBillboardConfig;
@@ -31,6 +39,7 @@ import com.tds.demo.fragment.BillboardFragment;
 import com.tds.demo.fragment.CloudSaveFragment;
 import com.tds.demo.fragment.DataSaveFragment;
 import com.tds.demo.fragment.IM.IMFragment;
+import com.tds.demo.fragment.push.PushActivity;
 import com.tds.demo.fragment.push.PushFragment;
 import com.tds.demo.fragment.ranking.RankingFragment;
 import com.tds.demo.fragment.achievement.AchievementFragment;
@@ -47,6 +56,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import butterknife.ButterKnife;
+import cn.leancloud.callback.LCCallback;
+import cn.leancloud.push.PushService;
+import cn.leancloud.session.LCConnectionManager;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -211,5 +225,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+
+
+
+    /**
+     * 创建通知渠道
+     *
+     * */
+    private void createNotificationChannel(String name, String description, String notificationId) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(notificationId, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
