@@ -22,4 +22,5 @@ public class SDKInfoData {
     public static String Clound_SHAREHOST = "=====换成你的 自定义域名 ===== ";
 
 
+
 }
