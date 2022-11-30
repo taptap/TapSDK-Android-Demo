@@ -238,7 +238,8 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onError(@NotNull Throwable e) {
-                ToastUtil.showCus(e.getMessage(), ToastUtil.Type.ERROR);
+//                ToastUtil.showCus(e.getMessage(), ToastUtil.Type.ERROR);
+                Log.e("TAG", "onError: "+e.getMessage()  );
 
             }
 

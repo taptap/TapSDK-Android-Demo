@@ -269,7 +269,7 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     * 实名认证是根据唯一标识进行判断是否已实名认证，所以建议该唯一标识和用户唯一绑定
     * */
     private void setQuick_authentication() {
-        String userIdentifier = "XXXX11kkkXXXXXXXXXXX";
+        String userIdentifier = "XXXX11k11k1111kXXXXXXXXXXX";
         AntiAddictionUIKit.startup(getActivity(), userIdentifier);
     }
 }
