@@ -10,8 +10,8 @@
 
 3、配置自己的签名信息，签名打包测试；
 
-3、安卓可以下载项目中的 [tds_demo_3.16.4.apk](https://capacity-files.lcfile.com/OousnGjcPitdWwY68Ukm0ki1GNvm3Jhh/tds_demo_3.16.4.apk) 或扫描如下二维码进行下载体验；
+4、安卓可以下载项目中的 [tds_demo_3.16.4.apk](https://capacity-files.lcfile.com/OousnGjcPitdWwY68Ukm0ki1GNvm3Jhh/tds_demo_3.16.4.apk) 或扫描如下二维码进行下载体验；
 ![Demo 下载图片](https://capacity-files.lcfile.com/TNPNCYWVEQ5rhN4hW1DcHJ809VKFKURD/android_demo.png)
 
-4、关于 TapSDK 更多详情请参考[官方文档](https://developer.taptap.com/docs/sdk/)。
+5、关于 TapSDK 更多详情请参考[官方文档](https://developer.taptap.com/docs/sdk/)。
 
