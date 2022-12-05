@@ -91,4 +91,11 @@
         </activity>
     </application>
 
+    <!--添加如下 queries 标签的内容，直接在 manifest 标签下-->
+    <queries>
+        <package android:name="com.taptap" />
+        <package android:name="com.taptap.pad" />
+        <package android:name="com.taptap.global" />
+    </queries>
+
 </manifest>
