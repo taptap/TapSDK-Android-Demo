@@ -85,8 +85,6 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
             public void onAchievementSDKInitSuccess() {
                 // 数据加载成功
                 ToastUtil.showCus("数据加载成功", ToastUtil.Type.SUCCEED);
-
-
                 /**
                  * 获取全部成就数据
                  *

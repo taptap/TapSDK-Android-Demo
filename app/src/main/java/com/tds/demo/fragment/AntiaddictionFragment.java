@@ -88,7 +88,10 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
         AntiAddictionUIKit.init(getActivity(), config, new AntiAddictionUICallback() {
             @Override
             public void onCallback(int code, Map<String, Object> extras) {
+                Log.e("TAG", "onCallback:=====  "+code +"   "+extras  );
                 if (code == Constants.ANTI_ADDICTION_CALLBACK_CODE.LOGIN_SUCCESS){
+                    String token = AntiAddictionUIKit.currentToken();
+                    Log.e("TAG", "Token: "+ token );
                     ToastUtil.showCus("玩家登录后判断当前玩家可以进行游戏", ToastUtil.Type.SUCCEED );
 
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.EXITED){
@@ -269,7 +272,7 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     * 实名认证是根据唯一标识进行判断是否已实名认证，所以建议该唯一标识和用户唯一绑定
     * */
     private void setQuick_authentication() {
-        String userIdentifier = "XXXX11k11k1111kXXXXXXXXXXX";
+        String userIdentifier = "XXXXXXXXXXXXXXXX";
         AntiAddictionUIKit.startup(getActivity(), userIdentifier);
     }
 }

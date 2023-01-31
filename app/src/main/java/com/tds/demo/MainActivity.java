@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.Service;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -21,13 +20,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.tapsdk.billboard.Callback;
-import com.tapsdk.billboard.TapBillboard;
-
-import cn.leancloud.LCException;
-import cn.leancloud.LCInstallation;
-import cn.leancloud.LCObject;
-import cn.leancloud.LeanCloud;
 import com.tapsdk.bootstrap.TapBootstrap;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapBillboardConfig;
@@ -35,20 +27,19 @@ import com.tds.common.entities.TapConfig;
 import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
+import com.tds.demo.fragment.AntiaddictionFragment;
 import com.tds.demo.fragment.BillboardFragment;
 import com.tds.demo.fragment.CloudSaveFragment;
 import com.tds.demo.fragment.DataSaveFragment;
-import com.tds.demo.fragment.IM.IMFragment;
-import com.tds.demo.fragment.push.PushActivity;
-import com.tds.demo.fragment.push.PushFragment;
-import com.tds.demo.fragment.ranking.RankingFragment;
-import com.tds.demo.fragment.achievement.AchievementFragment;
-import com.tds.demo.fragment.AntiaddictionFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
+import com.tds.demo.fragment.IM.IMFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
 import com.tds.demo.fragment.InsideAccoundFragment;
 import com.tds.demo.fragment.LoginFragment;
+import com.tds.demo.fragment.achievement.AchievementFragment;
 import com.tds.demo.fragment.friend.FriendsFragment;
+import com.tds.demo.fragment.push.PushFragment;
+import com.tds.demo.fragment.ranking.RankingFragment;
 import com.tds.demo.until.ToastUtil;
 
 import java.util.Arrays;
@@ -56,11 +47,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import butterknife.ButterKnife;
-import cn.leancloud.callback.LCCallback;
-import cn.leancloud.push.PushService;
-import cn.leancloud.session.LCConnectionManager;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         checkPermission(this, this);
+
         initSDK();
 
         ExpandableListView listView = findViewById(R.id.listview);
@@ -83,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < adapter.getGroupCount(); i++) {
             listView.expandGroup(i);
         }
-
 
     }
 
@@ -117,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
 
 //        TapBillboard.init(tdsConfig);
 
-
     }
 
     private MyBaseExpandableListAdapter.OnItemClickListener myItemClickListener = new MyBaseExpandableListAdapter.OnItemClickListener(){
@@ -126,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             switch (SDKType){
                 case "TapTap登录":
                     showFragment(LoginFragment.getInstance(), "loginFragment");
+
                     break;
                 case "内嵌动态":
                     showFragment(InLineDynamicFragment.getInstance(), "inLineDynamicFragment");

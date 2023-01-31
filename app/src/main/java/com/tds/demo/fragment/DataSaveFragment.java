@@ -42,6 +42,7 @@ import cn.leancloud.LCException;
 import cn.leancloud.LCFile;
 import cn.leancloud.LCObject;
 import cn.leancloud.LCQuery;
+import cn.leancloud.LCUser;
 import cn.leancloud.callback.ProgressCallback;
 import cn.leancloud.livequery.LCLiveQuery;
 import cn.leancloud.livequery.LCLiveQueryConnectionHandler;
@@ -575,7 +576,9 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
      * 查询对象
      * */
     private void searchData() {
-        LCQuery<LCObject> query = new LCQuery<>("Todo");
+
+
+       LCQuery<LCObject> query = new LCQuery<>("Todo");
 
         if (saveObjectId.isEmpty()){
             ToastUtil.showCus("暂无存储对象数据！", ToastUtil.Type.POINT);
@@ -615,9 +618,9 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
         LCObject todo = new LCObject("Todo");
 
         // 为属性赋值
-        todo.put("title",   "工程师周会");
-        todo.put("content", "周二两点，全体成员");
-        todo.put("time", "2022-10-29");
+        todo.put("title",   "工程师周会纠结纠结、");
+        todo.put("content", "周二两点，uuuuu全体成员");
+        todo.put("time", "2023-10-29");
 
         // 将对象保存到云端
         todo.saveInBackground().subscribe(new Observer<LCObject>() {

@@ -140,7 +140,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         thirdPartyData.put("openid", "my_OPENID");
         thirdPartyData.put("access_token", "my_ACCESS_TOKEN");
 
-        TDSUser.getCurrentUser().associateWithAuthData(thirdPartyData, "my").subscribe(new Observer<LCUser>() {
+        TDSUser.getCurrentUser().associateWithAuthData(thirdPartyData, "weixin").subscribe(new Observer<LCUser>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -164,32 +164,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-
-//        TDSUser user = TDSUser.currentUser();
-//        user.dissociateWithAuthData("weixin").subscribe(new Observer<LCUser>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(LCUser lcUser) {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
-
-
-
     }
 
 
@@ -205,13 +179,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 @Override
                 public void onSuccess(TDSUser resultUser) {
                     // 此处也可以获取用户信息
-                    Log.e("TAG", "onSuccess: "+ resultUser.toJSONInfo() );
+                    Log.e("TAG", "Login onSuccess: "+ resultUser.toJSONInfo() );
                     ToastUtil.showCus("恭喜 "+resultUser.getServerData().get("nickname")+" 登录成功！", ToastUtil.Type.SUCCEED );
                 }
                 @Override
                 public void onFail(TapError error) {
                     ToastUtil.showCus(error.getMessage(), ToastUtil.Type.ERROR );
-
+                    Log.e(TAG, "Login onFail: "+error.getMessage() );
                 }
             }, "public_profile");
 

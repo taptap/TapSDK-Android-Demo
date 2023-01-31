@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tds.demo.R;
+import com.tds.demo.data.User;
 import com.tds.demo.fragment.WebViewFragment;
 import com.tds.demo.until.ToastUtil;
 
@@ -31,6 +32,8 @@ import butterknife.ButterKnife;
 import cn.leancloud.LCException;
 import cn.leancloud.LCLeaderboard;
 import cn.leancloud.LCLeaderboardResult;
+import cn.leancloud.LCObject;
+import cn.leancloud.LCQuery;
 import cn.leancloud.LCRanking;
 import cn.leancloud.LCStatistic;
 import cn.leancloud.LCStatisticResult;
@@ -173,6 +176,12 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onNext(@NotNull LCLeaderboardResult leaderboardResult) {
                 List<LCRanking> rankings = leaderboardResult.getResults();
+                Log.e(TAG, "onNext:+++++>>>> "+rankings.get(0).getUser().toJSONString() );
+//                Log.e(TAG, "onNext:+++++>>>> "+rankings.get(1).getUser().toJSONString() );
+//                Log.e(TAG, "onNext:+++++>>>> "+rankings.get(2).getUser().toJSONString() );
+//                Log.e(TAG, "onNext:+++++>>>> "+rankings.get(3).getUser().toJSONString() );
+
+
 
                 RankingAdapter rankingAdapter = new RankingAdapter();
                 rankingAdapter.addData(rankings);

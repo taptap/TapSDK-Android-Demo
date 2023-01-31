@@ -168,7 +168,7 @@ public class InLineDynamicFragment extends Fragment implements View.OnClickListe
             case R.id.scene_entry:
                 Map<String, String> extras = new HashMap<>();
                 // 注意：这里的 key 是固定的，"scene_id"；第二个参数是开发者中心后台创建场景化入口后生成的「入口 ID」
-                extras.put("scene_id", "taprl0242181001");
+                extras.put("scene_id", "taprl0242181002");
                 // 注意：第二个参数固定为 "tap://moment/scene/"
                 TapMoment.directlyOpen(TapMoment.ORIENTATION_DEFAULT,"tap://moment/scene/", extras);
                 break;
