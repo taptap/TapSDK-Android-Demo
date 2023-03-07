@@ -33,6 +33,8 @@ import cn.leancloud.im.v2.LCIMException;
 import cn.leancloud.im.v2.LCIMMessageManager;
 import cn.leancloud.im.v2.callback.LCIMClientCallback;
 import cn.leancloud.im.v2.callback.LCIMConversationCreatedCallback;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 2022-10-11
@@ -99,7 +101,7 @@ public class IMFragment extends Fragment implements View.OnClickListener{
 
         nickname = LCUser.currentUser().getServerData().get("nickname").toString();
 
-        // Tom 创建了一个 client，用昵称作为 clientId 登录测试
+//         Tom 创建了一个 client，用昵称作为 clientId 登录测试
         testClient = LCIMClient.getInstance(nickname);
         // Tom 登录
         testClient.open(new LCIMClientCallback() {
@@ -114,6 +116,28 @@ public class IMFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        // 以 LCUser 的用户名和密码登录到存储服务
+//        LCUser.logIn("Tom", "cat!@#123").subscribe(new Observer<LCUser>() {
+//            public void onSubscribe(Disposable disposable) {}
+//            public void onNext(LCUser user) {
+//                // 登录成功，与服务器连接
+//                LCIMClient client = LCIMClient.getInstance(user);
+//                client.open(new LCIMClientCallback() {
+//                    @Override
+//                    public void done(final LCIMClient avimClient, LCIMException e) {
+//                        // 执行其他逻辑
+//                        testClient = avimClient;
+//                        Log.e(TAG, "===== done: "+ e+"   >>> "+avimClient );
+//                    }
+//                });
+//            }
+//            public void onError(Throwable throwable) {
+//                // 登录失败（可能是密码错误）
+//                Log.e(TAG, "===== done错误: "+ throwable.getLocalizedMessage());
+//
+//            }
+//            public void onComplete() {}
+//        });
 
 
         LCIMMessageManager.setConversationEventHandler(new CustomConversationEventHandler());

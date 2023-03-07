@@ -25,7 +25,6 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.MyViewHo
 
     private List<LCRanking> lCRankingList = new ArrayList<>();
 
-
     public void addData(List<LCRanking> data){
         if(data !=null){
             lCRankingList.clear();

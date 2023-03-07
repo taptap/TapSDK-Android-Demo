@@ -187,7 +187,7 @@ public class InsideAccoundFragment extends Fragment implements View.OnClickListe
      * */
     private void setOtherAttribute() {
         TDSUser currentUser = TDSUser.currentUser();  // 获取当前登录的账户实例
-        currentUser.put("nickname","阿祖");
+        currentUser.put("nickname","Trackk_New");
         currentUser.put("birthday", "01-01");
         currentUser.put("age", "18");
         currentUser.saveInBackground().subscribe(new Observer<LCObject>() {

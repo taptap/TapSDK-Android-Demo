@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,14 +14,11 @@ import androidx.fragment.app.Fragment;
 import com.tapsdk.billboard.Callback;
 import com.tapsdk.billboard.CustomLinkListener;
 import com.tapsdk.billboard.TapBillboard;
-import com.tapsdk.billboard.UserInteraction;
 import com.tapsdk.billboard.exceptions.TapBillboardException;
-import com.tapsdk.bootstrap.TapBootstrap;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapBillboardConfig;
 import com.tds.common.entities.TapConfig;
 import com.tds.common.models.TapRegionType;
-import com.tds.demo.MainActivity;
 import com.tds.demo.R;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.until.ToastUtil;
@@ -186,13 +182,6 @@ public class BillboardFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onSuccess(Void result) {
                 // 打开公告成功
-
-            }
-        },new UserInteraction() {
-            @Override
-            public void onClose() {
-                // 公告已关闭，如果有 UI 更新，请切换到 Android 主线程
-                ToastUtil.showCus("公告关闭", ToastUtil.Type.SUCCEED);
 
             }
         });

@@ -92,17 +92,12 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
 
     @BindView(R.id.invite_button)
     TextView invite_button;
-
-
     private LCIMConversation conversation;
-
     private String imgPath = "";
-
     private static AloneChatFragment aloneChatFragment = null;
     private List<Msg> msgList = new ArrayList<>();
     private MsgAdapter adapter = null;
     public AloneChatFragment() {
-
     }
 
     public static final AloneChatFragment getInstance(ChatBean chatBean) {
@@ -121,11 +116,8 @@ public class AloneChatFragment extends DialogFragment implements View.OnClickLis
         View view= inflater.inflate(R.layout.friends_alone_chat_fragment, container, false);
         ButterKnife.bind(this, view);
 
-
         LCIMMessageManager.setConversationEventHandler(new CustomConversationEventHandler());
         LCIMMessageManager.registerDefaultMessageHandler(new CustomMessageHandler());
-
-
 
 
         return view;

@@ -39,7 +39,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.leancloud.LCACL;
 import cn.leancloud.LCFile;
+import cn.leancloud.LCObject;
+import cn.leancloud.LCUser;
 import cn.leancloud.types.LCNull;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -196,6 +199,7 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void onError(@NotNull Throwable e) {
                         e.printStackTrace();
+                        Log.e("TAG", "onError: "+e.getLocalizedMessage() );
                     }
 
                     @Override
@@ -222,8 +226,8 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
         TapGameSave snapshot = new TapGameSave();
         snapshot.setName(save_name.getText().toString());
         snapshot.setSummary(save_description.getText().toString());
-        snapshot.setPlayedTime(60000); // ms
-        snapshot.setProgressValue(100);
+        snapshot.setPlayedTime(70000); // ms
+        snapshot.setProgressValue(102);
         snapshot.setCover(copyAssetGetFilePath("logo.png")); // jpg/png
         snapshot.setGameFile(copyAssetGetFilePath("存档元文件.csv"));
         snapshot.setModifiedAt(new Date());
@@ -238,7 +242,6 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onError(@NotNull Throwable e) {
-//                ToastUtil.showCus(e.getMessage(), ToastUtil.Type.ERROR);
                 Log.e("TAG", "onError: "+e.getMessage()  );
 
             }

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ExpandableListView;
 
 import androidx.annotation.NonNull;
@@ -49,7 +51,7 @@ import java.util.Set;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-
+    private WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         checkPermission(this, this);
 
         initSDK();
+
 
         ExpandableListView listView = findViewById(R.id.listview);
         MyBaseExpandableListAdapter adapter
@@ -71,8 +74,11 @@ public class MainActivity extends AppCompatActivity {
             listView.expandGroup(i);
         }
 
-    }
 
+
+
+
+    }
 
     /**
      * SDK 初始化

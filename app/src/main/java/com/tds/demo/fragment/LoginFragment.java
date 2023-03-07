@@ -29,8 +29,10 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.leancloud.LCUser;
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.observers.BlockingBaseObserver;
 
 /**
  * 2022-10-11
@@ -121,7 +123,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 refreshSessionToken();
                 break;
             case R.id.third_bind:
-
                 thirdBind();
                 break;
             default:
@@ -131,48 +132,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
 
     /**
-     * 第三方登录账号与 TapTap 登录账号绑定
-     * */
-    private void thirdBind() {
-
-        Map<String, Object> thirdPartyData = new HashMap<String, Object>();
-        thirdPartyData.put("expires_in", 7200);
-        thirdPartyData.put("openid", "my_OPENID");
-        thirdPartyData.put("access_token", "my_ACCESS_TOKEN");
-
-        TDSUser.getCurrentUser().associateWithAuthData(thirdPartyData, "weixin").subscribe(new Observer<LCUser>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(LCUser lcUser) {
-                Log.e(TAG, "绑定成功: "+ lcUser);
-                Log.e(TAG, "onNext==: "+ TDSUser.getCurrentUser() );
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e(TAG, "绑定失败: "+ e.getMessage());
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-
-    }
-
-
-    /**
      * 如果没有安装 TapTap 客户端则会调用网页授权
      * 静默登录可以帮助用户跳过登录的流程，通常用于用户下一次启动游戏时，仍需之前登录状态的场景。
      * */
     public void tapLogin() {
-        // 检查登录状态
+       // 检查登录状态
         if (null == TDSUser.currentUser()) {
             // 未登录
             TDSUser.loginWithTapTap(getActivity(), new Callback<TDSUser>() {
@@ -274,5 +238,102 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
 
 
+
     }
+
+
+    // 账号密码注册
+    private void userAndPasswotd(){
+        // 创建实例
+        LCUser user = new LCUser();
+        user.setUsername("Tom11");
+        user.setPassword("cat!@#123");
+
+// 可选
+//        user.setEmail("tom@leancloud.rocks");
+//        user.setMobilePhoneNumber("+8618200008888");
+
+//        设置其他属性的方法跟 LCObject 一样
+//        user.put("gender", "secret");
+
+        user.signUpInBackground().subscribe(new Observer<LCUser>() {
+            public void onSubscribe(Disposable disposable) {}
+            public void onNext(LCUser user) {
+                // 注册成功
+                Log.e(TAG, "注册成功："+ user.toJSONString());
+            }
+            public void onError(Throwable throwable) {
+                // 注册失败（通常是因为用户名已被使用）
+                Log.e(TAG, "注册失败："+ throwable.getLocalizedMessage());
+
+            }
+            public void onComplete() {}
+        });
+
+    }
+
+
+    /*
+    * 账号密码登录
+    * */
+
+    private void userAndPasswotdLogin(){
+        LCUser.logIn("Tom11", "cat!@#123").subscribe(new Observer<LCUser>() {
+            public void onSubscribe(Disposable disposable) {}
+            public void onNext(LCUser user) {
+                // 登录成功
+                Log.e(TAG, "登录成功："+ user.toJSONString());
+
+            }
+            public void onError(Throwable throwable) {
+                // 登录失败（可能是密码错误）
+                Log.e(TAG, "登录失败："+ throwable.getLocalizedMessage());
+
+            }
+            public void onComplete() {}
+        });
+
+    }
+
+    /**
+     * 第三方登录账号与 TapTap 登录账号绑定
+     * */
+    private void thirdBind() {
+
+        Map<String, Object> thirdPartyData = new HashMap<String, Object>();
+        thirdPartyData.put("expires_in", 7200);
+        thirdPartyData.put("openid", "my_OPENID");
+        thirdPartyData.put("access_token", "oitc7ischkqyjjd4buyg5s5mz");
+        thirdPartyData.put("userName", "Tom11");
+        thirdPartyData.put("password", "cat!@#123");
+
+
+        TDSUser.getCurrentUser().associateWithAuthData(thirdPartyData, "password").subscribe(new Observer<LCUser>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(LCUser lcUser) {
+                Log.e(TAG, "绑定成功: "+ lcUser);
+                Log.e(TAG, "onNext==: "+ TDSUser.getCurrentUser() );
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(TAG, "绑定失败: "+ e.getMessage());
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+    }
+
 }
+
+

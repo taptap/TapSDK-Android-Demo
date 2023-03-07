@@ -13,6 +13,7 @@ import com.tds.demo.fragment.push.PushActivity;
 import cn.leancloud.LCInstallation;
 import cn.leancloud.LCLogger;
 import cn.leancloud.LCObject;
+import cn.leancloud.LCUser;
 import cn.leancloud.LeanCloud;
 import cn.leancloud.push.PushService;
 import io.reactivex.Observer;
@@ -34,7 +35,6 @@ public class App extends Application {
 
         context = getApplicationContext();
         LeanCloud.initialize(this, SDKInfoData.SDK_CLIENT_ID, SDKInfoData.SDK_CLINT_TOKEN, SDKInfoData.SDK_SERVER_URL);
-
 
         // android 8.0 以上必须实现一个或多个通知渠道
         createNotificationChannel("public", "普通通知", "public_notificationId");

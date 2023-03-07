@@ -576,8 +576,6 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
      * 查询对象
      * */
     private void searchData() {
-
-
        LCQuery<LCObject> query = new LCQuery<>("Todo");
 
         if (saveObjectId.isEmpty()){
@@ -595,9 +593,8 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
                 String objectId = todo.getObjectId();
                 Date updatedAt  = todo.getUpdatedAt();
                 Date createdAt  = todo.getCreatedAt();
+                Log.e(TAG, "数据存储onNext: "+ todo.toJSONString() );
                 ToastUtil.showCus("查询成功！"+todo.toJSONString() , ToastUtil.Type.SUCCEED );
-
-
             }
             public void onError(Throwable throwable) {
                 ToastUtil.showCus(throwable.getMessage() , ToastUtil.Type.ERROR );
@@ -605,6 +602,8 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
             }
             public void onComplete() {}
         });
+
+
 
     }
 
