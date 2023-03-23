@@ -22,7 +22,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.tapsdk.billboard.Callback;
+import com.tapsdk.billboard.TapBillboard;
+import com.tapsdk.billboard.exceptions.TapBillboardException;
 import com.tapsdk.bootstrap.TapBootstrap;
+import com.taptap.taprtc.Config;
+import com.taptap.taprtc.DeviceID;
+import com.taptap.taprtc.TapRTCEngine;
+import com.taptap.taprtc.TapRTCException;
+import com.taptap.taprtc.UserID;
+import com.tds.common.TapCommon;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapBillboardConfig;
 import com.tds.common.entities.TapConfig;
@@ -75,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
-
     }
 
     /**
@@ -106,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 .withRegionType(TapRegionType.CN)
                 .build();
         TapBootstrap.init(MainActivity.this, tdsConfig);
-
 //        TapBillboard.init(tdsConfig);
 
     }
@@ -191,14 +196,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     // 要申请的权限
-    public static String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_NETWORK_STATE};
+    public static String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.BLUETOOTH_CONNECT};
 
     public static void checkPermission(Context context, Activity activity){
         int i = ContextCompat.checkSelfPermission(context, permissions[0]);
         int j = ContextCompat.checkSelfPermission(context, permissions[1]);
         int k = ContextCompat.checkSelfPermission(context, permissions[2]);
+        int z = ContextCompat.checkSelfPermission(context, permissions[3]);
 
-        if (i != PackageManager.PERMISSION_GRANTED || j != PackageManager.PERMISSION_GRANTED || k != PackageManager.PERMISSION_GRANTED) {
+        if (i != PackageManager.PERMISSION_GRANTED || j != PackageManager.PERMISSION_GRANTED || k != PackageManager.PERMISSION_GRANTED || z != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, permissions, 1); //调用方法获取权限
         }
     }

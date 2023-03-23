@@ -1,6 +1,7 @@
 package com.tds.demo.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.billboard.Callback;
 import com.tapsdk.billboard.CustomLinkListener;
+import com.tapsdk.billboard.PanelShowStateListener;
 import com.tapsdk.billboard.TapBillboard;
+import com.tapsdk.billboard.entities.BadgeDetails;
 import com.tapsdk.billboard.exceptions.TapBillboardException;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapBillboardConfig;
@@ -71,28 +74,6 @@ public class BillboardFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.layout_billboard_fragment, container, false);
         ButterKnife.bind(this, view);
-        Set<Pair<String, String>> dimensionSet = new HashSet<>();
-        dimensionSet.addAll(Arrays.asList(Pair.create("location", "CN"), Pair.create("platform", "TapTap")));
-        String billboardServerUrl = "https://tdsdemo.weijiash.cn"; // 开发者中心 > 你的游戏 > 游戏服务 > 应用配置 > 域名配置 > 公告
-
-        TapBillboardConfig billboardCnConfig = new TapBillboardConfig.Builder()
-                .withDimensionSet(dimensionSet)    // 可选
-                .withServerUrl(billboardServerUrl) // 必须, 公告的自定义域名
-                .withTemplate("navigate") // 可选, 默认是 navigate
-                .build();
-
-
-        TapConfig tdsConfig = new TapConfig.Builder()
-                .withAppContext(getActivity())
-                .withClientId(SDKInfoData.SDK_CLIENT_ID)
-                .withClientToken(SDKInfoData.SDK_CLINT_TOKEN)
-                .withServerUrl(SDKInfoData.SDK_SERVER_URL)
-                .withBillboardConfig(billboardCnConfig) // 使用公告系统时就必须加入
-                .withRegionType(TapRegionType.CN)
-                .build();
-
-        TapBillboard.init(tdsConfig);
-
 
 
         return view;
@@ -109,6 +90,7 @@ public class BillboardFragment extends Fragment implements View.OnClickListener 
         open_billboard.setOnClickListener(this);
         regist_listener.setOnClickListener(this);
         cancel_listener.setOnClickListener(this);
+
 
     }
 
@@ -172,7 +154,6 @@ public class BillboardFragment extends Fragment implements View.OnClickListener 
      *
      * */
     private void openBillboard() {
-
         TapBillboard.openPanel(this.getActivity(), new Callback<Void>() {
             @Override
             public void onError(TapBillboardException tapBillboardException) {
@@ -183,6 +164,11 @@ public class BillboardFragment extends Fragment implements View.OnClickListener 
             public void onSuccess(Void result) {
                 // 打开公告成功
 
+            }
+        }, new PanelShowStateListener() {
+            @Override
+            public void onClose() {
+                Log.e("TAG", "onClose: "+"关闭公告======" );
             }
         });
     }
