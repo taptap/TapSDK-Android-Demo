@@ -54,6 +54,7 @@ public class SDKTypeData {
 
         ArrayList<String> itemList3 = new ArrayList<String>();
         itemList3.add("公告系统");
+        itemList3.add("礼包系统");
 
         ArrayList iconList1 = new ArrayList();
         iconList1.add(R.mipmap.aa);
@@ -74,6 +75,8 @@ public class SDKTypeData {
 
         ArrayList iconList3 = new ArrayList();
         iconList3.add(R.mipmap.pp);
+        iconList3.add(R.mipmap.rr);
+
 
 
         childList = new ArrayList<ArrayList<String>>();

@@ -16,6 +16,7 @@ import cn.leancloud.LCObject;
 import cn.leancloud.LCUser;
 import cn.leancloud.LeanCloud;
 import cn.leancloud.push.PushService;
+import cn.leancloud.utils.StringUtil;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 

@@ -145,6 +145,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     // 此处也可以获取用户信息
                     Log.e("TAG", "Login onSuccess: "+ resultUser.toJSONInfo() );
                     ToastUtil.showCus("恭喜 "+resultUser.getServerData().get("nickname")+" 登录成功！", ToastUtil.Type.SUCCEED );
+                    resultUser.getObjectId();
                 }
                 @Override
                 public void onFail(TapError error) {
@@ -304,11 +305,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         thirdPartyData.put("expires_in", 7200);
         thirdPartyData.put("openid", "my_OPENID");
         thirdPartyData.put("access_token", "oitc7ischkqyjjd4buyg5s5mz");
-        thirdPartyData.put("userName", "Tom11");
-        thirdPartyData.put("password", "cat!@#123");
 
-
-        TDSUser.getCurrentUser().associateWithAuthData(thirdPartyData, "password").subscribe(new Observer<LCUser>() {
+        TDSUser.getCurrentUser().associateWithAuthData(thirdPartyData, "wechat").subscribe(new Observer<LCUser>() {
             @Override
             public void onSubscribe(Disposable d) {
 

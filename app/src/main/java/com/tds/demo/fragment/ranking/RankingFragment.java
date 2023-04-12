@@ -239,7 +239,7 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
     private void submitScore() {
 
         Map<String, Double> statistic  = new HashMap<>();
-        statistic.put("word", 210.00);
+        statistic.put("word", 1000.00);
         statistic.put("score", 310.00);
         statistic.put("kills", 180.0);
         LCLeaderboard.updateStatistic(LCUser.currentUser(), statistic).subscribe(new Observer<LCStatisticResult>() {

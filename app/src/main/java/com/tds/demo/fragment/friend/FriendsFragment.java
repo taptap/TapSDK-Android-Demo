@@ -19,6 +19,7 @@ import com.tapsdk.bootstrap.account.TDSUser;
 import com.tapsdk.friends.Callback;
 import com.tapsdk.friends.FriendStatusChangedListener;
 import com.tapsdk.friends.ListCallback;
+import com.tapsdk.friends.TDSFollows;
 import com.tapsdk.friends.TDSFriends;
 import com.tapsdk.friends.entities.TDSFriendInfo;
 import com.tapsdk.friends.entities.TDSFriendLinkInfo;
@@ -108,8 +109,36 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.friends_new_fragment, container, false);
         ButterKnife.bind(this, view);
+        playUp();
         // 好友状态监听
         initListener();
+
+
+        /**
+         * 关注模式监听
+         *
+         */
+//        TDSFollows.registerFriendStatusChangedListener(new FriendStatusChangedListener() {
+//            // 当前玩家成功上线（长连接建立成功）
+//            @Override
+//            public void onConnected() {
+//                Log.e("TAG", "关注模式监听 当前玩家成功上线（长连接建立成功） " );
+//            }
+//
+//            // 当前玩家长连接断开，SDK 会自动重试，开发者通常无需额外处理
+//            @Override
+//            public void onDisconnected() {
+//                Log.e("TAG", "关注模式监听 当前玩家长连接断开，SDK 会自动重试，开发者通常无需额外处理" );
+//
+//            }
+//
+//            // 当前连接异常
+//            @Override
+//            public void onConnectError(int code, String msg) {
+//                Log.e("TAG", "关注模式监听 当前连接异常" );
+//
+//            }
+//        });
 
         // 落地页网站的地址需要在客户端配置：
         TDSFriends.setShareLink(Clound_SHAREHOST);
@@ -490,12 +519,14 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
             // 新增好友（触发时机同「已发送的好友申请被接受」）
             @Override
             public void onFriendAdd(TDSFriendInfo friendInfo) {
+                Log.e("TAG", "onFriendAdd: "+ friendInfo.getUser().getUsername()+"新增好友");
                 ToastUtil.showCus(friendInfo.getUser().getUsername()+"新增好友", ToastUtil.Type.POINT);
             }
 
             // 新增好友申请
             @Override
             public void onNewRequestComing(TDSFriendshipRequest request) {
+                Log.e("TAG", "onNewRequestComing: "+ request.getFriendInfo().toString()+"新增好友申请");
                 ToastUtil.showCus(request.getFriendInfo().toString()+"新增好友申请", ToastUtil.Type.POINT);
             }
 

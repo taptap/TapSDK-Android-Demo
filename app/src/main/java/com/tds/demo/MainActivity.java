@@ -43,6 +43,7 @@ import com.tds.demo.fragment.BillboardFragment;
 import com.tds.demo.fragment.CloudSaveFragment;
 import com.tds.demo.fragment.DataSaveFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
+import com.tds.demo.fragment.GiftFragment;
 import com.tds.demo.fragment.IM.IMFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
 import com.tds.demo.fragment.InsideAccoundFragment;
@@ -167,15 +168,15 @@ public class MainActivity extends AppCompatActivity {
                 case "实时语音":
                     Log.e("TAG", "onItemClick: "+SDKType );
                     break;
-
                 case "推送通知":
                     showFragment(PushFragment.getInstance(), "pushFragment");
                     break;
-
                 case "公告系统":
                     showFragment(BillboardFragment.getInstance(), "billboardFragment");
                     break;
-
+                case "礼包系统":
+                    showFragment(GiftFragment.getInstance(), "giftFragment");
+                    break;
                 default:
                     break;
 
