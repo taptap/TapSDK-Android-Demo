@@ -7,23 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.UiThread;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.gamesave.TapGameSave;
 import com.tds.demo.R;
 import com.tds.demo.until.ToastUtil;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -31,10 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.security.auth.login.LoginException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +34,6 @@ import cn.leancloud.LCException;
 import cn.leancloud.LCFile;
 import cn.leancloud.LCObject;
 import cn.leancloud.LCQuery;
-import cn.leancloud.LCUser;
 import cn.leancloud.callback.ProgressCallback;
 import cn.leancloud.livequery.LCLiveQuery;
 import cn.leancloud.livequery.LCLiveQueryConnectionHandler;

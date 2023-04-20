@@ -1,6 +1,5 @@
 package com.tds.demo.fragment;
 
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,22 +8,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.tapsdk.antiaddictionui.utils.ToastUtils;
-import com.tapsdk.bootstrap.Callback;
-import com.tapsdk.bootstrap.account.TDSUser;
-import com.tapsdk.bootstrap.exceptions.TapError;
 import com.tapsdk.bootstrap.gamesave.TapGameSave;
-import com.taptap.sdk.Profile;
-import com.taptap.sdk.TapLoginHelper;
-import com.taptap.sdk.net.Api;
 import com.tds.demo.R;
-import com.tds.demo.until.FormatJson;
 import com.tds.demo.until.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -39,10 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.leancloud.LCACL;
 import cn.leancloud.LCFile;
-import cn.leancloud.LCObject;
-import cn.leancloud.LCUser;
 import cn.leancloud.types.LCNull;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,16 +21,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.tapsdk.billboard.Callback;
-import com.tapsdk.billboard.TapBillboard;
-import com.tapsdk.billboard.exceptions.TapBillboardException;
 import com.tapsdk.bootstrap.TapBootstrap;
-import com.taptap.taprtc.Config;
-import com.taptap.taprtc.DeviceID;
-import com.taptap.taprtc.TapRTCEngine;
-import com.taptap.taprtc.TapRTCException;
-import com.taptap.taprtc.UserID;
-import com.tds.common.TapCommon;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapBillboardConfig;
 import com.tds.common.entities.TapConfig;
@@ -100,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         TapBillboardConfig billboardCnConfig = new TapBillboardConfig.Builder()
                 .withDimensionSet(dimensionSet)    // 可选
                 .withServerUrl(billboardServerUrl) // 必须, 公告的自定义域名
-                .withTemplate("navigate") // 可选, 默认是 navigate
                 .build();
 
 

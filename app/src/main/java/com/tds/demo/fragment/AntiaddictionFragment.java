@@ -29,6 +29,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.internal.operators.flowable.FlowableAllSingle;
 
 /**
  * 2022/10/13
@@ -80,7 +81,6 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
         // 实名认证的初始化
         Config config = new Config.Builder()
                 .withClientId(SDKInfoData.SDK_CLIENT_ID) // TapTap 开发者中心对应 Client ID
-                .enableTapLogin(true)           // 是否启动 TapTap 快速认证
                 .showSwitchAccount(true)       // 是否显示切换账号按钮
                 .build();
 
@@ -272,7 +272,7 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     * 实名认证是根据唯一标识进行判断是否已实名认证，所以建议该唯一标识和用户唯一绑定
     * */
     private void setQuick_authentication() {
-        String userIdentifier = "XXXXXXXXXXXXXXXX1";
-        AntiAddictionUIKit.startup(getActivity(), userIdentifier);
+        String userIdentifier = "XXXXXXXXXXXXXXXX1131";
+        AntiAddictionUIKit.startup(getActivity(), userIdentifier, true);
     }
 }

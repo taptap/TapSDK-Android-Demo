@@ -101,17 +101,19 @@ public class IMFragment extends Fragment implements View.OnClickListener{
 
         nickname = LCUser.currentUser().getServerData().get("nickname").toString();
 
-//         Tom 创建了一个 client，用昵称作为 clientId 登录测试
+//          创建了一个 client，用昵称作为 clientId 登录测试
         testClient = LCIMClient.getInstance(nickname);
-        // Tom 登录
+        //  登录
         testClient.open(new LCIMClientCallback() {
             @Override
             public void done(LCIMClient client, LCIMException e) {
                 if (e == null) {
                     // 成功打开连接
                     ToastUtil.showCus("登录成功，长链接建立成功！", ToastUtil.Type.SUCCEED);
+                    Log.e(TAG, "登录成功，长链接建立成功！");
                 }else {
                     ToastUtil.showCus(e.getLocalizedMessage(), ToastUtil.Type.ERROR);
+                    Log.e(TAG, "done-error: "+ e.getLocalizedMessage());
                 }
             }
         });

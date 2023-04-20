@@ -256,11 +256,9 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
         try {
             sha = MessageDigest.getInstance("SHA");
         } catch (Exception e) {
-            System.out.println(e.toString());
             e.printStackTrace();
             return "";
         }
-
         byte[] byteArray = inStr.getBytes("UTF-8");
         byte[] md5Bytes = sha.digest(byteArray);
         StringBuffer hexValue = new StringBuffer();
