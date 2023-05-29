@@ -209,7 +209,6 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
         }
         Log.e("TAG", "createSave: "+ copyAssetGetFilePath("存档元文件.csv"));
 
-
         TapGameSave snapshot = new TapGameSave();
         snapshot.setName(save_name.getText().toString());
         snapshot.setSummary(save_description.getText().toString());
@@ -229,7 +228,7 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onError(@NotNull Throwable e) {
-                Log.e("TAG", "onError: "+e.getMessage()  );
+                Log.e("TAG", "onError: "+e.toString()  );
 
             }
 

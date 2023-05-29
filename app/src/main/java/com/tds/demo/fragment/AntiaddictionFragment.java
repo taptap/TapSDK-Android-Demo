@@ -273,6 +273,6 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     * */
     private void setQuick_authentication() {
         String userIdentifier = "XXXXXXXXXXXXXXXX1131";
-        AntiAddictionUIKit.startup(getActivity(), userIdentifier, true);
+        AntiAddictionUIKit.startup(getActivity(), userIdentifier, false);
     }
 }

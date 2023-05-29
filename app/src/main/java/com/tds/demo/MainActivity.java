@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 .withRegionType(TapRegionType.CN)
                 .build();
         TapBootstrap.init(MainActivity.this, tdsConfig);
-//        TapBillboard.init(tdsConfig);
 
     }
 

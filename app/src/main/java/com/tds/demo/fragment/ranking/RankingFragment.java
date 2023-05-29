@@ -176,8 +176,6 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onNext(@NotNull LCLeaderboardResult leaderboardResult) {
                 List<LCRanking> rankings = leaderboardResult.getResults();
-                Log.e(TAG, "onNext:+++++>>>> "+rankings.get(0).getUser().toJSONString() );
-
 
                 RankingAdapter rankingAdapter = new RankingAdapter();
                 rankingAdapter.addData(rankings);

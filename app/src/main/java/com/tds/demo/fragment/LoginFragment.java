@@ -16,10 +16,13 @@ import androidx.fragment.app.Fragment;
 import com.tapsdk.bootstrap.Callback;
 import com.tapsdk.bootstrap.account.TDSUser;
 import com.tapsdk.bootstrap.exceptions.TapError;
+import com.taptap.sdk.AccessToken;
+import com.taptap.sdk.AccountGlobalError;
 import com.taptap.sdk.Profile;
 import com.taptap.sdk.TapLoginHelper;
 import com.taptap.sdk.net.Api;
 import com.tds.demo.R;
+import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.until.FormatJson;
 import com.tds.demo.until.ToastUtil;
 
@@ -134,7 +137,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
      * 静默登录可以帮助用户跳过登录的流程，通常用于用户下一次启动游戏时，仍需之前登录状态的场景。
      * */
     public void tapLogin() {
-       // 检查登录状态
+
+        // 检查登录状态
         if (null == TDSUser.currentUser()) {
             // 未登录
             TDSUser.loginWithTapTap(getActivity(), new Callback<TDSUser>() {
@@ -157,6 +161,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             ToastUtil.showCus("您已登录！", ToastUtil.Type.POINT );
 
         }
+
+
+
+
+
     }
     /**
      * 重置 Session token
