@@ -38,6 +38,7 @@ import com.tds.demo.fragment.IM.IMFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
 import com.tds.demo.fragment.InsideAccoundFragment;
 import com.tds.demo.fragment.LoginFragment;
+import com.tds.demo.fragment.SupportFragment;
 import com.tds.demo.fragment.achievement.AchievementFragment;
 import com.tds.demo.fragment.friend.FriendsFragment;
 import com.tds.demo.fragment.push.PushFragment;
@@ -164,6 +165,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "礼包系统":
                     showFragment(GiftFragment.getInstance(), "giftFragment");
+                    break;
+                case "客服系统":
+                    showFragment(SupportFragment.getInstance(), "supportFragment");
                     break;
                 default:
                     break;

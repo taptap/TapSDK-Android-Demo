@@ -176,6 +176,23 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onNext(@NotNull LCLeaderboardResult leaderboardResult) {
                 List<LCRanking> rankings = leaderboardResult.getResults();
+                for(int i=0; i<rankings.size(); i++){
+                    Log.e(TAG, "onNext:=====  "+rankings.get(i).getUser().getServerData().get("objectId"));
+
+                    LCQuery<LCObject> query = new LCQuery<>("_User");
+                    query.getInBackground(rankings.get(i).getUser().getServerData().get("objectId").toString()).subscribe(new Observer<LCObject>() {
+                        public void onSubscribe(Disposable disposable) {}
+                        public void onNext(LCObject todo) {
+                            Log.e(TAG, "onNextUSER=========: "+ todo.toJSONString() );
+                        }
+                        public void onError(Throwable throwable) {}
+                        public void onComplete() {}
+                    });
+                }
+
+
+
+
 
                 RankingAdapter rankingAdapter = new RankingAdapter();
                 rankingAdapter.addData(rankings);

@@ -94,7 +94,7 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
         request.setOnClickListener(this);
 
         client_id.setText("hskcocvse6x1cgkklm");
-        gift_code.setText("87CfvvEdbRVPM");
+        gift_code.setText("NZ4mp2cztRMXH");
         character_id.setText(randomCharacterId());
         nonce_str.setText("DFGH3");
         String timeStr = (System.currentTimeMillis() / 1000)+"";
@@ -194,6 +194,7 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
                 Message message = new Message();
                 message.obj = response.body().string();
                 mMainHandler.sendMessage(message);
