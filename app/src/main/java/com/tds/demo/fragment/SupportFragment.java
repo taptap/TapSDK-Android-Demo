@@ -87,7 +87,7 @@ public class SupportFragment extends Fragment implements View.OnClickListener {
 
 
         initSupport();
-        bindToken();
+//        bindToken();
 
         return view;
     }

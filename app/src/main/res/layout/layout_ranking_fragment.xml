@@ -82,6 +82,14 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft="15dp"/>
 
+    <Button
+        android:id="@+id/search_rank_patly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查询区间排名"
+        app:layout_constraintTop_toBottomOf="@id/submit_score"
+        app:layout_constraintStart_toEndOf="@id/search_rank_list"
+        android:layout_marginLeft="15dp"/>
 
     <TextView
         android:id="@+id/ranking_title"

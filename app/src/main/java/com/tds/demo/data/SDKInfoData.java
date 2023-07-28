@@ -8,7 +8,7 @@ package com.tds.demo.data;
  */
 public class SDKInfoData {
 
-   // 必须，开发者中心对应 Client ID
+    // 必须，开发者中心对应 Client ID
     public static String SDK_CLIENT_ID = "=====换成你的 CLIENT_ID =====";
 
     // 必须，开发者中心对应 Client Token

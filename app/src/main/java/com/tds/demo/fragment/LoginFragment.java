@@ -28,6 +28,8 @@ import com.tds.demo.until.ToastUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -110,6 +112,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.tap_login:
                 tapLogin();
+
                 break;
             case R.id.userinfo_button:
                 getUserInfo();
@@ -152,7 +155,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 @Override
                 public void onFail(TapError error) {
                     ToastUtil.showCus(error.getMessage(), ToastUtil.Type.ERROR );
-                    Log.e(TAG, "Login onFail: "+error.getMessage() );
+                    Log.e(TAG, "Login onFail: "+error.code);
                 }
             }, "public_profile");
 
@@ -161,10 +164,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             ToastUtil.showCus("您已登录！", ToastUtil.Type.POINT );
 
         }
-
-
-
-
 
     }
     /**

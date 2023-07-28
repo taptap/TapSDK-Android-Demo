@@ -2,13 +2,10 @@ package com.tds.demo;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +22,7 @@ import com.tapsdk.bootstrap.TapBootstrap;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapBillboardConfig;
 import com.tds.common.entities.TapConfig;
+import com.tds.common.entities.TapDBConfig;
 import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
@@ -83,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
      *
      * */
     private void initSDK() {
+        Log.e("TAG", "initSDK: "+ Thread.currentThread().getName());
+
 
         Set<Pair<String, String>> dimensionSet = new HashSet<>();
         dimensionSet.addAll(Arrays.asList(Pair.create("location", "CN"), Pair.create("platform", "TapTap")));
@@ -93,6 +93,12 @@ public class MainActivity extends AppCompatActivity {
                 .withServerUrl(billboardServerUrl) // 必须, 公告的自定义域名
                 .build();
 
+        TapDBConfig tapDBConfig = new TapDBConfig();
+        tapDBConfig.setEnable(true); //是否开启 TapDB
+        tapDBConfig.setChannel("gameChannel"); //分包渠道，长度不大于 256
+        tapDBConfig.setGameVersion("1.0.0"); //游戏版本，为空时，自动获取游戏安装包的版本，长度不大于 256
+
+
 
         TapConfig tdsConfig = new TapConfig.Builder()
                 .withAppContext(this)
@@ -100,9 +106,13 @@ public class MainActivity extends AppCompatActivity {
                 .withClientToken(SDKInfoData.SDK_CLINT_TOKEN)
                 .withServerUrl(SDKInfoData.SDK_SERVER_URL)
                 .withBillboardConfig(billboardCnConfig) // 使用公告系统时就必须加入
+                .withTapDBConfig(tapDBConfig)
                 .withRegionType(TapRegionType.CN)
                 .build();
+
         TapBootstrap.init(MainActivity.this, tdsConfig);
+
+
 
     }
 
@@ -116,9 +126,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "内嵌动态":
                     showFragment(InLineDynamicFragment.getInstance(), "inLineDynamicFragment");
+
                     break;
                 case "即时通讯":
                     showFragment(IMFragment.getInstance(), "iMFragment");
+
                     break;
 
                 case "正版验证":
@@ -219,20 +231,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-    /**
-     * 创建通知渠道
-     *
-     * */
-    private void createNotificationChannel(String name, String description, String notificationId) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(notificationId, name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
 }

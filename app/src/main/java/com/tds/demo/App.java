@@ -32,8 +32,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LeanCloud.setLogLevel(LCLogger.Level.DEBUG);
-
         context = getApplicationContext();
         LeanCloud.initialize(this, SDKInfoData.SDK_CLIENT_ID, SDKInfoData.SDK_CLINT_TOKEN, SDKInfoData.SDK_SERVER_URL);
         LeanCloud.setLogLevel(LCLogger.Level.DEBUG);

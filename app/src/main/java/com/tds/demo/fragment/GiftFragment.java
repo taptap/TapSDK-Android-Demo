@@ -96,7 +96,7 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
         client_id.setText("hskcocvse6x1cgkklm");
         gift_code.setText("NZ4mp2cztRMXH");
         character_id.setText(randomCharacterId());
-        nonce_str.setText("DFGH3");
+        nonce_str.setText("RFG7U");
         String timeStr = (System.currentTimeMillis() / 1000)+"";
         timestamp.setText(timeStr);
 
@@ -162,7 +162,6 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
      */
 
     private void startSubmit() {
-        String url = "";
         OkHttpClient client = new OkHttpClient();
 
         JSONObject jsonObject = new JSONObject();
@@ -173,6 +172,8 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
             jsonObject.put("nonce_str",nonce_str.getText().toString());
             jsonObject.put("sign",sign.getText().toString());
             jsonObject.put("timestamp",Integer.parseInt(timestamp.getText().toString()));
+//            jsonObject.put("server_code","121212");  // 无二次校验的兑换接口
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -180,6 +181,8 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
         RequestBody body = RequestBody.create(jsonObject.toString(), MediaType.parse("application/json;charset=utf-8"));
         Request requst = new Request.Builder()
                 .url("https://poster-api.xd.cn/api/v1.0/cdk/game/submit-simple")
+//                .url("https://poster-api.xd.cn/api/v1.0/cdk/game/submit-send")  // 无二次校验的兑换接口
+//                .url("https://poster-api.xd.cn/api/v1.0/cdk/game/submit-check")  // 二次校验的兑换接口
                 .post(body)
                 .build();
         client.newCall(requst).enqueue(new Callback() {
@@ -195,8 +198,11 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
+                String result = response.body().string();
+                Log.e(TAG, "onResponse: ===》"+ result );
+
                 Message message = new Message();
-                message.obj = response.body().string();
+                message.obj = result;
                 mMainHandler.sendMessage(message);
 
             }
@@ -207,6 +213,7 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
 
     private Handler mMainHandler = new Handler(msg -> {
         if (msg.obj != null) {
+            Log.e(TAG, ":===  "+ msg.obj.toString() );
             response_info.setText(msg.obj.toString());
         }
         return true;

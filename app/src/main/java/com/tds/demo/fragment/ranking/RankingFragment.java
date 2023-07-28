@@ -2,6 +2,7 @@ package com.tds.demo.fragment.ranking;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ import cn.leancloud.LCRanking;
 import cn.leancloud.LCStatistic;
 import cn.leancloud.LCStatisticResult;
 import cn.leancloud.LCUser;
+import cn.leancloud.json.JSON;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -59,6 +61,10 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
     RecyclerView recycle_view;
     @BindView(R.id.search_ranking_attr)
     Button search_ranking_attr;
+    @BindView(R.id.search_rank_patly)
+    Button search_rank_patly;
+
+
 
 
 
@@ -95,6 +101,7 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
         submit_score.setOnClickListener(this);
         search_rank_list.setOnClickListener(this);
         search_ranking_attr.setOnClickListener(this);
+        search_rank_patly.setOnClickListener(this);
 
     }
 
@@ -120,12 +127,45 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             case R.id.search_ranking_attr:
                 searchRankingAttr();
                 break;
-
+            case R.id.search_rank_patly:
+                searchRankPatly();
+                break;
 
             default:
                 break;
 
         }
+
+    }
+
+//    查询指定区间的排行榜
+    private void searchRankPatly() {
+        LCLeaderboard leaderboard = LCLeaderboard.createWithoutData("word");
+
+        leaderboard.getResults(0, 10, null, null).subscribe(new Observer<LCLeaderboardResult>() {
+            @Override
+            public void onSubscribe(@NotNull Disposable disposable) {}
+
+            @Override
+            public void onNext(@NotNull LCLeaderboardResult leaderboardResult) {
+                List<LCRanking> rankings = leaderboardResult.getResults();
+
+                for (LCRanking ranking : rankings) {
+                    Log.e(TAG, "onNext==: "+ JSON.toJSONString(ranking));
+                }
+            }
+
+            @Override
+            public void onError(@NotNull Throwable throwable) {
+                // handle error
+                Log.e(TAG, "onError: "+throwable.getLocalizedMessage()  );
+            }
+
+            @Override
+            public void onComplete() {}
+        });
+
+
 
     }
 
@@ -254,9 +294,9 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
     private void submitScore() {
 
         Map<String, Double> statistic  = new HashMap<>();
-        statistic.put("word", 1000.00);
-        statistic.put("score", 310.00);
-        statistic.put("kills", 180.0);
+        statistic.put("word", 600.00);
+        statistic.put("score", 10.00);
+        statistic.put("kills", 80.0);
         LCLeaderboard.updateStatistic(LCUser.currentUser(), statistic).subscribe(new Observer<LCStatisticResult>() {
             @Override
             public void onSubscribe(@NotNull Disposable disposable) {}
@@ -278,6 +318,9 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onComplete() {}
         });
+
+
+
     }
 
 

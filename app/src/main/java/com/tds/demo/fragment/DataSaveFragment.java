@@ -567,14 +567,16 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
      * 查询对象
      * */
     private void searchData() {
-       LCQuery<LCObject> query = new LCQuery<>("Todo");
 
-        if (saveObjectId.isEmpty()){
-            ToastUtil.showCus("暂无存储对象数据！", ToastUtil.Type.POINT);
-            return;
-        }
 
-        query.getInBackground(saveObjectId).subscribe(new Observer<LCObject>() {
+       LCQuery<LCObject> query = new LCQuery<>("TapRole");
+        query.whereEqualTo("content", "测试");
+//        if (saveObjectId.isEmpty()){
+//            ToastUtil.showCus("暂无存储对象数据！", ToastUtil.Type.POINT);
+//            return;
+//        }
+
+        query.getInBackground("64afada4b4245dd73cf32a82").subscribe(new Observer<LCObject>() {
             public void onSubscribe(Disposable disposable) {}
             public void onNext(LCObject todo) {
                 // todo 就是 objectId 为 582570f38ac247004f39c24b 的 Todo 实例

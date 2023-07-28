@@ -138,14 +138,18 @@ public class InsideAccoundFragment extends Fragment implements View.OnClickListe
      * */
     private void thirdLogin() {
         Map<String, Object> thirdPartyData = new HashMap<String, Object>();
-        // 必须参数
-        thirdPartyData.put("expires_in", 7200);
-        thirdPartyData.put("openid", "调用微信授权返回的 openid 的值");
-        thirdPartyData.put("access_token", "调用微信授权返回的 ACCESS_TOKEN 的值");
-        // 可选参数
-        thirdPartyData.put("refresh_token", "调用微信授权返回的 refresh_token 的值");
-        thirdPartyData.put("scope", "调用微信授权返回的 scope 的值");
-        TDSUser.loginWithAuthData(TDSUser.class, thirdPartyData, "weixin").subscribe(new Observer<TDSUser>() {
+//        // 必须参数
+//        thirdPartyData.put("expires_in", 7200);
+//        thirdPartyData.put("openid", "调用微信授权返回的 openid 的值");
+//        thirdPartyData.put("access_token", "调用微信授权返回的 ACCESS_TOKEN 的值");
+//        // 可选参数
+//        thirdPartyData.put("refresh_token", "调用微信授权返回的 refresh_token 的值");
+//        thirdPartyData.put("scope", "调用微信授权返回的 scope 的值");
+
+        thirdPartyData.put("uid", "sfasdfadsfasdf");
+        thirdPartyData.put("access-token", "fasdfadsfvdafgjajfajfjadjfaj");
+
+        TDSUser.loginWithAuthData(TDSUser.class, thirdPartyData, "weilai9999").subscribe(new Observer<TDSUser>() {
             public void onSubscribe(Disposable disposable) {
             }
             public void onNext(TDSUser user) {
