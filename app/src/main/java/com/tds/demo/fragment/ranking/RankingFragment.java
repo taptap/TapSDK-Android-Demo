@@ -24,6 +24,8 @@ import com.tds.demo.until.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,14 +203,16 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
 
     /**
      * 查询排行榜列表
-     *
      * */
     private void searchRankList() {
+
+
         // 获取排行榜的实例
         LCLeaderboard leaderboard = LCLeaderboard.createWithoutData("word");
 
-
-        leaderboard.getResults(0, 10, null, null).subscribe(new Observer<LCLeaderboardResult>() {
+        List<String> selectKeys = new ArrayList<>();
+        selectKeys.add("nickname");
+        leaderboard.getResults(0, 10, selectKeys, null).subscribe(new Observer<LCLeaderboardResult>() {
             @Override
             public void onSubscribe(@NotNull Disposable disposable) {}
 
@@ -216,8 +220,8 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onNext(@NotNull LCLeaderboardResult leaderboardResult) {
                 List<LCRanking> rankings = leaderboardResult.getResults();
+
                 for(int i=0; i<rankings.size(); i++){
-                    Log.e(TAG, "onNext:=====  "+rankings.get(i).getUser().getServerData().get("objectId"));
 
                     LCQuery<LCObject> query = new LCQuery<>("_User");
                     query.getInBackground(rankings.get(i).getUser().getServerData().get("objectId").toString()).subscribe(new Observer<LCObject>() {
@@ -229,8 +233,6 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
                         public void onComplete() {}
                     });
                 }
-
-
 
 
 
@@ -294,7 +296,7 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
     private void submitScore() {
 
         Map<String, Double> statistic  = new HashMap<>();
-        statistic.put("word", 600.00);
+        statistic.put("word", 200.00);
         statistic.put("score", 10.00);
         statistic.put("kills", 80.0);
         LCLeaderboard.updateStatistic(LCUser.currentUser(), statistic).subscribe(new Observer<LCStatisticResult>() {
@@ -319,9 +321,34 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             public void onComplete() {}
         });
 
-
-
     }
+
+    /**
+     * score 实际的分数
+     * ts 时间戳
+     * 将实际分数与时间戳组合生成一个新的数据上传到服务器
+     */
+    public static double encryptScoreAndTs(double score, long ts) {
+        int int_score = (int) score;   // 实际分数的整数部分
+        float float_score = (float) (score - int_score); // 实际分数的小数部分
+        long encryptedScoreTs = ((long) int_score << 32) | (ts & 0xFFFFFFFFL); // 将整数部分分数与时间戳进行加密处理合并成一个新的score
+        double newScore =  (double)encryptedScoreTs + float_score;  // 然后将加密生成的数据拼接上小数部分的数据，上传到服务器
+        return newScore;
+    }
+
+
+    /**
+     * 将加密的数据进行解析出实际分数和当时提交成绩时的时间戳
+     *
+     */
+    public static int[] decryptNewScore(long encryptedNewScore) {
+        // 从newScore中分离出原来的score和ts
+        int score = (int) (encryptedNewScore >> 32);
+        long ts = encryptedNewScore & 0xFFFFFFFFL;
+        return new int[]{score, (int) ts};
+    }
+
+
 
 
 

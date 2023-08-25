@@ -141,6 +141,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
      * */
     public void tapLogin() {
 
+       TDSUser tdsUser =  TDSUser.getCurrentUser();
+
+        TapLoginHelper.getCurrentProfile();
+
         // 检查登录状态
         if (null == TDSUser.currentUser()) {
             // 未登录
