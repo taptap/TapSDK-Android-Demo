@@ -79,6 +79,7 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
         }
         TapAchievement.initData();
 
+
         // 注册监听回调
         TapAchievement.registerCallback(new AchievementCallback() {
             @Override
@@ -156,7 +157,7 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
         List<TapAchievementBean> userList = TapAchievement.getLocalUserAchievementList();
         String archieveName= "";
         for (int i= 0; i< userList.size(); i++) {
-            Log.e("TAG", "全部成就数据: "+ userList.get(i).getAchievementId()+"  "+userList.get(i).getTitle());
+            Log.e("TAG", "全部成就数据: "+ userList.get(i).getAchievementId()+"  "+userList.get(i).getTitle()+"  "+userList.get(i).isFullAchievement()+" "+ userList.get(i).isFullReached()+" "+ userList.get(i).getReachedStep() );
             archieveName =archieveName+userList.get(i).getTitle()+"、";
         }
         if(archieveName.isEmpty()){
@@ -228,7 +229,10 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
 
         // 本地数据
         List<TapAchievementBean> allList = TapAchievement.getLocalAllAchievementList();
-
+        for (int i = 0; i < allList.size(); i++) {
+            Log.e("TAG", "============ "+ allList.get(i).getDisplayId()+"  "+ allList.get(i).isFullAchievement()+"  " +allList.get(i).getReachedStep()+"  "+allList.get(i).isFullReached()+
+                    "  "+allList.get(i).getStep());
+        }
         ArchievementAdapter archievementAdapter = new ArchievementAdapter();
         archievementAdapter.addData(allList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -239,6 +243,7 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
             @Override
             public void onClick(TapAchievementBean tapAchievementBean, int position, int hadle_type) {
                 if(hadle_type == 1){
+                    Log.e("TAG", "onClick:getDisplayId :"+ tapAchievementBean.getDisplayId());
                     addStep(tapAchievementBean.getDisplayId());
                     ToastUtil.showCus("增加一步成功！", ToastUtil.Type.SUCCEED);
                 }else{
@@ -258,6 +263,7 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
             @Override
             public void onGetAchievementList(List<TapAchievementBean> achievementList, AchievementException exception) {
                 if (exception != null) {
+                    Log.e("TAG", "onGetAchievementList: "+ exception.errorCode );
                     switch (exception.errorCode) {
                         case AchievementException.SDK_NOT_INIT:
                             // SDK 还未初始化数据
@@ -268,7 +274,10 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
                     }
                 } else {
                     // 成功获取数据
-
+                    for (int i = 0; i < achievementList.size(); i++) {
+                        Log.e("TAG", "+++++++++++  "+ achievementList.get(i).getDisplayId()+"  "+ achievementList.get(i).isFullAchievement()+"  " +achievementList.get(i).getReachedStep()+"  "+achievementList.get(i).isFullReached()+
+                                "  "+achievementList.get(i).getStep());
+                    }
                 }
             }
         });

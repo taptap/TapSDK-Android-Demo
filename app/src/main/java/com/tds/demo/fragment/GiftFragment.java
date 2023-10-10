@@ -93,8 +93,8 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
         sign_btn.setOnClickListener(this);
         request.setOnClickListener(this);
 
-        client_id.setText("hskcocvse6x1cgkklm");
-        gift_code.setText("NZ4mp2cztRMXH");
+        client_id.setText("9zifz44qj3chjr9upy");
+        gift_code.setText("SHIYIVSNIcX2O7Bt8t");
         character_id.setText(randomCharacterId());
         nonce_str.setText("RFG7U");
         String timeStr = (System.currentTimeMillis() / 1000)+"";

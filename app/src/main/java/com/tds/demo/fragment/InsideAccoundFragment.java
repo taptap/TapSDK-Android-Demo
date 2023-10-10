@@ -51,6 +51,10 @@ public class InsideAccoundFragment extends Fragment implements View.OnClickListe
     Button search_user;
     @BindView(R.id.third_login)
     Button third_login;
+    @BindView(R.id.search_current)
+    Button search_current;
+
+
 
 
 
@@ -91,6 +95,8 @@ public class InsideAccoundFragment extends Fragment implements View.OnClickListe
         set_other_attribute.setOnClickListener(this);
         search_user.setOnClickListener(this);
         third_login.setOnClickListener(this);
+
+        search_current.setOnClickListener(this);
     }
 
     @Override
@@ -121,9 +127,24 @@ public class InsideAccoundFragment extends Fragment implements View.OnClickListe
             case R.id.third_login:
                 thirdLogin();
                 break;
+            case R.id.search_current:
+                searchCurrent();
+                break;
 
             default:
                 break;
+        }
+    }
+
+    private void searchCurrent() {
+
+        TDSUser currentUser = TDSUser.getCurrentUser();
+        if (currentUser != null) {
+            // 跳到首页
+            Log.e("TAG", "searchCurrent: "+currentUser.toJSONInfo()  );
+        } else {
+            // 显示注册或登录页面
+            Log.e("TAG", "当前对象为空" );
         }
     }
 
@@ -190,33 +211,53 @@ public class InsideAccoundFragment extends Fragment implements View.OnClickListe
      * 设置用户其他属性
      * */
     private void setOtherAttribute() {
-        TDSUser currentUser = TDSUser.currentUser();  // 获取当前登录的账户实例
-        currentUser.put("nickname","Trackk_New");
-        currentUser.put("birthday", "01-01");
-        currentUser.put("age", "18");
-        currentUser.saveInBackground().subscribe(new Observer<LCObject>() {
-            @Override
-            public void onSubscribe(@NotNull Disposable d) {
+
+
+
+        LCQuery<LCObject> query = new LCQuery<>("Todo");
+        query.getInBackground("64f1d2641dc8d8649ff5c872").subscribe(new Observer<LCObject>() {
+            public void onSubscribe(Disposable disposable) {}
+            public void onNext(LCObject todo) {
+
+                TDSUser currentUser = TDSUser.currentUser();  // 获取当前登录的账户实例
+                currentUser.put("nickname","Trackk_New");
+                currentUser.put("birthday", "01-01");
+                currentUser.put("age", "18");
+                currentUser.put("todo", todo);
+
+                currentUser.saveInBackground().subscribe(new Observer<LCObject>() {
+                    @Override
+                    public void onSubscribe(@NotNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NotNull LCObject lcObject) {
+                        // 保存成功，currentUser 的属性得到更新
+                        TDSUser tdsUser = (TDSUser) lcObject;
+                        ToastUtil.showCus("用户昵称属性："+tdsUser.getServerData().get("nickname").toString()+"设置成功", ToastUtil.Type.SUCCEED);
+                    }
+
+                    @Override
+                    public void onError(@NotNull Throwable e) {
+                        ToastUtil.showCus(e.getMessage(), ToastUtil.Type.ERROR);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
 
             }
-
-            @Override
-            public void onNext(@NotNull LCObject lcObject) {
-                // 保存成功，currentUser 的属性得到更新
-                TDSUser tdsUser = (TDSUser) lcObject;
-                ToastUtil.showCus("用户昵称属性："+tdsUser.getServerData().get("nickname").toString()+"设置成功", ToastUtil.Type.SUCCEED);
-            }
-
-            @Override
-            public void onError(@NotNull Throwable e) {
-                ToastUtil.showCus(e.getMessage(), ToastUtil.Type.ERROR);
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
+            public void onError(Throwable throwable) {}
+            public void onComplete() {}
         });
+
+
+
     }
 
     /**
