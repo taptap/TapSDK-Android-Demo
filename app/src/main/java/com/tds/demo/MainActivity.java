@@ -1,5 +1,7 @@
 package com.tds.demo;
 
+import static com.tapsdk.moment.TapMoment.isCN;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -19,11 +21,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
+import com.tapsdk.moment.TapMoment;
+import com.tapsdk.tapconnect.TapConnect;
+import com.taptap.sdk.TapLoginHelper;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapBillboardConfig;
 import com.tds.common.entities.TapConfig;
 import com.tds.common.entities.TapDBConfig;
 import com.tds.common.models.TapRegionType;
+import com.tds.common.utils.TapGameUtil;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.AntiaddictionFragment;
@@ -59,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         checkPermission(this, this);
 
         initSDK();
-
 
         ExpandableListView listView = findViewById(R.id.listview);
         MyBaseExpandableListAdapter adapter
@@ -112,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
         TapBootstrap.init(MainActivity.this, tdsConfig);
 
-
+        TapConnect.setEntryVisible(true);
 
     }
 
@@ -135,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
                 case "正版验证":
                     showFragment(GenuineVerifyFragment.getInstance(), "genuineVerifyFragment");
+
                     break;
 
                 case "防沉迷-合规认证":

@@ -20,6 +20,4 @@ public class SDKInfoData {
     // 游戏好友中 邀请落地页中的域名  如果是使用的云引擎部署，请在开发者中心=》游戏服务 =》云服务 =》云引擎 =》设置 页面中自定义域名
     public static String Clound_SHAREHOST = "=====换成你的 自定义域名 ===== ";
 
-
-
 }

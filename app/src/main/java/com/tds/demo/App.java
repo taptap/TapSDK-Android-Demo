@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
+import com.tapsdk.bootstrap.account.TDSUser;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.fragment.push.PushActivity;
 
@@ -91,6 +92,7 @@ public class App extends Application {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+
     }
 
 }

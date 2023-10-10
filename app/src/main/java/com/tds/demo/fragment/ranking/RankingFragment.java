@@ -212,6 +212,9 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
 
         List<String> selectKeys = new ArrayList<>();
         selectKeys.add("nickname");
+        selectKeys.add("avatar");
+        selectKeys.add("todo");
+
         leaderboard.getResults(0, 10, selectKeys, null).subscribe(new Observer<LCLeaderboardResult>() {
             @Override
             public void onSubscribe(@NotNull Disposable disposable) {}
@@ -222,6 +225,7 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
                 List<LCRanking> rankings = leaderboardResult.getResults();
 
                 for(int i=0; i<rankings.size(); i++){
+                    Log.e(TAG, "onNext======: "+rankings.get(i).getUser() );
 
                     LCQuery<LCObject> query = new LCQuery<>("_User");
                     query.getInBackground(rankings.get(i).getUser().getServerData().get("objectId").toString()).subscribe(new Observer<LCObject>() {

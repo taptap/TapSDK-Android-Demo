@@ -228,8 +228,7 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onError(@NotNull Throwable e) {
-                Log.e("TAG", "onError: "+e.toString()  );
-
+                Log.e("TAG", "onError: "+e.getLocalizedMessage()  );
             }
 
             @Override

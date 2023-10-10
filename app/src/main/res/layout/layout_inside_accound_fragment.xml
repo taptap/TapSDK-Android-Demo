@@ -97,6 +97,16 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
 
+    <Button
+        android:id="@+id/search_current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/third_login"
+        app:layout_constraintTop_toBottomOf="@id/search_user"
+        android:text="查询当前用户"
+        android:layout_marginLeft="15dp"
+        />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -606,6 +606,9 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
      * 存储对象到云端
      * */
     private void objectSaveToCloud() {
+
+
+
         // 构建对象
         LCObject todo = new LCObject("Todo");
 
