@@ -24,10 +24,12 @@ import com.tapsdk.bootstrap.TapBootstrap;
 import com.tapsdk.moment.TapMoment;
 import com.tapsdk.tapconnect.TapConnect;
 import com.taptap.sdk.TapLoginHelper;
+import com.tds.common.constants.Constants;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapBillboardConfig;
 import com.tds.common.entities.TapConfig;
 import com.tds.common.entities.TapDBConfig;
+import com.tds.common.entities.TapPaymentConfig;
 import com.tds.common.models.TapRegionType;
 import com.tds.common.utils.TapGameUtil;
 import com.tds.demo.data.SDKInfoData;
@@ -104,6 +106,15 @@ public class MainActivity extends AppCompatActivity {
         tapDBConfig.setGameVersion("1.0.0"); //游戏版本，为空时，自动获取游戏安装包的版本，长度不大于 256
 
 
+        TapPaymentConfig tapPaymentConfig = new TapPaymentConfig.Builder()
+                // 地区暂时只支持「中国地区」
+                .withRegionId(Constants.Region.REGION_CN)
+                // 语言暂时只支持中文
+                .withLanguage(Constants.Language.CN)
+                // 微信商户申请H5时提交的授权域名，详见 https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_4 里 Referer 设置相关部分
+                .withWXAuthorizedDomainName("https://tds-payment.tapapis.cn")
+                .build();
+
 
         TapConfig tdsConfig = new TapConfig.Builder()
                 .withAppContext(this)
@@ -113,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 .withBillboardConfig(billboardCnConfig) // 使用公告系统时就必须加入
                 .withTapDBConfig(tapDBConfig)
                 .withRegionType(TapRegionType.CN)
+                .withTapPaymentConfig(tapPaymentConfig)
                 .build();
 
         TapBootstrap.init(MainActivity.this, tdsConfig);
