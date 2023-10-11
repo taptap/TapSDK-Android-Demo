@@ -1,7 +1,5 @@
 package com.tds.demo;
 
-import static com.tapsdk.moment.TapMoment.isCN;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.webkit.WebView;
 import android.widget.ExpandableListView;
 
 import androidx.annotation.NonNull;
@@ -21,9 +17,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
-import com.tapsdk.moment.TapMoment;
 import com.tapsdk.tapconnect.TapConnect;
-import com.taptap.sdk.TapLoginHelper;
 import com.tds.common.constants.Constants;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapBillboardConfig;
@@ -31,7 +25,6 @@ import com.tds.common.entities.TapConfig;
 import com.tds.common.entities.TapDBConfig;
 import com.tds.common.entities.TapPaymentConfig;
 import com.tds.common.models.TapRegionType;
-import com.tds.common.utils.TapGameUtil;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.AntiaddictionFragment;
@@ -44,6 +37,7 @@ import com.tds.demo.fragment.IM.IMFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
 import com.tds.demo.fragment.InsideAccoundFragment;
 import com.tds.demo.fragment.LoginFragment;
+import com.tds.demo.fragment.pay.PayFragment;
 import com.tds.demo.fragment.SupportFragment;
 import com.tds.demo.fragment.achievement.AchievementFragment;
 import com.tds.demo.fragment.friend.FriendsFragment;
@@ -58,7 +52,6 @@ import java.util.Set;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-    private WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,79 +126,79 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private MyBaseExpandableListAdapter.OnItemClickListener myItemClickListener = new MyBaseExpandableListAdapter.OnItemClickListener(){
-        @Override
-        public void onItemClick(View v, String SDKType) {
-            switch (SDKType){
-                case "TapTap登录":
-                    showFragment(LoginFragment.getInstance(), "loginFragment");
+    private MyBaseExpandableListAdapter.OnItemClickListener myItemClickListener = (v, SDKType) -> {
+        switch (SDKType){
+            case "TapTap登录":
+                showFragment(LoginFragment.getInstance(), "loginFragment");
 
-                    break;
-                case "内嵌动态":
-                    showFragment(InLineDynamicFragment.getInstance(), "inLineDynamicFragment");
+                break;
+            case "内嵌动态":
+                showFragment(InLineDynamicFragment.getInstance(), "inLineDynamicFragment");
 
-                    break;
-                case "即时通讯":
-                    showFragment(IMFragment.getInstance(), "iMFragment");
+                break;
+            case "即时通讯":
+                showFragment(IMFragment.getInstance(), "iMFragment");
 
-                    break;
+                break;
 
-                case "正版验证":
-                    showFragment(GenuineVerifyFragment.getInstance(), "genuineVerifyFragment");
+            case "正版验证":
+                showFragment(GenuineVerifyFragment.getInstance(), "genuineVerifyFragment");
 
-                    break;
+                break;
 
-                case "防沉迷-合规认证":
-                    showFragment(AntiaddictionFragment.getInstance(), "antiaddictionFragment");
-                    break;
+            case "防沉迷-合规认证":
+                showFragment(AntiaddictionFragment.getInstance(), "antiaddictionFragment");
+                break;
 
-                case "内建账户":
-                    showFragment(InsideAccoundFragment.getInstance(), "insideAccoundFragment");
-                    break;
+            case "内建账户":
+                showFragment(InsideAccoundFragment.getInstance(), "insideAccoundFragment");
+                break;
 
-                case "好友":
-                    showFragment(FriendsFragment.getInstance(), "friendsFragment");
-                    break;
+            case "好友":
+                showFragment(FriendsFragment.getInstance(), "friendsFragment");
+                break;
 
-                case "成就":
-                    showFragment(AchievementFragment.getInstance(), "achievementFragment");
-                    break;
+            case "成就":
+                showFragment(AchievementFragment.getInstance(), "achievementFragment");
+                break;
 
-                case "排行榜":
+            case "排行榜":
 
-                    showFragment(RankingFragment.getInstance(), "rankingFragment");
-                    break;
+                showFragment(RankingFragment.getInstance(), "rankingFragment");
+                break;
 
-                case "云存档":
-                    showFragment(CloudSaveFragment.getInstance(), "cloudSaveFragment");
-                    break;
+            case "云存档":
+                showFragment(CloudSaveFragment.getInstance(), "cloudSaveFragment");
+                break;
 
-                case "数据存储":
-                    showFragment(DataSaveFragment.getInstance(), "dataSaveFragment");
-                    break;
+            case "数据存储":
+                showFragment(DataSaveFragment.getInstance(), "dataSaveFragment");
+                break;
+            case "实时语音":
+                Log.e("TAG", "onItemClick: "+SDKType );
+                break;
+            case "推送通知":
+                showFragment(PushFragment.getInstance(), "pushFragment");
+                break;
+            case "公告系统":
+                showFragment(BillboardFragment.getInstance(), "billboardFragment");
+                break;
+            case "礼包系统":
+                showFragment(GiftFragment.getInstance(), "giftFragment");
+                break;
+            case "客服系统":
+                showFragment(SupportFragment.getInstance(), "supportFragment");
+                break;
+            case "支付系统":
+                showFragment(PayFragment.getInstance(), "payFragment");
+                break;
 
-                case "实时语音":
-                    Log.e("TAG", "onItemClick: "+SDKType );
-                    break;
-                case "推送通知":
-                    showFragment(PushFragment.getInstance(), "pushFragment");
-                    break;
-                case "公告系统":
-                    showFragment(BillboardFragment.getInstance(), "billboardFragment");
-                    break;
-                case "礼包系统":
-                    showFragment(GiftFragment.getInstance(), "giftFragment");
-                    break;
-                case "客服系统":
-                    showFragment(SupportFragment.getInstance(), "supportFragment");
-                    break;
-                default:
-                    break;
-
-            }
-
+            default:
+                break;
 
         }
+
+
     };
 
     public void showFragment(Fragment fragment, String tag){
