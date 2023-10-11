@@ -90,4 +90,8 @@ dependencies {
 //    implementation('cn.leancloud:realtime-android:8.2.18'){
 //        exclude group: 'io.reactivex.rxjava2'
 //    }
+
+    // 如果要支持 app 支付，添加下面的微信和支付宝的 SDK
+    implementation 'com.alipay.sdk:alipaysdk-android:15.8.11@aar'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android:6.8.0'
 }
