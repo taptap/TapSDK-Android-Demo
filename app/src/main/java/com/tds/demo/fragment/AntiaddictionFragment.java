@@ -21,6 +21,9 @@ import com.tapsdk.antiaddiction.entities.response.CheckPayResult;
 import com.tapsdk.antiaddiction.entities.response.SubmitPayResult;
 import com.tapsdk.antiaddictionui.AntiAddictionUICallback;
 import com.tapsdk.antiaddictionui.AntiAddictionUIKit;
+import com.tapsdk.bootstrap.account.TDSUser;
+import com.taptap.sdk.Profile;
+import com.taptap.sdk.TapLoginHelper;
 import com.tds.demo.R;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.until.ToastUtil;
@@ -113,6 +116,9 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
             }
         });
 
+
+
+
         return view;
     }
 
@@ -147,7 +153,7 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
               antiaddictionExit();
               break;
           case R.id.age:
-              getGamerAge();
+//              getGamerAge();
               break;
           case R.id.pay_limit:
               checkPay();
@@ -190,7 +196,6 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
                     public void onError(Throwable throwable) {
                         // 处理异常
                         ToastUtil.showCus("处理异常！", ToastUtil.Type.ERROR );
-
                     }
                 }
         );
@@ -240,17 +245,6 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     }
 
     /**
-    * 获取玩家年龄
-    * ageRange 是一个整数，表示玩家所处年龄段的下限（最低年龄）。 特别地，-1 表示「未知」，说明该用户还未实名。
-    * */
-    private void getGamerAge() {
-        int ageRange = AntiAddictionUIKit.getAgeRange();
-        ToastUtil.showCus("玩家年龄是："+ ageRange, ToastUtil.Type.SUCCEED );
-
-    }
-
-
-    /**
      *
      * 玩家在游戏内退出账号时调用，重置防沉迷状态。
      * */
@@ -272,10 +266,19 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     * 实名认证是根据唯一标识进行判断是否已实名认证，所以建议该唯一标识和用户唯一绑定
     * */
     private void setQuick_authentication() {
-//        String userIdentifier = "XXXXXXXXXXXXdddjjjdXXXX1131";
-        String userIdentifier =  System.currentTimeMillis()+"";
-        AntiAddictionUIKit.startup(getActivity(), userIdentifier, false);
+        String userIdentifier =  "";
 
+//        Profile profile = TapLoginHelper.getCurrentProfile();
+//        if (profile != null) {
+//            userIdentifier = profile.getUnionid();
+//            Log.e("TAG", "=== "+userIdentifier  );
+//        } else {
+//
+//            ToastUtil.showCus("请登录", ToastUtil.Type.POINT);
+//        }
+
+        userIdentifier = System.currentTimeMillis()+"";
+        AntiAddictionUIKit.startupWithTapTap(getActivity(), userIdentifier);
 
 
     }
