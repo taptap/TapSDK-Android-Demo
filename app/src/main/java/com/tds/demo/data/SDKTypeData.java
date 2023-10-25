@@ -50,7 +50,6 @@ public class SDKTypeData {
         itemList2.add("云存档");
         itemList2.add("数据存储");
         itemList2.add("即时通讯");
-        itemList2.add("实时语音");
         itemList2.add("推送通知");
 
         ArrayList<String> itemList3 = new ArrayList<String>();
@@ -60,6 +59,7 @@ public class SDKTypeData {
 
         ArrayList<String> itemList4 = new ArrayList<String>();
         itemList4.add("支付系统");
+        itemList4.add("DLC 内购");
 
 
         ArrayList iconList1 = new ArrayList();
@@ -75,7 +75,6 @@ public class SDKTypeData {
         iconList2.add(R.mipmap.ii);
         iconList2.add(R.mipmap.jj);
         iconList2.add(R.mipmap.kk);
-        iconList2.add(R.mipmap.mm);
         iconList2.add(R.mipmap.nn);
         iconList2.add(R.mipmap.oo);
 
@@ -87,6 +86,8 @@ public class SDKTypeData {
 
         ArrayList iconList4 = new ArrayList();
         iconList4.add(R.mipmap.nc);
+        iconList4.add(R.mipmap.mm);
+
 
 
 

@@ -268,16 +268,16 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     private void setQuick_authentication() {
         String userIdentifier =  "";
 
-//        Profile profile = TapLoginHelper.getCurrentProfile();
-//        if (profile != null) {
-//            userIdentifier = profile.getUnionid();
-//            Log.e("TAG", "=== "+userIdentifier  );
-//        } else {
-//
-//            ToastUtil.showCus("请登录", ToastUtil.Type.POINT);
-//        }
+        Profile profile = TapLoginHelper.getCurrentProfile();
+        if (profile != null) {
+            userIdentifier = profile.getUnionid();
+            Log.e("TAG", "=== "+userIdentifier  );
+        } else {
 
-        userIdentifier = System.currentTimeMillis()+"";
+            ToastUtil.showCus("请登录", ToastUtil.Type.POINT);
+        }
+
+//        userIdentifier = System.currentTimeMillis()+"";
         AntiAddictionUIKit.startupWithTapTap(getActivity(), userIdentifier);
 
 
