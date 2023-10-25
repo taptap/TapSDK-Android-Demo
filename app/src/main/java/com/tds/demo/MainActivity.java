@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
 import com.tapsdk.tapconnect.TapConnect;
+import com.taptap.services.update.TapUpdate;
+import com.taptap.services.update.TapUpdateCallback;
 import com.tds.common.constants.Constants;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapBillboardConfig;
@@ -30,6 +32,7 @@ import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.AntiaddictionFragment;
 import com.tds.demo.fragment.BillboardFragment;
 import com.tds.demo.fragment.CloudSaveFragment;
+import com.tds.demo.fragment.DLCFragment;
 import com.tds.demo.fragment.DataSaveFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
 import com.tds.demo.fragment.GiftFragment;
@@ -124,6 +127,18 @@ public class MainActivity extends AppCompatActivity {
 
         TapConnect.setEntryVisible(true);
 
+
+         // 更新唤起的功能
+
+/*        TapUpdate.updateGame(MainActivity.this, new TapUpdateCallback() {
+            @Override
+            public void onCancel() {
+                // 取消更新的事件
+
+                Log.e("TAG", "取消更新的事件" );
+            }
+        });*/
+
     }
 
     private MyBaseExpandableListAdapter.OnItemClickListener myItemClickListener = (v, SDKType) -> {
@@ -174,8 +189,9 @@ public class MainActivity extends AppCompatActivity {
             case "数据存储":
                 showFragment(DataSaveFragment.getInstance(), "dataSaveFragment");
                 break;
-            case "实时语音":
-                Log.e("TAG", "onItemClick: "+SDKType );
+            case "DLC 内购":
+                showFragment(DLCFragment.getInstance(), "dlcFragment");
+
                 break;
             case "推送通知":
                 showFragment(PushFragment.getInstance(), "pushFragment");

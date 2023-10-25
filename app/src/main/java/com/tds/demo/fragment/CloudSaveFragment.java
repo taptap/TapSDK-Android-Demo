@@ -45,7 +45,6 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
     ImageButton closeButton;
     @BindView(R.id.intro_button)
     Button intro_button;
-
     @BindView(R.id.save_name)
     EditText save_name;
     @BindView(R.id.save_description)
@@ -56,7 +55,6 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
     Button search_save;
     @BindView(R.id.delete_save)
     Button delete_save;
-
     private List<TapGameSave> tapSaves = new ArrayList<>();
 
 
@@ -178,7 +176,7 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
                             int progressValue = gameSave.getProgressValue();
                             LCFile cover = gameSave.getCover();
                             LCFile gameFile = gameSave.getGameFile();
-
+                            Log.e("TAG", "=====  "+gameSave.toString() );
                             ToastUtil.showCus("存档名："+gameSave.getName()+" 描述："+summary+" 游戏时间："+playedTime, ToastUtil.Type.SUCCEED);
                         }
                     }
