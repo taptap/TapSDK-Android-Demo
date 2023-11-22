@@ -4,14 +4,14 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.tds.android.demo",
+  "applicationId": "com.tds.android.native_demo",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 2,
+      "versionCode": 1,
       "versionName": "1.0",
       "outputFile": "app-release.apk"
     }

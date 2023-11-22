@@ -86,6 +86,7 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
                 .withClientId(SDKInfoData.SDK_CLIENT_ID) // TapTap 开发者中心对应 Client ID
                 .showSwitchAccount(true)       // 是否显示切换账号按钮
                 .build();
+        Toast.makeText(this.getActivity(), "已实名，可进入游戏！", Toast.LENGTH_SHORT).show();
 
         // 注册防沉迷的消息监听
         AntiAddictionUIKit.init(getActivity(), config, new AntiAddictionUICallback() {
@@ -268,16 +269,16 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     private void setQuick_authentication() {
         String userIdentifier =  "";
 
-        Profile profile = TapLoginHelper.getCurrentProfile();
-        if (profile != null) {
-            userIdentifier = profile.getUnionid();
-            Log.e("TAG", "=== "+userIdentifier  );
-        } else {
+//        Profile profile = TapLoginHelper.getCurrentProfile();
+//        if (profile != null) {
+//            userIdentifier = profile.getUnionid();
+//            Log.e("TAG", "=== "+userIdentifier  );
+//        } else {
+//
+//            ToastUtil.showCus("请登录", ToastUtil.Type.POINT);
+//        }
 
-            ToastUtil.showCus("请登录", ToastUtil.Type.POINT);
-        }
-
-//        userIdentifier = System.currentTimeMillis()+"";
+        userIdentifier = System.currentTimeMillis()+"";
         AntiAddictionUIKit.startupWithTapTap(getActivity(), userIdentifier);
 
 
