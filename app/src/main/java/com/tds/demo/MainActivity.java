@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
 import com.tapsdk.tapconnect.TapConnect;
+import com.taptap.sdk.TapLoginHelper;
 import com.taptap.services.update.TapUpdate;
 import com.taptap.services.update.TapUpdateCallback;
 import com.tds.common.constants.Constants;
@@ -75,6 +76,16 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < adapter.getGroupCount(); i++) {
             listView.expandGroup(i);
         }
+
+
+        // 唤起更新的功能代码
+//        TapUpdate.updateGame(this, new TapUpdateCallback() {
+//            @Override
+//            public void onCancel() {
+//                // 取消更新的事件
+//                Log.e("TAG", "取消了更新==========" );
+//            }
+//        });
 
 
     }

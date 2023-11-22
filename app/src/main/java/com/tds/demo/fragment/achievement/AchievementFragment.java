@@ -150,7 +150,6 @@ public class AchievementFragment  extends Fragment implements View.OnClickListen
     }
     /**
      * 查询当前用户的成就
-     *
      * */
     private void searchMyArchieve() {
 // 本地数据
