@@ -80,7 +80,6 @@
         android:text="玩家年龄"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
-        android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@id/logout" />
 
 

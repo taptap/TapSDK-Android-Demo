@@ -139,16 +139,7 @@ public class MainActivity extends AppCompatActivity {
         TapConnect.setEntryVisible(true);
 
 
-         // 更新唤起的功能
 
-/*        TapUpdate.updateGame(MainActivity.this, new TapUpdateCallback() {
-            @Override
-            public void onCancel() {
-                // 取消更新的事件
-
-                Log.e("TAG", "取消更新的事件" );
-            }
-        });*/
 
     }
 
