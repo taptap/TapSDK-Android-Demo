@@ -141,10 +141,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
      * */
     public void tapLogin() {
 
-       TDSUser tdsUser =  TDSUser.getCurrentUser();
-
-        TapLoginHelper.getCurrentProfile();
-
         // 检查登录状态
         if (null == TDSUser.currentUser()) {
             // 未登录
@@ -154,7 +150,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     // 此处也可以获取用户信息
                     Log.e("TAG", "Login onSuccess: "+ resultUser.toJSONInfo() );
                     ToastUtil.showCus("恭喜 "+resultUser.getServerData().get("nickname")+" 登录成功！", ToastUtil.Type.SUCCEED );
-                    resultUser.getObjectId();
+
+                    Profile profile = TapLoginHelper.getCurrentProfile();
+                    Log.e(TAG, "onSuccess===》: "+ profile.getOpenid() );
+
                 }
                 @Override
                 public void onFail(TapError error) {
@@ -166,6 +165,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         } else {
             // 已登录，进入游戏
             ToastUtil.showCus("您已登录！", ToastUtil.Type.POINT );
+
+            Profile profile = TapLoginHelper.getCurrentProfile();
+            Log.e(TAG, "onSuccess===》: "+ profile.getOpenid() );
 
         }
 

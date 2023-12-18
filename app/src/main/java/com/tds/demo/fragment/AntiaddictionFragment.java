@@ -24,6 +24,7 @@ import com.tapsdk.antiaddictionui.AntiAddictionUIKit;
 import com.tapsdk.bootstrap.account.TDSUser;
 import com.taptap.sdk.Profile;
 import com.taptap.sdk.TapLoginHelper;
+import com.tds.common.utils.TapGameUtil;
 import com.tds.demo.R;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.until.ToastUtil;
@@ -86,7 +87,6 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
                 .withClientId(SDKInfoData.SDK_CLIENT_ID) // TapTap 开发者中心对应 Client ID
                 .showSwitchAccount(true)       // 是否显示切换账号按钮
                 .build();
-        Toast.makeText(this.getActivity(), "已实名，可进入游戏！", Toast.LENGTH_SHORT).show();
 
         // 注册防沉迷的消息监听
         AntiAddictionUIKit.init(getActivity(), config, new AntiAddictionUICallback() {
@@ -116,9 +116,6 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
                 }
             }
         });
-
-
-
 
         return view;
     }
@@ -154,7 +151,7 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
               antiaddictionExit();
               break;
           case R.id.age:
-//              getGamerAge();
+              getGamerAge();
               break;
           case R.id.pay_limit:
               checkPay();
@@ -176,6 +173,15 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
 
 
       }
+    }
+
+    private void getGamerAge() {
+
+        int ageRange = AntiAddictionUIKit.getAgeRange();
+        ToastUtil.showCus("当前年龄段最低年龄为："+ ageRange, ToastUtil.Type.SUCCEED);
+
+
+
     }
 
     /**
