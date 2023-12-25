@@ -82,14 +82,8 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
         View view= inflater.inflate(R.layout.antiaddiction_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        // 实名认证的初始化
-        Config config = new Config.Builder()
-                .withClientId(SDKInfoData.SDK_CLIENT_ID) // TapTap 开发者中心对应 Client ID
-                .showSwitchAccount(true)       // 是否显示切换账号按钮
-                .build();
-
         // 注册防沉迷的消息监听
-        AntiAddictionUIKit.init(getActivity(), config, new AntiAddictionUICallback() {
+        AntiAddictionUIKit.setAntiAddictionCallback(new AntiAddictionUICallback() {
             @Override
             public void onCallback(int code, Map<String, Object> extras) {
                 Log.e("TAG", "onCallback:=====  "+code +"   "+extras  );
@@ -99,7 +93,7 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
                     ToastUtil.showCus("玩家登录后判断当前玩家可以进行游戏", ToastUtil.Type.SUCCEED );
 
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.EXITED){
-                   ToastUtil.showCus("退出账号", ToastUtil.Type.SUCCEED );
+                    ToastUtil.showCus("退出账号", ToastUtil.Type.SUCCEED );
 
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.SWITCH_ACCOUNT){
                     ToastUtil.showCus("点击切换账号按钮", ToastUtil.Type.SUCCEED );
@@ -112,8 +106,8 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
 
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.REAL_NAME_STOP	){
                     ToastUtil.showCus("实名过程中点击了关闭实名窗", ToastUtil.Type.SUCCEED );
-
                 }
+
             }
         });
 

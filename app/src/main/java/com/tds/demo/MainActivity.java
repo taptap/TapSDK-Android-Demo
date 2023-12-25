@@ -23,11 +23,13 @@ import com.taptap.services.update.TapUpdate;
 import com.taptap.services.update.TapUpdateCallback;
 import com.tds.common.constants.Constants;
 import com.tds.common.entities.Pair;
+import com.tds.common.entities.TapAntiAddictionConfig;
 import com.tds.common.entities.TapBillboardConfig;
 import com.tds.common.entities.TapConfig;
 import com.tds.common.entities.TapDBConfig;
 import com.tds.common.entities.TapPaymentConfig;
 import com.tds.common.models.TapRegionType;
+import com.tds.common.utils.TapGameUtil;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.AntiaddictionFragment;
@@ -77,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             listView.expandGroup(i);
         }
 
-
         // 唤起更新的功能代码
 //        TapUpdate.updateGame(this, new TapUpdateCallback() {
 //            @Override
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
 //                Log.e("TAG", "取消了更新==========" );
 //            }
 //        });
-
 
     }
 
@@ -122,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
                 .withWXAuthorizedDomainName("https://tds-payment.tapapis.cn")
                 .build();
 
+        TapAntiAddictionConfig tapAntiAddictionConfig = new TapAntiAddictionConfig(true);  // 从 3.27.0 版本开始支持 TapBootstrap 防沉迷的初始化
+
 
         TapConfig tdsConfig = new TapConfig.Builder()
                 .withAppContext(this)
@@ -132,12 +134,12 @@ public class MainActivity extends AppCompatActivity {
                 .withTapDBConfig(tapDBConfig)
                 .withRegionType(TapRegionType.CN)
                 .withTapPaymentConfig(tapPaymentConfig)
+                .withAntiAddictionConfig(tapAntiAddictionConfig)
                 .build();
 
         TapBootstrap.init(MainActivity.this, tdsConfig);
 
         TapConnect.setEntryVisible(true);
-
 
 
 

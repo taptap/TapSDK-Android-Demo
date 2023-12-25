@@ -283,6 +283,27 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             public void onComplete() {}
         });
 
+
+
+        Map<String, Object> thirdPartyData = new HashMap<String, Object>();
+// 可选参数
+        thirdPartyData.put("expires_in", 7200);
+        thirdPartyData.put("openid", "OPENID");
+        thirdPartyData.put("access_token", "ACCESS_TOKEN");
+        thirdPartyData.put("refresh_token", "REFRESH_TOKEN");
+        thirdPartyData.put("scope", "SCOPE");
+        TDSUser.loginWithAuthData(TDSUser.class, thirdPartyData, "weixin").subscribe(new Observer<TDSUser>() {
+            public void onSubscribe(Disposable disposable) {
+            }
+            public void onNext(TDSUser user) {
+                System.out.println("成功登录");
+            }
+            public void onError(Throwable throwable) {
+                System.out.println("尝试使用第三方账号登录，发生错误。");
+            }
+            public void onComplete() {
+            }
+        });
     }
 
 
