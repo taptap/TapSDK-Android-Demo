@@ -151,7 +151,6 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onNext(@NotNull LCLeaderboardResult leaderboardResult) {
                 List<LCRanking> rankings = leaderboardResult.getResults();
-
                 for (LCRanking ranking : rankings) {
                     Log.e(TAG, "onNext==: "+ JSON.toJSONString(ranking));
                 }
