@@ -83,7 +83,8 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.stop_listener)
     Button stop_listener;
 
-
+    @BindView(R.id.search_is_friends)
+    Button search_is_friends;
 
 
 
@@ -167,6 +168,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         player_up.setOnClickListener(this);
         player_down.setOnClickListener(this);
         stop_listener.setOnClickListener(this);
+        search_is_friends.setOnClickListener(this);
     }
 
     @Override
@@ -218,13 +220,34 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
             case R.id.stop_listener:
                 stopListenr();
                 break;
+            case R.id.search_is_friends:
+                isFriends();
+                break;
             default:
                 break;
         }
     }
 
+    private void isFriends() {
 
+        TDSFriends.checkFriendship("659cc2014b1951833456211a", new Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean isFriend) {
+                if (isFriend) {
+                    ToastUtil.showCus("是好友", ToastUtil.Type.SUCCEED);
+                } else {
+                    ToastUtil.showCus("不是好友", ToastUtil.Type.SUCCEED);
+                }
+            }
 
+            @Override
+            public void onFail(TDSFriendError error) {
+                ToastUtil.showCus("查询失败："+error.detailMessage , ToastUtil.Type.ERROR);
+
+            }
+        });
+
+    }
 
 
     /**

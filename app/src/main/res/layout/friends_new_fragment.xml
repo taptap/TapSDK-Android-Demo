@@ -320,6 +320,16 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="15dp"/>
 
+            <Button
+                android:id="@+id/search_is_friends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="查询是否为好友"
+                app:layout_constraintTop_toTopOf="@id/stop_listener"
+                app:layout_constraintStart_toEndOf="@id/stop_listener"
+                android:layout_marginLeft="10dp"
+               />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -1,6 +1,5 @@
 package com.tds.demo.fragment;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,32 +7,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.antiaddiction.Callback;
-import com.tapsdk.antiaddiction.Config;
 import com.tapsdk.antiaddiction.constants.Constants;
 import com.tapsdk.antiaddiction.entities.response.CheckPayResult;
 import com.tapsdk.antiaddiction.entities.response.SubmitPayResult;
 import com.tapsdk.antiaddictionui.AntiAddictionUICallback;
 import com.tapsdk.antiaddictionui.AntiAddictionUIKit;
-import com.tapsdk.bootstrap.account.TDSUser;
 import com.taptap.sdk.Profile;
 import com.taptap.sdk.TapLoginHelper;
-import com.tds.common.utils.TapGameUtil;
 import com.tds.demo.R;
-import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.until.ToastUtil;
 
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.internal.operators.flowable.FlowableAllSingle;
 
 /**
  * 2022/10/13
@@ -82,14 +75,19 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
         View view= inflater.inflate(R.layout.antiaddiction_fragment, container, false);
         ButterKnife.bind(this, view);
 
+
+        String token1 = AntiAddictionUIKit.currentToken();
+        Log.e("TAG", "Token1: "+ token1 );
+
         // 注册防沉迷的消息监听
         AntiAddictionUIKit.setAntiAddictionCallback(new AntiAddictionUICallback() {
             @Override
             public void onCallback(int code, Map<String, Object> extras) {
                 Log.e("TAG", "onCallback:=====  "+code +"   "+extras  );
+                String token = AntiAddictionUIKit.currentToken();
+                Log.e("TAG", "Token: "+ token );
+
                 if (code == Constants.ANTI_ADDICTION_CALLBACK_CODE.LOGIN_SUCCESS){
-                    String token = AntiAddictionUIKit.currentToken();
-                    Log.e("TAG", "Token: "+ token );
                     ToastUtil.showCus("玩家登录后判断当前玩家可以进行游戏", ToastUtil.Type.SUCCEED );
 
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.EXITED){
@@ -241,8 +239,6 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
         int remainingTimeInMinutes = AntiAddictionUIKit.getRemainingTimeInMinutes();
         ToastUtil.showCus("剩余时长："+ remainingTimeInMinutes +"分钟", ToastUtil.Type.SUCCEED );
 
-
-
     }
 
     /**
@@ -269,16 +265,16 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     private void setQuick_authentication() {
         String userIdentifier =  "";
 
-//        Profile profile = TapLoginHelper.getCurrentProfile();
-//        if (profile != null) {
-//            userIdentifier = profile.getUnionid();
-//            Log.e("TAG", "=== "+userIdentifier  );
-//        } else {
-//
-//            ToastUtil.showCus("请登录", ToastUtil.Type.POINT);
-//        }
+        Profile profile = TapLoginHelper.getCurrentProfile();
+        if (profile != null) {
+            userIdentifier = profile.getUnionid();
+            Log.e("TAG", "=== "+userIdentifier  );
+        } else {
 
-        userIdentifier = System.currentTimeMillis()+"";
+            ToastUtil.showCus("请登录", ToastUtil.Type.POINT);
+        }
+
+//        userIdentifier = System.currentTimeMillis()+"";
         AntiAddictionUIKit.startupWithTapTap(getActivity(), userIdentifier);
 
 
