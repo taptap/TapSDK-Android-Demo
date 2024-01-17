@@ -95,12 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
         Set<Pair<String, String>> dimensionSet = new HashSet<>();
         dimensionSet.addAll(Arrays.asList(Pair.create("location", "CN"), Pair.create("platform", "TapTap")));
-        String billboardServerUrl = "https://tdsdemo.weijiash.cn"; // 开发者中心 > 你的游戏 > 游戏服务 > 应用配置 > 域名配置 > 公告
-
-        TapBillboardConfig billboardCnConfig = new TapBillboardConfig.Builder()
-                .withDimensionSet(dimensionSet)    // 可选
-                .withServerUrl(billboardServerUrl) // 必须, 公告的自定义域名
-                .build();
 
         TapDBConfig tapDBConfig = new TapDBConfig();
         tapDBConfig.setEnable(true); //是否开启 TapDB
@@ -125,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
                 .withClientId(SDKInfoData.SDK_CLIENT_ID)
                 .withClientToken(SDKInfoData.SDK_CLINT_TOKEN)
                 .withServerUrl(SDKInfoData.SDK_SERVER_URL)
-                .withBillboardConfig(billboardCnConfig) // 使用公告系统时就必须加入
                 .withTapDBConfig(tapDBConfig)
                 .withRegionType(TapRegionType.CN)
                 .withTapPaymentConfig(tapPaymentConfig)
