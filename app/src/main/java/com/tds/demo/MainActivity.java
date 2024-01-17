@@ -18,9 +18,6 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
 import com.tapsdk.tapconnect.TapConnect;
-import com.taptap.sdk.TapLoginHelper;
-import com.taptap.services.update.TapUpdate;
-import com.taptap.services.update.TapUpdateCallback;
 import com.tds.common.constants.Constants;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapAntiAddictionConfig;
@@ -29,11 +26,9 @@ import com.tds.common.entities.TapConfig;
 import com.tds.common.entities.TapDBConfig;
 import com.tds.common.entities.TapPaymentConfig;
 import com.tds.common.models.TapRegionType;
-import com.tds.common.utils.TapGameUtil;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.AntiaddictionFragment;
-import com.tds.demo.fragment.BillboardFragment;
 import com.tds.demo.fragment.CloudSaveFragment;
 import com.tds.demo.fragment.DLCFragment;
 import com.tds.demo.fragment.DataSaveFragment;
@@ -43,10 +38,10 @@ import com.tds.demo.fragment.IM.IMFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
 import com.tds.demo.fragment.InsideAccoundFragment;
 import com.tds.demo.fragment.LoginFragment;
-import com.tds.demo.fragment.pay.PayFragment;
 import com.tds.demo.fragment.SupportFragment;
 import com.tds.demo.fragment.achievement.AchievementFragment;
 import com.tds.demo.fragment.friend.FriendsFragment;
+import com.tds.demo.fragment.pay.PayFragment;
 import com.tds.demo.fragment.push.PushFragment;
 import com.tds.demo.fragment.ranking.RankingFragment;
 import com.tds.demo.until.ToastUtil;
@@ -199,9 +194,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "推送通知":
                 showFragment(PushFragment.getInstance(), "pushFragment");
-                break;
-            case "公告系统":
-                showFragment(BillboardFragment.getInstance(), "billboardFragment");
                 break;
             case "礼包系统":
                 showFragment(GiftFragment.getInstance(), "giftFragment");
