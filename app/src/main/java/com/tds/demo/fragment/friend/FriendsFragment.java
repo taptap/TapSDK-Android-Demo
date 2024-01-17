@@ -1,5 +1,8 @@
 package com.tds.demo.fragment.friend;
 
+import static android.content.Context.*;
+import static android.content.Context.CLIPBOARD_SERVICE;
+import static com.taptap.services.update.download.OkDownloadProvider.context;
 import static com.tds.demo.data.SDKInfoData.Clound_SHAREHOST;
 
 import android.os.Bundle;
@@ -10,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +24,6 @@ import com.tapsdk.bootstrap.account.TDSUser;
 import com.tapsdk.friends.Callback;
 import com.tapsdk.friends.FriendStatusChangedListener;
 import com.tapsdk.friends.ListCallback;
-import com.tapsdk.friends.TDSFollows;
 import com.tapsdk.friends.TDSFriends;
 import com.tapsdk.friends.entities.TDSFriendInfo;
 import com.tapsdk.friends.entities.TDSFriendLinkInfo;
@@ -37,6 +41,10 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.leancloud.LCFriendshipRequest;
+import androidx.core.content.ContextCompat;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 
 /**
  * 2022/10/19
@@ -85,8 +93,19 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.search_is_friends)
     Button search_is_friends;
+    @BindView(R.id.search_is_friends_for_objectid)
+    EditText search_is_friends_for_objectid;
+    @BindView(R.id.my_shortid)
+    TextView myShortId;
 
+    @BindView(R.id.my_objectid)
+    TextView myObjectid;
 
+    @BindView(R.id.copy_shortid_button)
+    Button copy_shortid_button;
+
+    @BindView(R.id.copy_objectid_button)
+    Button copy_objectid_button;
 
 
 
@@ -115,7 +134,15 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         initListener();
 
 
+        TDSUser tdsUser = TDSUser.currentUser();
+        if (tdsUser != null){
+            myShortId.setText("我的 shortId："+tdsUser.getServerData().get("shortId").toString());
+            myObjectid.setText("我的 ObjectId:\n "+ tdsUser.getObjectId().toString());
+        }
+
+
         /**
+         *
          * 关注模式监听
          *
          */
@@ -169,6 +196,8 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         player_down.setOnClickListener(this);
         stop_listener.setOnClickListener(this);
         search_is_friends.setOnClickListener(this);
+        copy_shortid_button.setOnClickListener(this);
+        copy_objectid_button.setOnClickListener(this);
     }
 
     @Override
@@ -223,14 +252,69 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
             case R.id.search_is_friends:
                 isFriends();
                 break;
+            case R.id.copy_shortid_button:
+                copyShortid();
+                break;
+            case R.id.copy_objectid_button:
+                copyObjectid();
+                break;
             default:
                 break;
         }
     }
 
+    private void copyObjectid() {
+
+        if (myObjectid.getText().toString().isEmpty()){
+            Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ClipboardManager clipboardManager = ContextCompat.getSystemService(context, ClipboardManager.class);
+
+
+        // 创建ClipData对象
+        ClipData clipData = ClipData.newPlainText("label", myObjectid.getText().toString() );
+
+        // 将ClipData对象设置到剪贴板
+        if (clipboardManager != null) {
+            clipboardManager.setPrimaryClip(clipData);
+            Toast.makeText(getActivity(), "复制成功", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void copyShortid() {
+
+        if (myShortId.getText().toString().isEmpty()){
+            Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+
+            return;
+        }
+
+
+        ClipboardManager clipboardManager = ContextCompat.getSystemService(context, ClipboardManager.class);
+
+
+        // 创建ClipData对象
+        ClipData clipData = ClipData.newPlainText("label", myShortId.getText().toString() );
+
+        // 将ClipData对象设置到剪贴板
+        if (clipboardManager != null) {
+            clipboardManager.setPrimaryClip(clipData);
+            Toast.makeText(getActivity(), "复制成功", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
     private void isFriends() {
 
-        TDSFriends.checkFriendship("659cc2014b1951833456211a", new Callback<Boolean>() {
+        if (search_is_friends_for_objectid.getText().toString().isEmpty()){
+            ToastUtil.showToast("请输入 ObjectId ！ ");
+            return;
+        }
+
+        TDSFriends.checkFriendship(search_is_friends_for_objectid.getText().toString(), new Callback<Boolean>() {
             @Override
             public void onSuccess(Boolean isFriend) {
                 if (isFriend) {

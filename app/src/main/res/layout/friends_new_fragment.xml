@@ -66,6 +66,49 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/my_shortid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的 shortId:"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="15dp"
+                android:textSize="16sp"
+                />
+            <Button
+                android:id="@+id/copy_shortid_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="复制"
+                app:layout_constraintStart_toEndOf="@id/my_shortid"
+                app:layout_constraintTop_toTopOf="@id/my_shortid"
+                app:layout_constraintBottom_toBottomOf="@id/my_shortid"
+                android:layout_marginLeft="15dp"/>
+
+
+            <TextView
+                android:id="@+id/my_objectid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的 objectId:"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/copy_shortid_button"
+                android:layout_margin="15dp"
+                android:textSize="16sp"
+                />
+            <Button
+                android:id="@+id/copy_objectid_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="复制"
+                app:layout_constraintStart_toEndOf="@id/my_objectid"
+                app:layout_constraintTop_toTopOf="@id/my_objectid"
+                app:layout_constraintBottom_toBottomOf="@id/my_objectid"
+                android:layout_marginLeft="15dp"/>
+
 
     <Button
         android:id="@+id/friend_list"
@@ -74,7 +117,7 @@
         android:text="好友列表"
         app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/copy_objectid_button"
         app:layout_constraintEnd_toStartOf="@id/apply_list"
         android:layout_marginLeft="15dp"/>
 
@@ -88,7 +131,7 @@
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintEnd_toStartOf="@id/black_list"
         app:layout_constraintStart_toEndOf="@id/friend_list"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/copy_objectid_button"
         />
 
 
@@ -100,7 +143,7 @@
         app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toEndOf="@id/apply_list"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/copy_objectid_button"
         android:layout_marginRight="15dp"
         />
 
@@ -108,13 +151,15 @@
         android:id="@+id/add_friend_tx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="添加好友:"
+        android:text="添加好友 "
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/black_list"
         android:layout_margin="15dp"
         android:textSize="16sp"
         />
+
+
 
     <LinearLayout
         android:id="@+id/shortid_lay"
@@ -320,15 +365,38 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="15dp"/>
 
-            <Button
-                android:id="@+id/search_is_friends"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:id="@+id/search_is_friends_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="查询是否为好友"
-                app:layout_constraintTop_toTopOf="@id/stop_listener"
-                app:layout_constraintStart_toEndOf="@id/stop_listener"
-                android:layout_marginLeft="10dp"
-               />
+                app:layout_constraintTop_toBottomOf="@id/stop_listener"
+                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_margin="15dp">
+
+                <EditText
+                    android:id="@+id/search_is_friends_for_objectid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_weight="0.8"
+                    android:padding="5dp"
+                    android:background="@drawable/edittext_shape"
+                    android:hint="通过 objectid 查询"/>
+                <Button
+                    android:id="@+id/search_is_friends"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查询是否为好友"
+                    android:layout_weight="0.2"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
