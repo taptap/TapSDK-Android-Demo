@@ -78,6 +78,8 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
 
         String token1 = AntiAddictionUIKit.currentToken();
         Log.e("TAG", "Token1: "+ token1 );
+        AntiAddictionUIKit.setTestEnvironment(getActivity(), true);
+
 
         // 注册防沉迷的消息监听
         AntiAddictionUIKit.setAntiAddictionCallback(new AntiAddictionUICallback() {
