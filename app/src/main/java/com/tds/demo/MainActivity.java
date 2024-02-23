@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
 import com.tapsdk.tapconnect.TapConnect;
+import com.taptap.services.update.TapUpdate;
+import com.taptap.services.update.TapUpdateCallback;
 import com.tds.common.constants.Constants;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapAntiAddictionConfig;
