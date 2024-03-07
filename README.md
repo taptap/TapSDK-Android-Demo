@@ -1,4 +1,4 @@
-## TapSDK - 3.28.0 For Android Demo
+## TapSDK - 3.28.2 For Android Demo
 
 ## 运行示例程序
 
@@ -10,7 +10,7 @@
 
 3、运行 Demo 源码前请先进入 SDKInfoData.java 文件中修改为您应用配置信息，修改包名以及签名信息。
 
-3、安卓可以下载项目中的 [tds_demo_android_3.28.0.apk](https://capacity-files.lcfile.com/MOEMjrhSXeQUtcNPYuPg61YYbFmhbHvo/tds_demo_android_3.27.1.apk) 或扫描如下二维码进行下载体验；
+3、安卓可以下载项目中的 [tds_demo_android_3.28.2.apk](https://lc-buhezimj.cn-e1.lcfile.com/WRR9CsFrgkRUHyp4TPRhteBel5e7rB1r/tds_demo_android_3.28.2.apk) 或扫描如下二维码进行下载体验；
 ![Demo 扫码下载](tapsdk_android.png)
 
 4、关于 TapSDK 更多详情请参考[官方文档](https://developer.taptap.com/docs/sdk/)。
