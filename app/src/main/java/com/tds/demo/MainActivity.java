@@ -18,12 +18,9 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
 import com.tapsdk.tapconnect.TapConnect;
-import com.taptap.services.update.TapUpdate;
-import com.taptap.services.update.TapUpdateCallback;
 import com.tds.common.constants.Constants;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapAntiAddictionConfig;
-import com.tds.common.entities.TapBillboardConfig;
 import com.tds.common.entities.TapConfig;
 import com.tds.common.entities.TapDBConfig;
 import com.tds.common.entities.TapPaymentConfig;
@@ -36,15 +33,12 @@ import com.tds.demo.fragment.DLCFragment;
 import com.tds.demo.fragment.DataSaveFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
 import com.tds.demo.fragment.GiftFragment;
-import com.tds.demo.fragment.IM.IMFragment;
 import com.tds.demo.fragment.InLineDynamicFragment;
 import com.tds.demo.fragment.InsideAccoundFragment;
 import com.tds.demo.fragment.LoginFragment;
 import com.tds.demo.fragment.SupportFragment;
 import com.tds.demo.fragment.achievement.AchievementFragment;
-import com.tds.demo.fragment.friend.FriendsFragment;
 import com.tds.demo.fragment.pay.PayFragment;
-import com.tds.demo.fragment.push.PushFragment;
 import com.tds.demo.fragment.ranking.RankingFragment;
 import com.tds.demo.until.ToastUtil;
 
@@ -145,10 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 showFragment(InLineDynamicFragment.getInstance(), "inLineDynamicFragment");
 
                 break;
-            case "即时通讯":
-                showFragment(IMFragment.getInstance(), "iMFragment");
 
-                break;
 
             case "正版验证":
                 showFragment(GenuineVerifyFragment.getInstance(), "genuineVerifyFragment");
@@ -162,11 +153,6 @@ public class MainActivity extends AppCompatActivity {
             case "内建账户":
                 showFragment(InsideAccoundFragment.getInstance(), "insideAccoundFragment");
                 break;
-
-            case "好友":
-                showFragment(FriendsFragment.getInstance(), "friendsFragment");
-                break;
-
             case "成就":
                 showFragment(AchievementFragment.getInstance(), "achievementFragment");
                 break;
@@ -187,9 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 showFragment(DLCFragment.getInstance(), "dlcFragment");
 
                 break;
-            case "推送通知":
-                showFragment(PushFragment.getInstance(), "pushFragment");
-                break;
+
             case "礼包系统":
                 showFragment(GiftFragment.getInstance(), "giftFragment");
                 break;
