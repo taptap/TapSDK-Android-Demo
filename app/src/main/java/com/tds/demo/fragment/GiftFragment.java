@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.tapsdk.lc.utils.StringUtil;
 import com.tds.demo.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +32,6 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.leancloud.utils.StringUtil;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;

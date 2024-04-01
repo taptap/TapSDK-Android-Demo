@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.gamesave.TapGameSave;
+import com.tapsdk.lc.LCFile;
+import com.tapsdk.lc.types.LCNull;
 import com.tds.demo.R;
 import com.tds.demo.until.ToastUtil;
 
@@ -29,8 +31,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.leancloud.LCFile;
-import cn.leancloud.types.LCNull;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 

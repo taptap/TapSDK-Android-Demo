@@ -16,6 +16,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.gamesave.TapGameSave;
+import com.tapsdk.lc.LCException;
+import com.tapsdk.lc.LCFile;
+import com.tapsdk.lc.LCObject;
+import com.tapsdk.lc.LCQuery;
+import com.tapsdk.lc.callback.ProgressCallback;
+import com.tapsdk.lc.livequery.LCLiveQuery;
+import com.tapsdk.lc.livequery.LCLiveQueryConnectionHandler;
+import com.tapsdk.lc.livequery.LCLiveQueryEventHandler;
+import com.tapsdk.lc.livequery.LCLiveQuerySubscribeCallback;
+import com.tapsdk.lc.types.LCNull;
 import com.tds.demo.R;
 import com.tds.demo.until.ToastUtil;
 
@@ -30,16 +40,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.leancloud.LCException;
-import cn.leancloud.LCFile;
-import cn.leancloud.LCObject;
-import cn.leancloud.LCQuery;
-import cn.leancloud.callback.ProgressCallback;
-import cn.leancloud.livequery.LCLiveQuery;
-import cn.leancloud.livequery.LCLiveQueryConnectionHandler;
-import cn.leancloud.livequery.LCLiveQueryEventHandler;
-import cn.leancloud.livequery.LCLiveQuerySubscribeCallback;
-import cn.leancloud.types.LCNull;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 

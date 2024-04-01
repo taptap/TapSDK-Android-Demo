@@ -9,13 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tds.achievement.TapAchievementBean;
+import com.tapsdk.lc.LCRanking;
 import com.tds.demo.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.leancloud.LCRanking;
 
 /**
  * 2022/10/19

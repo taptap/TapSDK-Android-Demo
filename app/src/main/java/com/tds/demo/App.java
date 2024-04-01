@@ -1,12 +1,10 @@
 package com.tds.demo;
-
 import android.app.Application;
 import android.content.Context;
 
+import com.tapsdk.lc.LCLogger;
+import com.tapsdk.lc.LeanCloud;
 import com.tds.demo.data.SDKInfoData;
-
-import cn.leancloud.LCLogger;
-import cn.leancloud.LeanCloud;
 
 /**
  * 2022/10/14

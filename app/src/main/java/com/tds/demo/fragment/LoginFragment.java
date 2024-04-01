@@ -16,24 +16,19 @@ import androidx.fragment.app.Fragment;
 import com.tapsdk.bootstrap.Callback;
 import com.tapsdk.bootstrap.account.TDSUser;
 import com.tapsdk.bootstrap.exceptions.TapError;
-import com.taptap.sdk.AccessToken;
-import com.taptap.sdk.AccountGlobalError;
+import com.tapsdk.lc.LCUser;
 import com.taptap.sdk.Profile;
 import com.taptap.sdk.TapLoginHelper;
 import com.taptap.sdk.net.Api;
 import com.tds.demo.R;
-import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.until.FormatJson;
 import com.tds.demo.until.ToastUtil;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.leancloud.LCUser;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -78,7 +73,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.layout_login_fragment, container, false);
-        ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view) ;
 
         return view;
 
@@ -112,7 +107,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.tap_login:
                 tapLogin();
-
                 break;
             case R.id.userinfo_button:
                 getUserInfo();
@@ -149,11 +143,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 public void onSuccess(TDSUser resultUser) {
                     // 此处也可以获取用户信息
                     Log.e("TAG", "Login onSuccess: "+ resultUser.toJSONInfo() );
-                    ToastUtil.showCus("恭喜 "+resultUser.getServerData().get("nickname")+" 登录成功！", ToastUtil.Type.SUCCEED );
-
                     Profile profile = TapLoginHelper.getCurrentProfile();
                     Log.e(TAG, "onSuccess===》: "+ profile.getOpenid() );
-
                 }
                 @Override
                 public void onFail(TapError error) {
@@ -161,16 +152,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     Log.e(TAG, "Login onFail: "+error.code);
                 }
             }, "public_profile");
-
         } else {
             // 已登录，进入游戏
             ToastUtil.showCus("您已登录！", ToastUtil.Type.POINT );
 
             Profile profile = TapLoginHelper.getCurrentProfile();
-            Log.e(TAG, "onSuccess===》: "+ profile.getOpenid() );
-
+            Log.e(TAG, "onSuccess===》: " );
         }
-
     }
     /**
      * 重置 Session token
@@ -181,20 +169,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 @Override
                 public void onSubscribe(Disposable d) {
                 }
-
                 @Override
                 public void onNext(Boolean aBoolean) {
                     if (aBoolean){
                         ToastUtil.showCus("SessionToken 重置成功", ToastUtil.Type.SUCCEED );
-
                     }
                 }
                 @Override
                 public void onError(Throwable e) {
                     ToastUtil.showCus(e.getMessage(), ToastUtil.Type.ERROR );
-
                 }
-
                 @Override
                 public void onComplete() {
                 }

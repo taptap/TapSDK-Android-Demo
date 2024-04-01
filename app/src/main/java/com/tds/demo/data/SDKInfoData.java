@@ -32,5 +32,5 @@ public class SDKInfoData {
     public static String SDK_SERVER_URL = "https://hskcocvs.cloud.tds1.tapapis.cn";
 
     // 游戏好友中 邀请落地页中的域名  如果是使用的云引擎部署，请在开发者中心=》游戏服务 =》云服务 =》云引擎 =》设置 页面中自定义域名
-    public static String Clound_SHAREHOST = "https://stg-tdsdemo.tds1.tdsapps.cn ";
+    public static String Clound_SHAREHOST = "https://stg-tdsdemo.tds1.tdsapps.cn";
 }

@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ExpandableListView;
 
 import androidx.annotation.NonNull;
@@ -38,7 +37,6 @@ import com.tds.demo.fragment.InsideAccoundFragment;
 import com.tds.demo.fragment.LoginFragment;
 import com.tds.demo.fragment.SupportFragment;
 import com.tds.demo.fragment.achievement.AchievementFragment;
-import com.tds.demo.fragment.pay.PayFragment;
 import com.tds.demo.fragment.ranking.RankingFragment;
 import com.tds.demo.until.ToastUtil;
 
@@ -86,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
      *
      * */
     private void initSDK() {
-        Log.e("TAG", "initSDK: "+ Thread.currentThread().getName());
-
-
         Set<Pair<String, String>> dimensionSet = new HashSet<>();
         dimensionSet.addAll(Arrays.asList(Pair.create("location", "CN"), Pair.create("platform", "TapTap")));
 
@@ -179,9 +174,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "客服系统":
                 showFragment(SupportFragment.getInstance(), "supportFragment");
-                break;
-            case "支付系统":
-                showFragment(PayFragment.getInstance(), "payFragment");
                 break;
 
             default:

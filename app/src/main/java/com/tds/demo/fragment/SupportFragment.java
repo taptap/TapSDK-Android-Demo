@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.account.TDSUser;
+import com.tapsdk.lc.json.JSONObject;
 import com.tds.common.net.exception.ServerException;
 import com.tds.demo.R;
 import com.tds.tapsupport.TapSupport;
@@ -27,13 +28,12 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.leancloud.json.JSONObject;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
  * 2022/10/13
- * Describe：防沉迷-合规认证
+ * Describe：客服系统
  */
 public class SupportFragment extends Fragment implements View.OnClickListener {
 
