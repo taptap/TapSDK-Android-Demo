@@ -12,7 +12,7 @@ android {
         minSdk 21
         targetSdk 32
         versionCode 1
-        versionName "1.0"
+        versionName "2.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -75,13 +75,10 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'  // 图片加载
     implementation 'org.greenrobot:eventbus:3.1.1'
 
-//    implementation 'com.google.code.gson:gson:2.9.0'
-
-    implementation 'cn.leancloud:realtime-android:8.2.19'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-
-    implementation 'cn.leancloud:storage-android:8.2.19'
-
+    // 数据存储
+    implementation 'com.taptap:lc-storage-android:8.2.24'
+    implementation 'com.taptap:lc-realtime-android:8.2.24'
 
 
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
@@ -89,9 +86,6 @@ dependencies {
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
 
-//    implementation('cn.leancloud:realtime-android:8.2.18'){
-//        exclude group: 'io.reactivex.rxjava2'
-//    }
 
     // 如果要支持使用 微信和支付宝客户端支付，添加下面的微信和支付宝的 SDK
 //    implementation 'com.alipay.sdk:alipaysdk-android:15.8.11@aar'

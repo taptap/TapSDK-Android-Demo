@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.account.TDSUser;
+import com.tapsdk.lc.LCObject;
+import com.tapsdk.lc.LCQuery;
 import com.tds.demo.R;
 import com.tds.demo.until.ToastUtil;
 
@@ -23,8 +25,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.leancloud.LCObject;
-import cn.leancloud.LCQuery;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 

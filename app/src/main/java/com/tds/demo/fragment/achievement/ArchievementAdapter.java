@@ -16,7 +16,6 @@ import com.tds.demo.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.leancloud.LCFriendshipRequest;
 
 /**
  * 2022/10/19

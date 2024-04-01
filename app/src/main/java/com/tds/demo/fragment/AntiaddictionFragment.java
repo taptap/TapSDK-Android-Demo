@@ -78,7 +78,7 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
 
         String token1 = AntiAddictionUIKit.currentToken();
         Log.e("TAG", "Token1: "+ token1 );
-        AntiAddictionUIKit.setTestEnvironment(getActivity(), true);
+        AntiAddictionUIKit.setTestEnvironment(getActivity(), false); // 是否开通调试模式
 
 
         // 注册防沉迷的消息监听
@@ -265,7 +265,7 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     * 实名认证是根据唯一标识进行判断是否已实名认证，所以建议该唯一标识和用户唯一绑定
     * */
     private void setQuick_authentication() {
-        String userIdentifier =  "";
+        String userIdentifier = "";
 
         Profile profile = TapLoginHelper.getCurrentProfile();
         if (profile != null) {

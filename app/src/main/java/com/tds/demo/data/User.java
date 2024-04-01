@@ -1,6 +1,6 @@
 package com.tds.demo.data;
 
-import cn.leancloud.LCUser;
+import com.tapsdk.lc.LCUser;
 
 /**
  * 2023/1/28

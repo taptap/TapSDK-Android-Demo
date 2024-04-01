@@ -2,7 +2,6 @@ package com.tds.demo.fragment.ranking;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +16,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tapsdk.lc.LCException;
+import com.tapsdk.lc.LCLeaderboard;
+import com.tapsdk.lc.LCLeaderboardResult;
+import com.tapsdk.lc.LCObject;
+import com.tapsdk.lc.LCQuery;
+import com.tapsdk.lc.LCRanking;
+import com.tapsdk.lc.LCStatistic;
+import com.tapsdk.lc.LCStatisticResult;
+import com.tapsdk.lc.LCUser;
+import com.tapsdk.lc.json.JSON;
 import com.tds.demo.R;
-import com.tds.demo.data.User;
 import com.tds.demo.fragment.WebViewFragment;
 import com.tds.demo.until.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,16 +40,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.leancloud.LCException;
-import cn.leancloud.LCLeaderboard;
-import cn.leancloud.LCLeaderboardResult;
-import cn.leancloud.LCObject;
-import cn.leancloud.LCQuery;
-import cn.leancloud.LCRanking;
-import cn.leancloud.LCStatistic;
-import cn.leancloud.LCStatisticResult;
-import cn.leancloud.LCUser;
-import cn.leancloud.json.JSON;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
