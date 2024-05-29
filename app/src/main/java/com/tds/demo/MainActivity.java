@@ -17,12 +17,11 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
 import com.tapsdk.tapconnect.TapConnect;
-import com.tds.common.constants.Constants;
+import com.taptap.pay.sdk.library.TapLicenseHelper;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapAntiAddictionConfig;
 import com.tds.common.entities.TapConfig;
 import com.tds.common.entities.TapDBConfig;
-import com.tds.common.entities.TapPaymentConfig;
 import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
@@ -53,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         checkPermission(this, this);
+//        DLC 测试环境是否开启
+        TapLicenseHelper.setTestEnvironment(false, this);
 
         initSDK();
 
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             listView.expandGroup(i);
         }
 
-        // 唤起更新的功能代码
+//         唤起更新的功能代码
 //        TapUpdate.updateGame(this, new TapUpdateCallback() {
 //            @Override
 //            public void onCancel() {
@@ -76,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
 //                Log.e("TAG", "取消了更新==========" );
 //            }
 //        });
+
+
 
     }
 
@@ -93,16 +96,7 @@ public class MainActivity extends AppCompatActivity {
         tapDBConfig.setGameVersion("1.0.0"); //游戏版本，为空时，自动获取游戏安装包的版本，长度不大于 256
 
 
-        TapPaymentConfig tapPaymentConfig = new TapPaymentConfig.Builder()
-                // 地区暂时只支持「中国地区」
-                .withRegionId(Constants.Region.REGION_CN)
-                // 语言暂时只支持中文
-                .withLanguage(Constants.Language.CN)
-                // 微信商户申请H5时提交的授权域名，详见 https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_4 里 Referer 设置相关部分
-                .withWXAuthorizedDomainName("https://tds-payment.tapapis.cn")
-                .build();
-
-        TapAntiAddictionConfig tapAntiAddictionConfig = new TapAntiAddictionConfig(true);  // 从 3.27.0 版本开始支持 TapBootstrap 防沉迷的初始化
+        TapAntiAddictionConfig tapAntiAddictionConfig = new TapAntiAddictionConfig(true, true);  // 从 3.27.0 版本开始支持 TapBootstrap 防沉迷的初始化
 
 
         TapConfig tdsConfig = new TapConfig.Builder()
@@ -112,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 .withServerUrl(SDKInfoData.SDK_SERVER_URL)
                 .withTapDBConfig(tapDBConfig)
                 .withRegionType(TapRegionType.CN)
-                .withTapPaymentConfig(tapPaymentConfig)
                 .withAntiAddictionConfig(tapAntiAddictionConfig)
                 .build();
 

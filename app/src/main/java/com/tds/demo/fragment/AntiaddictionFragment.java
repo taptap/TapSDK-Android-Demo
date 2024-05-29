@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.antiaddiction.Callback;
+import com.tapsdk.antiaddiction.Config;
 import com.tapsdk.antiaddiction.constants.Constants;
 import com.tapsdk.antiaddiction.entities.response.CheckPayResult;
 import com.tapsdk.antiaddiction.entities.response.SubmitPayResult;
@@ -21,6 +22,7 @@ import com.tapsdk.antiaddictionui.AntiAddictionUIKit;
 import com.taptap.sdk.Profile;
 import com.taptap.sdk.TapLoginHelper;
 import com.tds.demo.R;
+import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.until.ToastUtil;
 
 import java.util.Map;
@@ -75,11 +77,11 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
         View view= inflater.inflate(R.layout.antiaddiction_fragment, container, false);
         ButterKnife.bind(this, view);
 
+        // 单独初始化防沉迷 SDk
+//        aloneInit();
 
-        String token1 = AntiAddictionUIKit.currentToken();
-        Log.e("TAG", "Token1: "+ token1 );
-        AntiAddictionUIKit.setTestEnvironment(getActivity(), false); // 是否开通调试模式
 
+        AntiAddictionUIKit.setTestEnvironment(getActivity(), true); // 是否开通调试模式
 
         // 注册防沉迷的消息监听
         AntiAddictionUIKit.setAntiAddictionCallback(new AntiAddictionUICallback() {
@@ -104,14 +106,37 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.DURATION_LIMIT	){
                     ToastUtil.showCus("时长限制", ToastUtil.Type.SUCCEED );
 
+                }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.AGE_RESTRICT	){
+                    ToastUtil.showCus("当前用户因触发应用设置的年龄限制无法进入游戏", ToastUtil.Type.SUCCEED );
+
+                }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.INVALID_CLIENT_OR_NETWORK_ERROR	){
+                    ToastUtil.showCus("数据请求失败，游戏需检查当前设置的应用信息是否正确及判断当前网络连接是否正常", ToastUtil.Type.SUCCEED );
+
                 }else if(code == Constants.ANTI_ADDICTION_CALLBACK_CODE.REAL_NAME_STOP	){
                     ToastUtil.showCus("实名过程中点击了关闭实名窗", ToastUtil.Type.SUCCEED );
                 }
-
             }
         });
 
         return view;
+    }
+
+    private void aloneInit() {
+        AntiAddictionUICallback callback = new AntiAddictionUICallback() {
+            @Override
+            public void onCallback(int code, Map<String, Object> extras) {
+                // 防沉迷回调
+
+                Log.e("TAG", "onCallback: "+ code);
+            }
+        };
+
+        Config config = new Config.Builder()
+                .withClientId(SDKInfoData.SDK_CLIENT_ID) // TapTap 开发者中心对应 Client ID
+                .showSwitchAccount(false)       // 是否显示切换账号按钮
+                .useAgeRange(false)  //是否使用年龄段信息
+                .build();
+        AntiAddictionUIKit.init(getActivity(), config, callback);
     }
 
     @Override

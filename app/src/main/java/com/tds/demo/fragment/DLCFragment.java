@@ -6,6 +6,7 @@ import static com.taptap.pay.sdk.library.DLCManager.QUERY_RESULT_NOT_INSTALL_TAP
 import static com.taptap.pay.sdk.library.DLCManager.QUERY_RESULT_OK;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,7 @@ public class DLCFragment extends Fragment implements View.OnClickListener{
     Button pay_dlc;
 
 
-    private String[] skuIds = {"99", "100", "101"};
+    private String[] skuIds = {"101"};
 
     public DLCFragment() {
     }
@@ -87,8 +88,8 @@ public class DLCFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onOrderCallBack(String s, int i) {
                 // 购买回调
+                Log.e(TAG, "onOrderCallBack: "+ s + i );
                 ToastUtil.showCus("购买商品 ID："+ s, ToastUtil.Type.POINT);
-
             }
         });
 
@@ -101,7 +102,6 @@ public class DLCFragment extends Fragment implements View.OnClickListener{
         super.onViewCreated(view, savedInstanceState);
 
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -121,6 +121,7 @@ public class DLCFragment extends Fragment implements View.OnClickListener{
 
             case R.id.search:
                 TapLicenseHelper.queryDLC(getActivity(), skuIds);
+
                 break;
 
             default:
