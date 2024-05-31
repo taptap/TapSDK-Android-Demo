@@ -35,54 +35,54 @@ public class SDKTypeData {
         groupList.add("云服务");
         groupList.add("运营工具");
 
-        ArrayList<String> itemList1 = new ArrayList<String>();
-        itemList1.add("TapTap登录");
-        itemList1.add("内嵌动态");
-        itemList1.add("正版验证");
-        itemList1.add("合规认证");
+        ArrayList<String> itemListEcological = new ArrayList<String>();
+        itemListEcological.add("TapTap登录");
+        itemListEcological.add("内嵌动态");
+        itemListEcological.add("正版验证");
+        itemListEcological.add("合规认证");
 
-        ArrayList<String> itemList2 = new ArrayList<String>();
-        itemList2.add("内建账户");
-        itemList2.add("成就");
-        itemList2.add("排行榜");
-        itemList2.add("云存档");
-        itemList2.add("数据存储");
-
-
-        ArrayList<String> itemList3 = new ArrayList<String>();
-        itemList3.add("礼包系统");
-        itemList3.add("客服系统");
+        ArrayList<String> itemListCloud = new ArrayList<String>();
+        itemListCloud.add("内建账户");
+        itemListCloud.add("成就");
+        itemListCloud.add("排行榜");
+        itemListCloud.add("云存档");
+        itemListCloud.add("数据存储");
 
 
-        ArrayList iconList1 = new ArrayList();
-        iconList1.add(R.mipmap.aa);
-        iconList1.add(R.mipmap.bb);
-        iconList1.add(R.mipmap.cc);
-        iconList1.add(R.mipmap.dd);
-
-        ArrayList iconList2 = new ArrayList();
-        iconList2.add(R.mipmap.ee);
-        iconList2.add(R.mipmap.hh);
-        iconList2.add(R.mipmap.ii);
-        iconList2.add(R.mipmap.jj);
-        iconList2.add(R.mipmap.kk);
+        ArrayList<String> itemListOperate = new ArrayList<String>();
+        itemListOperate.add("礼包系统");
+        itemListOperate.add("客服系统");
 
 
-        ArrayList iconList3 = new ArrayList();
-        iconList3.add(R.mipmap.rr);
-        iconList3.add(R.mipmap.ee);
+        ArrayList iconListEcological = new ArrayList();
+        iconListEcological.add(R.mipmap.aa);
+        iconListEcological.add(R.mipmap.bb);
+        iconListEcological.add(R.mipmap.cc);
+        iconListEcological.add(R.mipmap.dd);
+
+        ArrayList iconListCloud = new ArrayList();
+        iconListCloud.add(R.mipmap.ee);
+        iconListCloud.add(R.mipmap.hh);
+        iconListCloud.add(R.mipmap.ii);
+        iconListCloud.add(R.mipmap.jj);
+        iconListCloud.add(R.mipmap.kk);
+
+
+        ArrayList iconListOperate = new ArrayList();
+        iconListOperate.add(R.mipmap.rr);
+        iconListOperate.add(R.mipmap.ee);
 
 
 
         childList = new ArrayList<>();
-        childList.add(itemList1);
-        childList.add(itemList2);
-        childList.add(itemList3);
+        childList.add(itemListEcological);
+        childList.add(itemListCloud);
+        childList.add(itemListOperate);
 
         iconChildList = new ArrayList<>();
-        iconChildList.add(iconList1);
-        iconChildList.add(iconList2);
-        iconChildList.add(iconList3);
+        iconChildList.add(iconListEcological);
+        iconChildList.add(iconListCloud);
+        iconChildList.add(iconListOperate);
 
     }
 
