@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
 import com.tapsdk.tapconnect.TapConnect;
-import com.taptap.pay.sdk.library.TapLicenseHelper;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapAntiAddictionConfig;
 import com.tds.common.entities.TapConfig;
@@ -27,7 +26,6 @@ import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.AntiaddictionFragment;
 import com.tds.demo.fragment.CloudSaveFragment;
-import com.tds.demo.fragment.DLCFragment;
 import com.tds.demo.fragment.DataSaveFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
 import com.tds.demo.fragment.GiftFragment;
@@ -52,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         checkPermission(this, this);
-//        DLC 测试环境是否开启
-        TapLicenseHelper.setTestEnvironment(false, this);
 
         initSDK();
 
@@ -68,17 +64,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < adapter.getGroupCount(); i++) {
             listView.expandGroup(i);
         }
-
-//         唤起更新的功能代码
-//        TapUpdate.updateGame(this, new TapUpdateCallback() {
-//            @Override
-//            public void onCancel() {
-//                // 取消更新的事件
-//                Log.e("TAG", "取消了更新==========" );
-//            }
-//        });
-
-
 
     }
 
@@ -125,19 +110,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "内嵌动态":
                 showFragment(InLineDynamicFragment.getInstance(), "inLineDynamicFragment");
-
                 break;
-
-
             case "正版验证":
                 showFragment(GenuineVerifyFragment.getInstance(), "genuineVerifyFragment");
-
                 break;
-
-            case "防沉迷-合规认证":
+            case "合规认证":
                 showFragment(AntiaddictionFragment.getInstance(), "antiaddictionFragment");
                 break;
-
             case "内建账户":
                 showFragment(InsideAccoundFragment.getInstance(), "insideAccoundFragment");
                 break;
@@ -156,10 +135,6 @@ public class MainActivity extends AppCompatActivity {
 
             case "数据存储":
                 showFragment(DataSaveFragment.getInstance(), "dataSaveFragment");
-                break;
-            case "DLC 内购":
-                showFragment(DLCFragment.getInstance(), "dlcFragment");
-
                 break;
 
             case "礼包系统":

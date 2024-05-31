@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -47,19 +48,26 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     Button age;
     @BindView(R.id.pay_limit)
     Button pay_limit;
-    @BindView(R.id.open_game_time)
-    Button open_game_time;
-    @BindView(R.id.close_game_time)
-    Button close_game_time;
     @BindView(R.id.get_time_remaining)
     Button get_time_remaining;
     @BindView(R.id.submit_pay)
     Button submit_pay;
+    @BindView(R.id.test_btn)
+    Button test_btn;
+    @BindView(R.id.upload_amount)
+    EditText upload_amount;
+    @BindView(R.id.examine_amount)
+    EditText examine_amount;
+
+
+
+
 
 
 
     private static AntiaddictionFragment antiaddictionFragment = null;
 
+    private boolean isOpenTest = false;
     public AntiaddictionFragment() {
 
     }
@@ -79,9 +87,6 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
 
         // 单独初始化防沉迷 SDk
 //        aloneInit();
-
-
-        AntiAddictionUIKit.setTestEnvironment(getActivity(), true); // 是否开通调试模式
 
         // 注册防沉迷的消息监听
         AntiAddictionUIKit.setAntiAddictionCallback(new AntiAddictionUICallback() {
@@ -126,7 +131,6 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
             @Override
             public void onCallback(int code, Map<String, Object> extras) {
                 // 防沉迷回调
-
                 Log.e("TAG", "onCallback: "+ code);
             }
         };
@@ -148,10 +152,11 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
         logout.setOnClickListener(this);
         age.setOnClickListener(this);
         pay_limit.setOnClickListener(this);
-        open_game_time.setOnClickListener(this);
-        close_game_time.setOnClickListener(this);
         get_time_remaining.setOnClickListener(this);
         submit_pay.setOnClickListener(this);
+        test_btn.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -175,17 +180,14 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
           case R.id.pay_limit:
               checkPay();
               break;
-          case R.id.open_game_time:
-              AntiAddictionUIKit.enterGame();
-              break;
-          case R.id.close_game_time:
-              AntiAddictionUIKit.leaveGame();
-              break;
           case R.id.get_time_remaining:
               remainingTime();
               break;
           case R.id.submit_pay:
               submitPayMoney();
+              break;
+          case R.id.test_btn:
+               openOrCloseTest();
               break;
           default:
               break;
@@ -194,13 +196,22 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
       }
     }
 
-    private void getGamerAge() {
 
+    // 设置测试环境
+    private void openOrCloseTest() {
+        if(isOpenTest){
+            ToastUtil.showToast("关闭测试模式");
+        }else{
+            ToastUtil.showToast("开启测试模式");
+        }
+        isOpenTest = !isOpenTest;
+        AntiAddictionUIKit.setTestEnvironment(getActivity(), isOpenTest);
+
+    }
+
+    private void getGamerAge() {
         int ageRange = AntiAddictionUIKit.getAgeRange();
         ToastUtil.showCus("当前年龄段最低年龄为："+ ageRange, ToastUtil.Type.SUCCEED);
-
-
-
     }
 
     /**
@@ -209,8 +220,12 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
      * 开发者也可以调用 SDK 提供的接口，当未成年玩家消费成功后，在客户端上报消费金额，在客户端上报的可靠性低于在服务端上报，主要适用于无服务端的单机游戏。
      * */
     private void submitPayMoney() {
-        long amount = 100;
-        AntiAddictionUIKit.submitPayResult(amount, new Callback<SubmitPayResult>() {
+        String uploadAmount = upload_amount.getText().toString();
+        if(uploadAmount.isEmpty() || convertToLong(uploadAmount) == 0L){
+            ToastUtil.showToast("请输入正确的金额");
+            return;
+        }
+        AntiAddictionUIKit.submitPayResult(convertToLong(uploadAmount), new Callback<SubmitPayResult>() {
                     @Override
                     public void onSuccess(SubmitPayResult result) {
                         // 提交成功
@@ -230,11 +245,15 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
     /**
      * 检查消费上限
      * 根据年龄段的不同，未成年玩家的消费金额有不同的上限。 如果启用消费限制功能，开发者需要在未成年玩家消费前检查是否受限，并在成功消费后上报消费金额。
-     * 消费金额的单位为分。
+     * 消费金额的单位为 分。
      * */
     private void checkPay() {
-        long amount = 100;  // 单位为 分
-        AntiAddictionUIKit.checkPayLimit(getActivity(), amount,
+        String examineAmount = examine_amount.getText().toString();
+        if(examineAmount.isEmpty() || convertToLong(examineAmount) == 0L){
+           ToastUtil.showToast("请输入正确的金额");
+            return;
+        }
+        AntiAddictionUIKit.checkPayLimit(getActivity(), convertToLong(examineAmount),
                 new com.tapsdk.antiaddictionui.Callback<CheckPayResult>() {
                     @Override
                     public void onSuccess(CheckPayResult result) {
@@ -251,12 +270,27 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
 
                     @Override
                     public void onError(Throwable throwable) {
+                        Log.e("TAG", "onError: "+throwable.getMessage() );
                         // 处理异常
                         ToastUtil.showCus(throwable.getMessage(), ToastUtil.Type.ERROR );
 
                     }
                 }
         );
+        }
+
+
+    private long convertToLong(String amount) {
+        if (amount != null && amount.matches("-?\\d+")){
+            try {
+                return Long.parseLong(amount);
+            } catch (NumberFormatException e) {
+                return 0L;
+            }
+        } else {
+            ToastUtil.showToast("请输入正确的金额");
+            return 0L; // 你可以根据需要选择其他默认值或抛出异常
+        }
     }
 
     /**

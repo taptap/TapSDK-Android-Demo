@@ -136,11 +136,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
      * */
     public void tapLogin() {
 
-//        String[] premission = new String[]{"public_profile","user_friends"};
+//      String[] premission = new String[]{"public_profile","user_friends"};    // 开启互关好友接口权限时使用
         String[] premission = new String[]{"public_profile"};
         // 检查登录状态
         if (null == TDSUser.currentUser()) {
-
             // 未登录
             TDSUser.loginWithTapTap(getActivity(), new Callback<TDSUser>() {
                 @Override
@@ -149,20 +148,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     Log.e("TAG", "Login onSuccess: "+ resultUser.toJSONInfo() );
                     Profile profile = TapLoginHelper.getCurrentProfile();
                     Log.e(TAG, "onSuccess===》userName: "+ profile.getName() );
-                    Log.e(TAG, "onSuccess===》: "+ profile.getOpenid() );
-
-                    Log.e(TAG, "onSuccess:=====> "+ TapLoginHelper.getCurrentAccessToken().toString() );
-
-
-
-                    boolean authenticated = TDSUser.getCurrentUser().isAuthenticated();
-                    Log.e(TAG, "tapLogin:==>  "+  TDSUser.getCurrentUser() );
-                    if (authenticated) {
-                        Log.e(TAG, "tapLogin: =====");
-                    } else {
-                        Log.e(TAG, "tapLogin:Fail =====");
-                    }
-
 
                 }
                 @Override
@@ -174,19 +159,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         } else {
             // 已登录，进入游戏
             ToastUtil.showCus("您已登录！", ToastUtil.Type.POINT );
-
-            Profile profile = TapLoginHelper.getCurrentProfile();
-            Log.e(TAG, "onSuccess===》: " );
-
-
-
-            boolean authenticated = TDSUser.getCurrentUser().isAuthenticated();
-            Log.e(TAG, "tapLogin:==>  "+  TDSUser.getCurrentUser() );
-            if (authenticated) {
-                Log.e(TAG, "tapLogin: =====");
-            } else {
-                Log.e(TAG, "tapLogin:Fail =====");
-            }
         }
     }
     /**

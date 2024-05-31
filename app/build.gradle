@@ -81,18 +81,9 @@ dependencies {
     implementation 'com.taptap:lc-realtime-android:8.2.24'
 
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
 
-//    implementation "com.taptap.android.payment:sdk:1.0.5"
-//    implementation("com.taptap.android:login:3.28.3@aar")
-//    implementation("com.taptap.android:common:3.28.3@aar")
-
-    // 如果要支持使用 微信和支付宝客户端支付，添加下面的微信和支付宝的 SDK
-//    implementation 'com.alipay.sdk:alipaysdk-android:15.8.11@aar'
-//    implementation 'com.tencent.mm.opensdk:wechat-sdk-android:6.8.0'
 
 
 }

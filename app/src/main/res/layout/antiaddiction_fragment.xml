@@ -1,134 +1,144 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:clickable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="15dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="15dp">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageButton
             android:id="@+id/close_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@mipmap/back"
             android:background="@android:color/transparent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:src="@mipmap/back"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/close_button"
-            app:layout_constraintEnd_toStartOf="@id/intro_button"
-            android:text="防沉迷-合规认证"
-            android:textStyle="bold"
+            android:text="合规认证"
             android:textColor="@color/TapTap"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/intro_button"
+            app:layout_constraintStart_toEndOf="@id/close_button"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/intro_button"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="功能介绍"
-            android:textSize="14sp"
-            android:textColor="@color/white"
             android:background="@drawable/box_shape"
-            app:layout_constraintTop_toTopOf="parent"
+            android:text="功能介绍"
+            android:textColor="@color/white"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/quick_authentication"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="快速认证"
+        style="@style/button_style"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
-        style="@style/button_style"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"/>
-
-
+        android:text="快速认证"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar" />
 
     <Button
         android:id="@+id/logout"
         style="@style/button_style"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
         android:text="登出"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"/>
+        app:layout_constraintTop_toBottomOf="@id/top_bar" />
 
-    <Button
-        android:id="@+id/age"
-        style="@style/button_style"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="玩家年龄"
+    <EditText
+        android:id="@+id/examine_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        app:layout_constraintTop_toBottomOf="@id/logout" />
-
+        android:background="@drawable/edittext_shape"
+        android:hint="输入需要检查的金额"
+        android:minWidth="120dp"
+        android:padding="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quick_authentication" />
 
     <Button
         android:id="@+id/pay_limit"
         style="@style/button_style"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="消费上限"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        app:layout_constraintTop_toBottomOf="@id/logout"/>
-
-
-    <Button
-        android:id="@+id/close_game_time"
-        style="@style/button_style"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="关闭游戏时长上报"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        app:layout_constraintTop_toBottomOf="@id/pay_limit"/>
-
-    <Button
-        android:id="@+id/open_game_time"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="游戏时长上报"
-        style="@style/button_style"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
-        app:layout_constraintTop_toBottomOf="@id/pay_limit"
-        />
+        android:text="检查消费上限"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quick_authentication" />
+
+    <Button
+        android:id="@+id/age"
+        style="@style/button_style"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:text="获取年龄段"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/examine_amount" />
 
     <Button
         android:id="@+id/get_time_remaining"
         style="@style/button_style"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="剩余游戏时间"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:text="剩余游戏时间"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/examine_amount" />
+
+    <EditText
+        android:id="@+id/upload_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        app:layout_constraintTop_toBottomOf="@id/close_game_time"/>
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_shape"
+        android:hint="输入充值的金额"
+        android:minWidth="120dp"
+        android:padding="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/get_time_remaining" />
 
     <Button
         android:id="@+id/submit_pay"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="上报消费金额"
         style="@style/button_style"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
-        app:layout_constraintTop_toBottomOf="@id/open_game_time"
-        />
+        android:text="上报消费金额"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/get_time_remaining" />
+
+    <Button
+        android:id="@+id/test_btn"
+        style="@style/button_style"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:text="开启/关闭测试环境"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/upload_amount" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

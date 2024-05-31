@@ -16,15 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.gamesave.TapGameSave;
-import com.tapsdk.lc.LCException;
 import com.tapsdk.lc.LCFile;
 import com.tapsdk.lc.LCObject;
 import com.tapsdk.lc.LCQuery;
 import com.tapsdk.lc.callback.ProgressCallback;
-import com.tapsdk.lc.livequery.LCLiveQuery;
-import com.tapsdk.lc.livequery.LCLiveQueryConnectionHandler;
-import com.tapsdk.lc.livequery.LCLiveQueryEventHandler;
-import com.tapsdk.lc.livequery.LCLiveQuerySubscribeCallback;
 import com.tapsdk.lc.types.LCNull;
 import com.tds.demo.R;
 import com.tds.demo.until.ToastUtil;
@@ -66,12 +61,6 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
     Button update_data;
     @BindView(R.id.delete_data)
     Button delete_data;
-    @BindView(R.id.subscriber)
-    Button subscriber;
-    @BindView(R.id.listener_network)
-    Button listener_network;
-    @BindView(R.id.cancel_listener)
-    Button cancel_listener;
     @BindView(R.id.save_file)
     Button save_file;
     @BindView(R.id.show_progress)
@@ -105,8 +94,6 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.layout_data_save_fragment, container, false);
         ButterKnife.bind(this, view);
-        // 网络状态响应
-        listenerNetwork();
 
         return view;
 
@@ -122,9 +109,6 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
         refresh_data.setOnClickListener(this);
         update_data.setOnClickListener(this);
         delete_data.setOnClickListener(this);
-        subscriber.setOnClickListener(this);
-        listener_network.setOnClickListener(this);
-        cancel_listener.setOnClickListener(this);
         save_file.setOnClickListener(this);
         show_progress.setOnClickListener(this);
         download_file.setOnClickListener(this);
@@ -158,16 +142,6 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.delete_data:
                 deleteData();
-                break;
-            case R.id.subscriber:
-                startSubscriber();
-                break;
-            case R.id.listener_network:
-                listenerNetwork();
-                break;
-
-            case R.id.cancel_listener:
-                cancelListener();
                 break;
             case R.id.save_file:
                 saveFile();
@@ -350,129 +324,6 @@ public class DataSaveFragment extends Fragment implements View.OnClickListener{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-    }
-
-
-    /**
-     * 取消订阅
-     *
-     * */
-    private void cancelListener() {
-        LCQuery<LCObject> query = new LCQuery<>("Todo");
-        query.whereEqualTo("time", "2022-10-29");
-        LCLiveQuery liveQuery = LCLiveQuery.initWithQuery(query);
-
-        liveQuery.unsubscribeInBackground(new LCLiveQuerySubscribeCallback() {
-            @Override
-            public void done(LCException e) {
-                if (e == null) {
-                    // 订阅成功
-                    ToastUtil.showCus("订阅取消成功", ToastUtil.Type.SUCCEED);
-                }else {
-                    Log.e(TAG, "done: "+ e.toString());
-                    ToastUtil.showCus(e.getMessage(), ToastUtil.Type.ERROR);
-
-                }
-            }
-        });
-
-    }
-
-
-    /**
-     *
-     * 网络状态响应
-     * */
-    private void listenerNetwork() {
-
-        LCLiveQuery.setConnectionHandler(new LCLiveQueryConnectionHandler() {
-            @Override
-            public void onConnectionOpen() {
-                Log.e(TAG, "LiveQuery 网络链接开启" );
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtil.showCus("LiveQuery 网络链接开启", ToastUtil.Type.SUCCEED);
-                    }
-                });
-            }
-
-            @Override
-            public void onConnectionClose() {
-                Log.e(TAG, "LiveQuery 网络链接关闭" );
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtil.showCus("LiveQuery 网络链接关闭", ToastUtil.Type.WARNING);
-                    }
-                });
-
-            }
-
-            @Override
-            public void onConnectionError(int code, String reason) {
-                Log.e(TAG, "LiveQuery 网络链接异常："+ reason);
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtil.showCus("LiveQuery 网络链接异常："+ reason, ToastUtil.Type.ERROR);
-                    }
-                });
-
-            }
-        });
-
-    }
-
-
-    /**
-     * LiveQuery 构建订阅
-     *
-     * */
-    private void startSubscriber() {
-
-        LCQuery<LCObject> query = new LCQuery<>("Todo");
-        query.whereEqualTo("time", "2022-10-29");
-        LCLiveQuery liveQuery = LCLiveQuery.initWithQuery(query);
-
-        // 当另一个设备中新建 Todo 一个对象，那么下面的代码可以获取到这个新的
-        liveQuery.setEventHandler(new LCLiveQueryEventHandler() {
-            @Override
-            public void onObjectCreated(LCObject newTodo) {
-                Log.e(TAG, "创建了新的对象："+ newTodo.toJSONString());
-            }
-        });
-        // 此时如果有人把 Todo 的 content 改为 进行修改，那么下面的代码可以获取到本次更新
-        liveQuery.setEventHandler(new LCLiveQueryEventHandler() {
-            @Override
-            public void onObjectUpdated(LCObject updatedTodo, List<String> updatedKeys) {
-                Log.e(TAG, "对象被更新成如下："+ updatedTodo.toJSONString() +"更新的Key是："+updatedKeys.toString());
-
-            }
-        });
-
-        // 当一个已存在的、原本符合 LCQuery 查询条件的 LCObject 被删除，delete 事件会被触发。下面的 object 就是被删除的 LCObject 的 objectId：
-        liveQuery.setEventHandler(new LCLiveQueryEventHandler() {
-            @Override
-            public void onObjectDeleted(String object) {
-                Log.e(TAG, "被删除的ObjectId是："+ object);
-
-            }
-        });
-
-        liveQuery.subscribeInBackground(new LCLiveQuerySubscribeCallback() {
-            @Override
-            public void done(LCException e) {
-                if (e == null) {
-                    // 订阅成功
-                    ToastUtil.showCus("订阅成功", ToastUtil.Type.SUCCEED);
-                }else {
-                    ToastUtil.showCus(e.getMessage(), ToastUtil.Type.ERROR);
-
-                }
-            }
-        });
 
     }
 

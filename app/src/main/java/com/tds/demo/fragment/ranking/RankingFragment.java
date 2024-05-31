@@ -139,7 +139,7 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
 
     }
 
-//    查询指定区间的排行榜
+    //    查询指定区间的排行榜
     private void searchRankPatly() {
         LCLeaderboard leaderboard = LCLeaderboard.createWithoutData("word");
 
@@ -182,7 +182,7 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onNext(LCLeaderboard lcLeaderboard) {
-               ToastUtil.showCus(lcLeaderboard.getStatisticName()+"榜：更新策略："+lcLeaderboard.getUpdateStrategy()+"  排序："+lcLeaderboard.getOrder() , ToastUtil.Type.SUCCEED);
+                ToastUtil.showCus(lcLeaderboard.getStatisticName()+"榜：更新策略："+lcLeaderboard.getUpdateStrategy()+"  排序："+lcLeaderboard.getOrder() , ToastUtil.Type.SUCCEED);
             }
 
             @Override
@@ -211,7 +211,6 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
         List<String> selectKeys = new ArrayList<>();
         selectKeys.add("nickname");
         selectKeys.add("avatar");
-        selectKeys.add("todo");
 
         leaderboard.getResults(0, 10, selectKeys, null).subscribe(new Observer<LCLeaderboardResult>() {
             @Override
@@ -221,21 +220,6 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onNext(@NotNull LCLeaderboardResult leaderboardResult) {
                 List<LCRanking> rankings = leaderboardResult.getResults();
-
-                for(int i=0; i<rankings.size(); i++){
-                    Log.e(TAG, "onNext======: "+rankings.get(i).getUser() );
-
-                    LCQuery<LCObject> query = new LCQuery<>("_User");
-                    query.getInBackground(rankings.get(i).getUser().getServerData().get("objectId").toString()).subscribe(new Observer<LCObject>() {
-                        public void onSubscribe(Disposable disposable) {}
-                        public void onNext(LCObject todo) {
-                            Log.e(TAG, "onNextUSER=========: "+ todo.toJSONString() );
-                        }
-                        public void onError(Throwable throwable) {}
-                        public void onComplete() {}
-                    });
-                }
-
 
 
                 RankingAdapter rankingAdapter = new RankingAdapter();

@@ -15,8 +15,6 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.gamesave.TapGameSave;
 import com.tapsdk.lc.LCFile;
-import com.tapsdk.lc.LCObject;
-import com.tapsdk.lc.LCQuery;
 import com.tapsdk.lc.types.LCNull;
 import com.tds.demo.R;
 import com.tds.demo.until.ToastUtil;

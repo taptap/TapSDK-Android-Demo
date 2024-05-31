@@ -61,6 +61,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_bar"/>
 
+    <Button
+        android:id="@+id/search"
+        android:text="DLC 查询"
+        style="@style/button_style"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/check_pay"/>
+
+    <Button
+        android:id="@+id/pay_dlc"
+        android:text="DLC 购买"
+        style="@style/button_style"
+        android:layout_marginRight="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/check_pay"/>
+
+    <Button
+        android:id="@+id/test_environment"
+        android:text="开启/关闭测试环境"
+        style="@style/button_style"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search"/>
+
 
 
 

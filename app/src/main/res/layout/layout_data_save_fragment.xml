@@ -148,57 +148,11 @@
 
 
     <TextView
-        android:id="@+id/live_query_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LiveQuery相关："
-        app:layout_constraintTop_toBottomOf="@id/delete_data"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"/>
-
-
-
-    <Button
-        android:id="@+id/subscriber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="构建订阅"
-        app:layout_constraintTop_toBottomOf="@id/live_query_title"
-        app:layout_constraintStart_toEndOf="@id/listener_network"
-        android:layout_marginLeft="15dp"
-        />
-
-
-    <Button
-        android:id="@+id/listener_network"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="监听网络状态"
-        app:layout_constraintTop_toBottomOf="@id/live_query_title"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="15dp"
-        />
-
-    <Button
-        android:id="@+id/cancel_listener"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="取消订阅"
-        app:layout_constraintTop_toBottomOf="@id/listener_network"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="15dp"
-        />
-
-    <TextView
         android:id="@+id/file_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="文件相关："
-        app:layout_constraintTop_toBottomOf="@id/cancel_listener"
+        app:layout_constraintTop_toBottomOf="@id/delete_data"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="14sp"
         android:textColor="@color/black"
