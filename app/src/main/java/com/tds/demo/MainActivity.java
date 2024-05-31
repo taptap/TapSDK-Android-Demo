@@ -17,18 +17,15 @@ import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
 import com.tapsdk.tapconnect.TapConnect;
-import com.tds.common.constants.Constants;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapAntiAddictionConfig;
 import com.tds.common.entities.TapConfig;
 import com.tds.common.entities.TapDBConfig;
-import com.tds.common.entities.TapPaymentConfig;
 import com.tds.common.models.TapRegionType;
 import com.tds.demo.data.SDKInfoData;
 import com.tds.demo.data.SDKTypeData;
 import com.tds.demo.fragment.AntiaddictionFragment;
 import com.tds.demo.fragment.CloudSaveFragment;
-import com.tds.demo.fragment.DLCFragment;
 import com.tds.demo.fragment.DataSaveFragment;
 import com.tds.demo.fragment.GenuineVerifyFragment;
 import com.tds.demo.fragment.GiftFragment;
@@ -68,15 +65,6 @@ public class MainActivity extends AppCompatActivity {
             listView.expandGroup(i);
         }
 
-        // 唤起更新的功能代码
-//        TapUpdate.updateGame(this, new TapUpdateCallback() {
-//            @Override
-//            public void onCancel() {
-//                // 取消更新的事件
-//                Log.e("TAG", "取消了更新==========" );
-//            }
-//        });
-
     }
 
     /**
@@ -93,16 +81,7 @@ public class MainActivity extends AppCompatActivity {
         tapDBConfig.setGameVersion("1.0.0"); //游戏版本，为空时，自动获取游戏安装包的版本，长度不大于 256
 
 
-        TapPaymentConfig tapPaymentConfig = new TapPaymentConfig.Builder()
-                // 地区暂时只支持「中国地区」
-                .withRegionId(Constants.Region.REGION_CN)
-                // 语言暂时只支持中文
-                .withLanguage(Constants.Language.CN)
-                // 微信商户申请H5时提交的授权域名，详见 https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_4 里 Referer 设置相关部分
-                .withWXAuthorizedDomainName("https://tds-payment.tapapis.cn")
-                .build();
-
-        TapAntiAddictionConfig tapAntiAddictionConfig = new TapAntiAddictionConfig(true);  // 从 3.27.0 版本开始支持 TapBootstrap 防沉迷的初始化
+        TapAntiAddictionConfig tapAntiAddictionConfig = new TapAntiAddictionConfig(true, true);  // 从 3.27.0 版本开始支持 TapBootstrap 防沉迷的初始化
 
 
         TapConfig tdsConfig = new TapConfig.Builder()
@@ -112,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 .withServerUrl(SDKInfoData.SDK_SERVER_URL)
                 .withTapDBConfig(tapDBConfig)
                 .withRegionType(TapRegionType.CN)
-                .withTapPaymentConfig(tapPaymentConfig)
                 .withAntiAddictionConfig(tapAntiAddictionConfig)
                 .build();
 
@@ -132,19 +110,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "内嵌动态":
                 showFragment(InLineDynamicFragment.getInstance(), "inLineDynamicFragment");
-
                 break;
-
-
             case "正版验证":
                 showFragment(GenuineVerifyFragment.getInstance(), "genuineVerifyFragment");
-
                 break;
-
-            case "防沉迷-合规认证":
+            case "合规认证":
                 showFragment(AntiaddictionFragment.getInstance(), "antiaddictionFragment");
                 break;
-
             case "内建账户":
                 showFragment(InsideAccoundFragment.getInstance(), "insideAccoundFragment");
                 break;
@@ -163,10 +135,6 @@ public class MainActivity extends AppCompatActivity {
 
             case "数据存储":
                 showFragment(DataSaveFragment.getInstance(), "dataSaveFragment");
-                break;
-            case "DLC 内购":
-                showFragment(DLCFragment.getInstance(), "dlcFragment");
-
                 break;
 
             case "礼包系统":

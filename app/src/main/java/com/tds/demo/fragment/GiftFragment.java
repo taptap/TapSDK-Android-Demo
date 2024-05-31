@@ -94,7 +94,7 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
         request.setOnClickListener(this);
 
         client_id.setText("hskcocvse6x1cgkklm");
-        gift_code.setText("87CfvvEdbRVPM");
+        gift_code.setText("NTVCMr6wN5b9N");
         character_id.setText(randomCharacterId());
         nonce_str.setText("RFG7U");
         String timeStr = (System.currentTimeMillis() / 1000)+"";
@@ -172,7 +172,9 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
             jsonObject.put("nonce_str",nonce_str.getText().toString());
             jsonObject.put("sign",sign.getText().toString());
             jsonObject.put("timestamp",Integer.parseInt(timestamp.getText().toString()));
-//            jsonObject.put("server_code","121212");  // 无二次校验的兑换接口
+            jsonObject.put("server_code","121212");  // 无二次校验的兑换接口
+
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -245,8 +247,12 @@ public class GiftFragment extends Fragment implements View.OnClickListener{
         }
 
         try {
-           String signTxt = shaEncode(timestamp.getText().toString()+nonce_str.getText().toString()+client_id.getText().toString());
+
+
+           String signTxt = shaEncode(timestamp.getText().toString()+nonce_str.getText().toString()+client_id.getText().toString());  // 无服务器兑换
+//           String signTxt = shaEncode(timestamp.getText().toString()+nonce_str.getText().toString()+"nZfLau9jFAj7GQi3l0xA3HNXTr7WxQ4M");  // 非无服务器兑换的接口生成签名使用
            sign.setText(signTxt);
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);

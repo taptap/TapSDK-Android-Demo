@@ -1,5 +1,10 @@
 package com.tds.demo.fragment;
 
+import static com.tapsdk.bootstrap.constants.Constants.ERROR_CODE_UNDEFINED;
+import static com.taptap.pay.sdk.library.DLCManager.QUERY_RESULT_ERR;
+import static com.taptap.pay.sdk.library.DLCManager.QUERY_RESULT_NOT_INSTALL_TAPTAP;
+import static com.taptap.pay.sdk.library.DLCManager.QUERY_RESULT_OK;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +18,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import com.taptap.pay.sdk.library.DLCManager;
 import com.taptap.pay.sdk.library.TapLicenseCallback;
 import com.taptap.pay.sdk.library.TapLicenseHelper;
 import com.tds.demo.R;
+import com.tds.demo.until.ToastUtil;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +41,15 @@ public class GenuineVerifyFragment extends Fragment implements View.OnClickListe
     Button intro_button;
     @BindView(R.id.check_pay)
     Button check_pay;
+    @BindView(R.id.search)
+    Button search;
+    @BindView(R.id.pay_dlc)
+    Button pay_dlc;
+    @BindView(R.id.test_environment)
+    Button test_environment;
 
+    private String[] skuIds = {"101"};
+    private boolean isOpenTest = false;
 
 
     private static GenuineVerifyFragment genuineVerifyFragment = null;
@@ -53,13 +70,41 @@ public class GenuineVerifyFragment extends Fragment implements View.OnClickListe
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.genuine_verify_fragment, container, false);
         ButterKnife.bind(this, view);
-        // 默认情况下 SDK 会弹出不可由玩家手动取消的弹窗来避免未授权玩家进入游戏，如果需要回调来触发流程，请添加如下代码
+
+
         TapLicenseHelper.setLicenseCallback(new TapLicenseCallback() {
             @Override
             public void onLicenseSuccess() {
-                Log.e("TAG", "授权成功的回调！" );
+                ToastUtil.showToast("授权成功！");
             }
         });
+
+
+        TapLicenseHelper.setDLCCallback(new DLCManager.InventoryCallback() {
+            @Override
+            public boolean onQueryCallBack(int i, HashMap<String, Integer> queryList) {
+                // 查询回调
+                if(i == QUERY_RESULT_OK	){
+                    ToastUtil.showCus("查询成功："+ queryList.toString(), ToastUtil.Type.SUCCEED);
+                } else if (i == QUERY_RESULT_NOT_INSTALL_TAPTAP) {
+                    ToastUtil.showCus("设备未安装 TapTap 客户端", ToastUtil.Type.POINT);
+                }else if (i == QUERY_RESULT_ERR) {
+                    ToastUtil.showCus("查询失败", ToastUtil.Type.ERROR);
+                }else if (i == ERROR_CODE_UNDEFINED	) {
+                    ToastUtil.showCus("未知错误", ToastUtil.Type.ERROR);
+                }
+                return false;
+            }
+
+            @Override
+            public void onOrderCallBack(String s, int i) {
+                // 购买回调
+                Log.e("TAG", "onOrderCallBack: "+ s + i );
+                ToastUtil.showCus("购买商品 ID："+ s, ToastUtil.Type.POINT);
+            }
+        });
+
+
         return view;
     }
 
@@ -70,6 +115,9 @@ public class GenuineVerifyFragment extends Fragment implements View.OnClickListe
         close_button.setOnClickListener(this);
         intro_button.setOnClickListener(this);
         check_pay.setOnClickListener(this);
+        pay_dlc.setOnClickListener(this);
+        search.setOnClickListener(this);
+        test_environment.setOnClickListener(this);
     }
 
     public void onClick(View v) {
@@ -87,6 +135,25 @@ public class GenuineVerifyFragment extends Fragment implements View.OnClickListe
             case R.id.check_pay:
                 // 检查是否付费
                 TapLicenseHelper.check(getActivity());
+                break;
+            case R.id.search:
+                // DLC 查询
+                TapLicenseHelper.queryDLC(getActivity(), skuIds);
+                break;
+            case R.id.pay_dlc:
+                // DLC 购买
+                TapLicenseHelper.purchaseDLC(getActivity(), skuIds[0]);
+                break;
+            case R.id.test_environment:
+                if (isOpenTest){
+                    ToastUtil.showToast("关闭测试环境！");
+                }else{
+                    ToastUtil.showToast("开启测试环境！");
+                }
+                isOpenTest = !isOpenTest;
+                TapLicenseHelper.setTestEnvironment(isOpenTest, getActivity());
+
+
                 break;
             default:
                 break;

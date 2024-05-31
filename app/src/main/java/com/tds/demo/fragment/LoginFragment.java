@@ -17,6 +17,7 @@ import com.tapsdk.bootstrap.Callback;
 import com.tapsdk.bootstrap.account.TDSUser;
 import com.tapsdk.bootstrap.exceptions.TapError;
 import com.tapsdk.lc.LCUser;
+import com.taptap.sdk.AccessToken;
 import com.taptap.sdk.Profile;
 import com.taptap.sdk.TapLoginHelper;
 import com.taptap.sdk.net.Api;
@@ -135,6 +136,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
      * */
     public void tapLogin() {
 
+//      String[] premission = new String[]{"public_profile","user_friends"};    // 开启互关好友接口权限时使用
+        String[] premission = new String[]{"public_profile"};
         // 检查登录状态
         if (null == TDSUser.currentUser()) {
             // 未登录
@@ -144,20 +147,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     // 此处也可以获取用户信息
                     Log.e("TAG", "Login onSuccess: "+ resultUser.toJSONInfo() );
                     Profile profile = TapLoginHelper.getCurrentProfile();
-                    Log.e(TAG, "onSuccess===》: "+ profile.getOpenid() );
+                    Log.e(TAG, "onSuccess===》userName: "+ profile.getName() );
+
                 }
                 @Override
                 public void onFail(TapError error) {
                     ToastUtil.showCus(error.getMessage(), ToastUtil.Type.ERROR );
-                    Log.e(TAG, "Login onFail: "+error.code);
+                    Log.e(TAG, "Login onFail: "+error.toJSON());
                 }
-            }, "public_profile");
+            }, premission);
         } else {
             // 已登录，进入游戏
             ToastUtil.showCus("您已登录！", ToastUtil.Type.POINT );
-
-            Profile profile = TapLoginHelper.getCurrentProfile();
-            Log.e(TAG, "onSuccess===》: " );
         }
     }
     /**
@@ -191,10 +192,32 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
      * 获取用户信息
      * */
     private void getUserInfo() {
+
+       AccessToken token =  TapLoginHelper.getCurrentAccessToken();
+        Log.e(TAG, "getUserInfo: ===="+ token.toString() );
+
+
         Profile profile = TapLoginHelper.getCurrentProfile();
         if (null != profile){
             user_info.setText(FormatJson.format(profile.toJsonString()));
         }
+
+
+        // 获取实时更新的用户信息
+        TapLoginHelper.fetchProfileForCurrentAccessToken(new Api.ApiCallback<Profile>() {
+            @Override
+            public void onSuccess(Profile data) {
+                Log.e(TAG, "获取实时更新的用户信息: =====>"+ data.toString() );
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                Log.e(TAG, "获取实时更新的用户信息失败: =====》"+ error.toString() );
+
+            }
+        });
+
+
 
     }
     // 退出登录

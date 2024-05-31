@@ -149,7 +149,6 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
                 public void onComplete() {}
             });
 
-
     }
 
 
@@ -157,7 +156,6 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
      * 查询用户存档
      * */
     private void searchSave() {
-
         TapGameSave.getCurrentUserGameSaves()
                 .subscribe(new Observer<List<TapGameSave>>() {
                     @Override
@@ -180,7 +178,6 @@ public class CloudSaveFragment extends Fragment implements View.OnClickListener{
                             ToastUtil.showCus("存档名："+gameSave.getName()+" 描述："+summary+" 游戏时间："+playedTime, ToastUtil.Type.SUCCEED);
                         }
                     }
-
                     @Override
                     public void onError(@NotNull Throwable e) {
                         e.printStackTrace();
