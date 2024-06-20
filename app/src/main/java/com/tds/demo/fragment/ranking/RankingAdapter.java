@@ -1,5 +1,6 @@
 package com.tds.demo.fragment.ranking;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ import com.tds.demo.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 2022/10/19
@@ -66,20 +70,24 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.MyViewHo
         }
 
         public void setData(LCRanking lCRanking, int position) {
-            user_id.setText(lCRanking.getUser().getObjectId());
+            try {
+                JSONObject jsonObject = new JSONObject(lCRanking.getUser().toJSONString());
+                if(jsonObject.has("serverData")){
+                    JSONObject serverData = jsonObject.getJSONObject("serverData");
+                    if(serverData.has("nickname")){
+                        user_id.setText(serverData.getString("nickname"));
+                    }
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
             ranking_value.setText(lCRanking.getStatisticValue()+"");
 
-            handle_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnItemClickListener.onClick(lCRanking, position);
-                }
-            });
+            handle_button.setOnClickListener(v -> mOnItemClickListener.onClick(lCRanking, position));
         }
     }
 
     private OnItemClickListener mOnItemClickListener;
-
 
     public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;

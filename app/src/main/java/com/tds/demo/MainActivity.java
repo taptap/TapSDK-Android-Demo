@@ -65,7 +65,16 @@ public class MainActivity extends AppCompatActivity {
             listView.expandGroup(i);
         }
 
+//        TapUpdate.updateGame(this, new TapUpdateCallback() {
+//            @Override
+//            public void onCancel() {
+//
+//                // 取消更新的事件
+//            }
+//        });
+
     }
+
 
     /**
      * SDK 初始化
@@ -81,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         tapDBConfig.setGameVersion("1.0.0"); //游戏版本，为空时，自动获取游戏安装包的版本，长度不大于 256
 
 
-        TapAntiAddictionConfig tapAntiAddictionConfig = new TapAntiAddictionConfig(true, true);  // 从 3.27.0 版本开始支持 TapBootstrap 防沉迷的初始化
+        TapAntiAddictionConfig tapAntiAddictionConfig = new TapAntiAddictionConfig(true,true);  // 从 3.27.0 版本开始支持 TapBootstrap 防沉迷的初始化
 
 
         TapConfig tdsConfig = new TapConfig.Builder()
@@ -143,12 +152,9 @@ public class MainActivity extends AppCompatActivity {
             case "客服系统":
                 showFragment(SupportFragment.getInstance(), "supportFragment");
                 break;
-
             default:
                 break;
-
         }
-
 
     };
 

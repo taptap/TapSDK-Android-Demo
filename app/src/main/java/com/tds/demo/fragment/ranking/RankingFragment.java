@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tapsdk.bootstrap.account.TDSUser;
 import com.tapsdk.lc.LCException;
 import com.tapsdk.lc.LCLeaderboard;
 import com.tapsdk.lc.LCLeaderboardResult;
@@ -64,6 +65,8 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
     Button search_ranking_attr;
     @BindView(R.id.search_rank_patly)
     Button search_rank_patly;
+    @BindView(R.id.search_user_score)
+    Button search_user_score;
 
 
 
@@ -103,6 +106,7 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
         search_rank_list.setOnClickListener(this);
         search_ranking_attr.setOnClickListener(this);
         search_rank_patly.setOnClickListener(this);
+        search_user_score.setOnClickListener(this);
 
     }
 
@@ -131,11 +135,55 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
             case R.id.search_rank_patly:
                 searchRankPatly();
                 break;
+            case R.id.search_user_score:
+                searchUserScore();
+                break;
 
             default:
                 break;
 
         }
+
+    }
+
+
+    /**
+     * 查询用户的成绩
+     *
+     */
+    private void searchUserScore() {
+
+        // 查询排行榜成员成绩，那 onjectID 就传对应用户的 objectid
+        LCUser otherUser = null;
+        try {
+            otherUser = LCUser.createWithoutData(LCUser.class, "5c76107144d90400536fc88b");
+        } catch (LCException e) {
+            e.printStackTrace();
+        }
+
+        // 这里演示的是获取自己的成绩
+        LCLeaderboard.getUserStatistics(TDSUser.currentUser()).subscribe(new Observer<LCStatisticResult>() {
+            @Override
+            public void onSubscribe(@NotNull Disposable disposable) {}
+
+            @Override
+            public void onNext(@NotNull LCStatisticResult lcStatisticResult) {
+                List<LCStatistic> statistics = lcStatisticResult.getResults();
+                for (LCStatistic statistic : statistics) {
+
+                    Log.e(TAG, "用户排行榜分数："+String.valueOf(statistic.getValue()) + " 上传的排行榜名称："+statistic.getName());
+
+                }
+            }
+
+            @Override
+            public void onError(@NotNull Throwable throwable) {
+                Log.e(TAG, "onError: "+ throwable.getLocalizedMessage() );
+            }
+
+            @Override
+            public void onComplete() {}
+        });
 
     }
 
@@ -212,7 +260,7 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
         selectKeys.add("nickname");
         selectKeys.add("avatar");
 
-        leaderboard.getResults(0, 10, selectKeys, null).subscribe(new Observer<LCLeaderboardResult>() {
+        leaderboard.getResults(0, 100, selectKeys, null).subscribe(new Observer<LCLeaderboardResult>() {
             @Override
             public void onSubscribe(@NotNull Disposable disposable) {}
 
@@ -282,17 +330,20 @@ public class RankingFragment extends Fragment implements View.OnClickListener{
     private void submitScore() {
 
         Map<String, Double> statistic  = new HashMap<>();
-        statistic.put("word", 200.00);
-        statistic.put("score", 10.00);
-        statistic.put("kills", 80.0);
-        LCLeaderboard.updateStatistic(LCUser.currentUser(), statistic).subscribe(new Observer<LCStatisticResult>() {
+        statistic.put("word", 400.00);
+        statistic.put("score", 60.00);
+        statistic.put("kills", 100.0);
+        LCLeaderboard.updateStatistic(TDSUser.currentUser(), statistic).subscribe(new Observer<LCStatisticResult>() {
             @Override
             public void onSubscribe(@NotNull Disposable disposable) {}
 
             @Override
             public void onNext(@NotNull LCStatisticResult jsonObject) {
-                // scores saved
-                Log.e(TAG, "onNext: "+jsonObject.getResults().get(0).toString());
+                Log.d("上传成绩 onNext", String.valueOf(jsonObject.getResults().size()));
+
+                for (int i = 0; i < jsonObject.getResults().size(); i++) {
+                    Log.e(TAG, "上传的排行榜分数："+jsonObject.getResults().get(i).getStatisticValue() + " 上传的排行榜名称："+jsonObject.getResults().get(i).getStatisticName() );
+                }
                 ToastUtil.showCus("上传成功：排行榜名："+jsonObject.getResults().get(0).getStatisticName()+ " 排行榜积分："
                         +jsonObject.getResults().get(0).getStatisticValue(), ToastUtil.Type.SUCCEED);
 

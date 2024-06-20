@@ -91,12 +91,22 @@
         app:layout_constraintStart_toEndOf="@id/search_rank_list"
         android:layout_marginLeft="15dp"/>
 
+    <Button
+        android:id="@+id/search_user_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查询排行榜成员成绩"
+        app:layout_constraintTop_toBottomOf="@id/search_rank_patly"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="15dp"
+        />
+
     <TextView
         android:id="@+id/ranking_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="排行榜列表"
-        app:layout_constraintTop_toBottomOf="@id/search_rank_list"
+        app:layout_constraintTop_toBottomOf="@id/search_user_score"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textStyle="bold"
@@ -147,9 +157,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/recycle_title"
-        android:layout_marginTop="5dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"/>
 
 
 
