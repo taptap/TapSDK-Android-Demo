@@ -48,7 +48,7 @@ public class GenuineVerifyFragment extends Fragment implements View.OnClickListe
     @BindView(R.id.test_environment)
     Button test_environment;
 
-    private String[] skuIds = {"175"};
+    private String[] skuIds = {"99"};
     private boolean isOpenTest = false;
 
 
