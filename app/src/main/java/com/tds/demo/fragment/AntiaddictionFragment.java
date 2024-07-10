@@ -92,7 +92,7 @@ public class AntiaddictionFragment extends Fragment implements View.OnClickListe
         AntiAddictionUIKit.setAntiAddictionCallback(new AntiAddictionUICallback() {
             @Override
             public void onCallback(int code, Map<String, Object> extras) {
-                Log.e("TAG", "onCallback:=====  "+code +"   "+extras  );
+                Log.e("TAG", "onCallback:=====  "+code +"   "+extras );
                 String token = AntiAddictionUIKit.currentToken();
                 Log.e("TAG", "Token: "+ token );
 

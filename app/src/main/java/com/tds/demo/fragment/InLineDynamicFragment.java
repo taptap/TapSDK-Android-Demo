@@ -174,7 +174,7 @@ public class InLineDynamicFragment extends Fragment implements View.OnClickListe
                 break;
             case R.id.onekey_send:
                 int orientation = TapMoment.ORIENTATION_PORTRAIT;
-                String content = "动态描述：Tds demo 开发中";
+                String content = "动态描述：Tds demo 开发中#福利活动 #超数据世界 ";
                 String[] imagePaths = new String[]{copyAssetGetFilePath("logo.png")};  // 路径可自己设置
                 TapMoment.publish(orientation, imagePaths, content);
                 break;

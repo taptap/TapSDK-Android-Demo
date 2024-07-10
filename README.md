@@ -1,4 +1,4 @@
-## TapSDK - 3.29.0 For Android Demo
+## TapSDK - 3.29.2 For Android Demo
 
 ## 运行示例程序
 
@@ -10,7 +10,7 @@
 
 3、运行 Demo 源码前请先进入 SDKInfoData.java 文件中修改为您应用配置信息，修改包名以及签名信息。
 
-3、安卓可以下载项目中的 [tapsdk_android_v3.29.0.apk](https://capacity-files.lcfile.com/MgMrSbWK8LBoYnjB3cBsYEsk63C3E3LV/tapsdk_android_v3.29.0.apk) 或扫描如下二维码进行下载体验；
+3、安卓可以下载项目中的 [tapsdk_android_v3.29.2.apk](https://lc-buhezimj.cn-e1.lcfile.com/vIPf467arrqfFhaupxOBXHAQpdu4Cdl1/tapsdk_android_v3.29.2.apk) 或扫描如下二维码进行下载体验；
 ![Demo 扫码下载](tapsdk_android.png)
 
 4、关于 TapSDK 更多详情请参考[官方文档](https://developer.taptap.com/docs/sdk/)。
@@ -41,3 +41,7 @@
 - 删除部分已经过时的接口
 - 更新防沉迷的初始化方法，以及新增的回调 code
 - 删除数据存储中的关于 LiveQuery 功能演示
+
+### V2.0.3
+
+- 更新 SDK 版本至 3.29.2；

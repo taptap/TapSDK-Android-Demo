@@ -48,7 +48,7 @@ public class GenuineVerifyFragment extends Fragment implements View.OnClickListe
     @BindView(R.id.test_environment)
     Button test_environment;
 
-    private String[] skuIds = {"101"};
+    private String[] skuIds = {"99"};
     private boolean isOpenTest = false;
 
 
@@ -99,8 +99,8 @@ public class GenuineVerifyFragment extends Fragment implements View.OnClickListe
             @Override
             public void onOrderCallBack(String s, int i) {
                 // 购买回调
-                Log.e("TAG", "onOrderCallBack: "+ s + i );
-                ToastUtil.showCus("购买商品 ID："+ s, ToastUtil.Type.POINT);
+                Log.e("TAG", "购买的回调: "+ s +" ==== "+ i );
+                ToastUtil.showCus("购买的回调: "+ s +" ==== "+ i, ToastUtil.Type.POINT);
             }
         });
 
