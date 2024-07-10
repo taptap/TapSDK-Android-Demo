@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.ShinyShoe.MonsterTrain.mtap",
+  "applicationId": "com.tds.android.native_demo",
   "variantName": "release",
   "elements": [
     {

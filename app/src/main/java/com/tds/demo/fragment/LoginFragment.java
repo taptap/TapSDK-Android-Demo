@@ -25,6 +25,9 @@ import com.tds.demo.R;
 import com.tds.demo.until.FormatJson;
 import com.tds.demo.until.ToastUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,8 +55,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     Button userinfo_button;
     @BindView(R.id.user_info)
     TextView user_info;
-    @BindView(R.id.test_status)
-    Button test_status;
     @BindView(R.id.refresh_token_button)
     Button refresh_token_button;
     @BindView(R.id.third_bind)
@@ -88,7 +89,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         tap_login.setOnClickListener(this);
         userinfo_button.setOnClickListener(this);
         logout.setOnClickListener(this);
-        test_status.setOnClickListener(this);
         refresh_token_button.setOnClickListener(this);
         third_bind.setOnClickListener(this);
     }
@@ -114,9 +114,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.logout:
                 tapLogout();
-                break;
-            case R.id.test_status:
-                testStatus();
                 break;
             case R.id.refresh_token_button:
                 refreshSessionToken();
@@ -147,7 +144,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     // 此处也可以获取用户信息
                     Log.e("TAG", "Login onSuccess: "+ resultUser.toJSONInfo() );
                     Profile profile = TapLoginHelper.getCurrentProfile();
-                    Log.e(TAG, "onSuccess===》userName: "+ profile.getName() );
+                    Log.e(TAG, "onSuccess===》userName: "+ profile );
+                    Log.e(TAG, "Access Token ====>: "+ TapLoginHelper.getCurrentAccessToken().access_token);
+                    Log.e(TAG, "mac_key ====>: "+ TapLoginHelper.getCurrentAccessToken().mac_key);
+
 
                 }
                 @Override
@@ -157,6 +157,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 }
             }, premission);
         } else {
+            Log.e(TAG, "Access Token ====>: "+ TapLoginHelper.getCurrentAccessToken().access_token);
+            Log.e(TAG, "mac_key ====>: "+ TapLoginHelper.getCurrentAccessToken().mac_key);
+
+
+            Log.e(TAG, "getObjectId: "+ TDSUser.currentUser().getObjectId());
+
             // 已登录，进入游戏
             ToastUtil.showCus("您已登录！", ToastUtil.Type.POINT );
         }
@@ -185,7 +191,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 }
             });
         }
-
     }
 
     /**
@@ -222,117 +227,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     }
     // 退出登录
     private void tapLogout() {
+
         TDSUser.logOut();
         ToastUtil.showCus("退出登录！", ToastUtil.Type.SUCCEED );
-
-    }
-
-    /**
-     * 测试资格校验
-     * 该功能仅用于需要上线「篝火测试服」的游戏，对有登录白名单的用户进行资格校验，防止测试阶段开发包外传被利用
-     * Error 信息为网络错误，或者该游戏未开通篝火测试服。
-     * */
-    private void testStatus() {
-
-        TapLoginHelper.getTestQualification(new Api.ApiCallback<Boolean>() {
-            @Override
-            public void onSuccess(Boolean aBoolean) {
-                if(aBoolean){
-                    // 该玩家已拥有测试资格
-                    ToastUtil.showCus("该玩家已具有篝火测试资格", ToastUtil.Type.SUCCEED );
-                    Log.e(TAG, "onSuccess: "+"该玩家已具有篝火测试资格" );
-                }else {
-                    // 该玩家不具备测试资格， 游戏层面进行拦截
-                    ToastUtil.showCus("该玩家不具备篝火测试资格", ToastUtil.Type.SUCCEED );
-                    Log.e(TAG, "该玩家不具备篝火测试资格" );
-                }
-            }
-            @Override
-            public void onError(Throwable throwable) {
-                // 服务端检查出错或者网络异常
-                ToastUtil.showCus("服务端检查出错或者网络异常", ToastUtil.Type.SUCCEED );
-                Log.e(TAG, "onError: "+"服务端检查出错或者网络异常" );
-
-            }
-        });
-
-
-
-
-    }
-
-
-    // 账号密码注册
-    private void userAndPasswotd(){
-        // 创建实例
-        LCUser user = new LCUser();
-        user.setUsername("Tom11");
-        user.setPassword("cat!@#123");
-
-// 可选
-//        user.setEmail("tom@leancloud.rocks");
-//        user.setMobilePhoneNumber("+8618200008888");
-
-//        设置其他属性的方法跟 LCObject 一样
-//        user.put("gender", "secret");
-
-        user.signUpInBackground().subscribe(new Observer<LCUser>() {
-            public void onSubscribe(Disposable disposable) {}
-            public void onNext(LCUser user) {
-                // 注册成功
-                Log.e(TAG, "注册成功："+ user.toJSONString());
-            }
-            public void onError(Throwable throwable) {
-                // 注册失败（通常是因为用户名已被使用）
-                Log.e(TAG, "注册失败："+ throwable.getLocalizedMessage());
-
-            }
-            public void onComplete() {}
-        });
-
-
-
-        Map<String, Object> thirdPartyData = new HashMap<String, Object>();
-// 可选参数
-        thirdPartyData.put("expires_in", 7200);
-        thirdPartyData.put("openid", "OPENID");
-        thirdPartyData.put("access_token", "ACCESS_TOKEN");
-        thirdPartyData.put("refresh_token", "REFRESH_TOKEN");
-        thirdPartyData.put("scope", "SCOPE");
-        TDSUser.loginWithAuthData(TDSUser.class, thirdPartyData, "weixin").subscribe(new Observer<TDSUser>() {
-            public void onSubscribe(Disposable disposable) {
-            }
-            public void onNext(TDSUser user) {
-                System.out.println("成功登录");
-            }
-            public void onError(Throwable throwable) {
-                System.out.println("尝试使用第三方账号登录，发生错误。");
-            }
-            public void onComplete() {
-            }
-        });
-    }
-
-
-    /*
-    * 账号密码登录
-    * */
-
-    private void userAndPasswotdLogin(){
-        LCUser.logIn("Tom11", "cat!@#123").subscribe(new Observer<LCUser>() {
-            public void onSubscribe(Disposable disposable) {}
-            public void onNext(LCUser user) {
-                // 登录成功
-                Log.e(TAG, "登录成功："+ user.toJSONString());
-
-            }
-            public void onError(Throwable throwable) {
-                // 登录失败（可能是密码错误）
-                Log.e(TAG, "登录失败："+ throwable.getLocalizedMessage());
-
-            }
-            public void onComplete() {}
-        });
 
     }
 

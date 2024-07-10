@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tapsdk.bootstrap.TapBootstrap;
+import com.tapsdk.bootstrap.account.TDSUser;
 import com.tapsdk.tapconnect.TapConnect;
+import com.taptap.sdk.TapLoginHelper;
+import com.taptap.services.update.TapUpdate;
+import com.taptap.services.update.TapUpdateCallback;
 import com.tds.common.entities.Pair;
 import com.tds.common.entities.TapAntiAddictionConfig;
 import com.tds.common.entities.TapConfig;
@@ -47,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 设置全屏沉浸模式
+        int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+        getWindow().getDecorView().setSystemUiVisibility(flags);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         checkPermission(this, this);
@@ -64,15 +79,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < adapter.getGroupCount(); i++) {
             listView.expandGroup(i);
         }
-
-//        TapUpdate.updateGame(this, new TapUpdateCallback() {
-//            @Override
-//            public void onCancel() {
-//
-//                // 取消更新的事件
-//            }
-//        });
-
     }
 
 
@@ -90,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         tapDBConfig.setGameVersion("1.0.0"); //游戏版本，为空时，自动获取游戏安装包的版本，长度不大于 256
 
 
-        TapAntiAddictionConfig tapAntiAddictionConfig = new TapAntiAddictionConfig(true,true);  // 从 3.27.0 版本开始支持 TapBootstrap 防沉迷的初始化
+        TapAntiAddictionConfig tapAntiAddictionConfig = new TapAntiAddictionConfig(true, true);  // 从 3.27.0 版本开始支持 TapBootstrap 防沉迷的初始化
 
 
         TapConfig tdsConfig = new TapConfig.Builder()

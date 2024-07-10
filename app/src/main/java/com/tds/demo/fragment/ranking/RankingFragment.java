@@ -20,8 +20,6 @@ import com.tapsdk.bootstrap.account.TDSUser;
 import com.tapsdk.lc.LCException;
 import com.tapsdk.lc.LCLeaderboard;
 import com.tapsdk.lc.LCLeaderboardResult;
-import com.tapsdk.lc.LCObject;
-import com.tapsdk.lc.LCQuery;
 import com.tapsdk.lc.LCRanking;
 import com.tapsdk.lc.LCStatistic;
 import com.tapsdk.lc.LCStatisticResult;
@@ -33,7 +31,6 @@ import com.tds.demo.until.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +38,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
